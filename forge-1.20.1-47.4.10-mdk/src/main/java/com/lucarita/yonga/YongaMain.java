@@ -1,5 +1,6 @@
 package com.lucarita.yonga;
 
+import com.lucarita.yonga.core.ModItems;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -20,6 +21,9 @@ public class YongaMain
     public YongaMain(FMLJavaModLoadingContext context)
     {
         IEventBus modEventBus = context.getModEventBus();
+
+        // Registramos nuestros ítems
+        ModItems.register(modEventBus);
 
         // Aquí registraremos nuestros futuros módulos, ítems y bloques
 
