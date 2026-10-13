@@ -1,5 +1,6 @@
 package com.lucarita.yonga;
 
+import com.lucarita.yonga.core.ModCreativeTabs;
 import com.lucarita.yonga.core.ModItems;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
@@ -24,6 +25,8 @@ public class YongaMain
 
         // Registramos nuestros ítems
         ModItems.register(modEventBus);
+        // Registramos nuestra pestaña creativa
+        ModCreativeTabs.register(modEventBus);
 
         // Aquí registraremos nuestros futuros módulos, ítems y bloques
 
