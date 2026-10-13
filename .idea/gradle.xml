@@ -5,7 +5,7 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/forge-1.20.1-47.4.10-mdk" />
-        <option name="gradleJvm" value="22" />
+        <option name="gradleJvm" value="17" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/forge-1.20.1-47.4.10-mdk" />
