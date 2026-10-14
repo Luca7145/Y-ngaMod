@@ -22,6 +22,13 @@ public class ModCreativeTabs {
                     .displayItems((parametros, output) -> {
                         // AQUÍ AÑADIMOS LOS ÍTEMS A LA PESTAÑA
                         output.accept(ModItems.MONEDA.get());
+                        output.accept(ModItems.FALCATA.get());
+                        output.accept(ModItems.ALABARDA.get());
+                        output.accept(ModItems.GLADIO.get());
+                        output.accept(ModItems.MAZA.get());
+                        output.accept(ModItems.PUNAL.get());
+                        output.accept(ModItems.ESPADA_CABALLERESCA.get());
+                        output.accept(ModItems.ROPERA.get());
 
                         // Cuando crees más ítems en el futuro, solo tendrás que añadir otra línea como esta:
                         // output.accept(ModItems.NUEVO_ITEM.get());

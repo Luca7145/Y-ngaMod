@@ -48,13 +48,30 @@ public class YongaMain
         LOGGER.info("Servidor de Yonga Mod iniciado correctamente");
     }
 
-    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = net.minecraftforge.api.distmarker.Dist.CLIENT)
     public static class ClientModEvents
     {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-            LOGGER.info("Cliente de Yonga Mod configurado");
+            // event.enqueueWork asegura que esto se cargue de forma segura en el cliente
+            event.enqueueWork(() -> {
+
+                // Registramos la propiedad "blocking" para la Espada Caballeresca
+                net.minecraft.client.renderer.item.ItemProperties.register(ModItems.ESPADA_CABALLERESCA.get(),
+                        new net.minecraft.resources.ResourceLocation("yonga", "blocking"),
+                        (stack, nivel, entidad, semilla) -> {
+                            return entidad != null && entidad.isUsingItem() && entidad.getUseItem() == stack ? 1.0F : 0.0F;
+                        });
+
+                // Hacemos lo mismo para la Ropera
+                net.minecraft.client.renderer.item.ItemProperties.register(ModItems.ROPERA.get(),
+                        new net.minecraft.resources.ResourceLocation("yonga", "blocking"),
+                        (stack, nivel, entidad, semilla) -> {
+                            return entidad != null && entidad.isUsingItem() && entidad.getUseItem() == stack ? 1.0F : 0.0F;
+                        });
+
+            });
         }
     }
 }
