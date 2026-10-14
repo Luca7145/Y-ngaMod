@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " LL",
+    " LL",
+    "S  "
+  ],
+  "key": {
+    "L": {
+      "item": "yonga:lucarita"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "yonga:maza",
+    "count": 1
+  }
+}

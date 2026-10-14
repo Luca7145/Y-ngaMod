@@ -16,6 +16,9 @@ public class ModItems {
     public static final RegistryObject<Item> MONEDA = ITEMS.register("moneda",
             () -> new Item(new Item.Properties()));
 
+    public static final RegistryObject<Item> LUCARITA = ITEMS.register("lucarita",
+            () -> new Item(new Item.Properties()));
+
     // --- ARMAS NORMALES (Usan SwordItem por defecto) ---
     // (Material, Daño Extra, Modificador de Velocidad, Propiedades)
 
