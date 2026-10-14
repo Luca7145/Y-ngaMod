@@ -8,5 +8,7 @@
   "item.yonga.maza": "Maza",
   "item.yonga.punal": "Puñal",
   "item.yonga.ropera": "Ropera",
-  "item.yonga.lucarita": "Lucarita"
+  "item.yonga.lucarita": "Lingote de Lucarita",
+  "item.yonga.raw_lucarita": "Lucarita en bruto",
+  "block.yonga.lucarita_ore": "Mineral de Lucarita"
 }

@@ -19,6 +19,14 @@ public class ModItems {
     public static final RegistryObject<Item> LUCARITA = ITEMS.register("lucarita",
             () -> new Item(new Item.Properties()));
 
+    // El material crudo
+    public static final RegistryObject<Item> RAW_LUCARITA = ITEMS.register("raw_lucarita",
+            () -> new Item(new Item.Properties()));
+
+    // El ítem que representa al bloque en tu inventario
+    public static final RegistryObject<Item> LUCARITA_ORE_ITEM = ITEMS.register("lucarita_ore",
+            () -> new net.minecraft.world.item.BlockItem(ModBlocks.LUCARITA_ORE.get(), new Item.Properties()));
+
     // --- ARMAS NORMALES (Usan SwordItem por defecto) ---
     // (Material, Daño Extra, Modificador de Velocidad, Propiedades)
 

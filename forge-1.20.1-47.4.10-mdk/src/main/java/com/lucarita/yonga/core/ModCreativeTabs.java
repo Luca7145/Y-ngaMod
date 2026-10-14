@@ -23,6 +23,8 @@ public class ModCreativeTabs {
                         // AQUÍ AÑADIMOS LOS ÍTEMS A LA PESTAÑA
                         output.accept(ModItems.MONEDA.get());
                         output.accept(ModItems.LUCARITA.get());
+                        output.accept(ModItems.RAW_LUCARITA.get());
+                        output.accept(ModItems.LUCARITA_ORE_ITEM.get());
                         output.accept(ModItems.FALCATA.get());
                         output.accept(ModItems.ALABARDA.get());
                         output.accept(ModItems.GLADIO.get());
