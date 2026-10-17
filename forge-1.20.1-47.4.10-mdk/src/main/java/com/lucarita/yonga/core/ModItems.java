@@ -1,6 +1,7 @@
 package com.lucarita.yonga.core;
 
 import com.lucarita.yonga.YongaMain;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -31,10 +32,10 @@ public class ModItems {
     // (Material, Daño Extra, Modificador de Velocidad, Propiedades)
 
     public static final RegistryObject<Item> ALABARDA = ITEMS.register("alabarda",
-            () -> new net.minecraft.world.item.SwordItem(ModTiers.LUCARITA, 7, -3.3f, new Item.Properties()));
+            () -> new ArmaSangradoItem(ModTiers.LUCARITA, 7, -3.3f, new Item.Properties()));
 
     public static final RegistryObject<Item> FALCATA = ITEMS.register("falcata",
-            () -> new net.minecraft.world.item.SwordItem(ModTiers.LUCARITA, 4, -2.6f, new Item.Properties()));
+            () -> new ArmaSangradoItem(ModTiers.LUCARITA, 4, -2.6f, new Item.Properties()));
 
     public static final RegistryObject<Item> GLADIO = ITEMS.register("gladio",
             () -> new net.minecraft.world.item.SwordItem(ModTiers.LUCARITA, 3, -2.1f, new Item.Properties()));
@@ -43,7 +44,7 @@ public class ModItems {
             () -> new net.minecraft.world.item.SwordItem(ModTiers.LUCARITA, 5, -3.1f, new Item.Properties()));
 
     public static final RegistryObject<Item> PUNAL = ITEMS.register("punal",
-            () -> new net.minecraft.world.item.SwordItem(ModTiers.LUCARITA, 1, -1.5f, new Item.Properties()));
+            () -> new ArmaSangradoItem(ModTiers.LUCARITA, 1, -1.5f, new Item.Properties()));
 
     // --- ARMAS CON PARRY (Usan nuestra nueva clase ArmaParryItem) ---
 
@@ -52,6 +53,10 @@ public class ModItems {
 
     public static final RegistryObject<Item> ROPERA = ITEMS.register("ropera",
             () -> new ArmaParryItem(ModTiers.LUCARITA, 2, -2.0f, new Item.Properties()));
+
+    public static final RegistryObject<Item> VENDAS = ITEMS.register("vendas",
+            () -> new VendaItem(new Item.Properties()
+                    .food(new FoodProperties.Builder().alwaysEat().build())));
 
     // Este método le dice a Forge que cargue nuestra lista al arrancar
     public static void register(IEventBus eventBus) {

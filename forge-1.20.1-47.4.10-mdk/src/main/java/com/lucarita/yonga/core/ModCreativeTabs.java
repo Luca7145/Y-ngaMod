@@ -4,7 +4,9 @@ import com.lucarita.yonga.YongaMain;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
@@ -32,6 +34,10 @@ public class ModCreativeTabs {
                         output.accept(ModItems.PUNAL.get());
                         output.accept(ModItems.ESPADA_CABALLERESCA.get());
                         output.accept(ModItems.ROPERA.get());
+                        output.accept(ModItems.VENDAS.get());
+                        EnchantmentInstance cortanteInstancia = new EnchantmentInstance(ModEnchantments.CORTANTE.get(), 1);
+                        ItemStack libroCortante = EnchantedBookItem.createForEnchantment(cortanteInstancia);
+                        output.accept(libroCortante);
 
                         // Cuando crees más ítems en el futuro, solo tendrás que añadir otra línea como esta:
                         // output.accept(ModItems.NUEVO_ITEM.get());

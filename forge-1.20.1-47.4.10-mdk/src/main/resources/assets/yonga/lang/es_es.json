@@ -10,5 +10,8 @@
   "item.yonga.ropera": "Ropera",
   "item.yonga.lucarita": "Lingote de Lucarita",
   "item.yonga.raw_lucarita": "Lucarita en bruto",
-  "block.yonga.lucarita_ore": "Mineral de Lucarita"
+  "block.yonga.lucarita_ore": "Mineral de Lucarita",
+  "effect.yonga.sangrado": "Sangrado",
+  "item.yonga.vendas": "Vendas",
+  "enchantment.yonga.cortante": "Cortante"
 }
