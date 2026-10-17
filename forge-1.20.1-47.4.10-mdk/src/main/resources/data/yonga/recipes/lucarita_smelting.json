@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": {
+    "item": "yonga:raw_lucarita"
+  },
+  "result": "yonga:lucarita",
+  "experience": 1.3,
+  "cookingtime": 1200
+}

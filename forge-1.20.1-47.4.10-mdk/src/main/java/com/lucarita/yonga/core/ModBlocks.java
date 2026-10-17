@@ -19,7 +19,7 @@ public class ModBlocks {
     public static final RegistryObject<Block> LUCARITA_ORE = BLOCKS.register("lucarita_ore",
             () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.DIAMOND_ORE)
                     .strength(25.0f, 6.0f) // El primer número es la dureza (tiempo de picado), el segundo es la resistencia a explosiones
-                    .lightLevel(estado -> 9), UniformInt.of(3, 7)));
+                    .lightLevel(estado -> 6), UniformInt.of(3, 7)));
 
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
