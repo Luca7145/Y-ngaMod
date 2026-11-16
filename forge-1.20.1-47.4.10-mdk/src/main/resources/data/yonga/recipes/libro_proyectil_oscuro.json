@@ -1,0 +1,31 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "fe"
+    }
+  ],
+  "type": "yonga:libro_hechizo",
+  "category": "misc",
+  "group": "yonga_libros_hechizo",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "minecraft:ghast_tear"
+    },
+    {
+      "item": "minecraft:fire_charge"
+    },
+    {
+      "item": "yonga:lucarita"
+    },
+    {
+      "item": "yonga:lucarita"
+    }
+  ],
+  "result": {
+    "item": "yonga:libro_proyectil_oscuro"
+  }
+}

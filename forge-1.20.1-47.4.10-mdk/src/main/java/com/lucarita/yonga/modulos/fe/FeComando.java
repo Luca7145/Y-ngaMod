@@ -21,6 +21,7 @@ import java.util.function.ToDoubleFunction;
  *   /fe restar <jugadores> <puntos>      -> resta puntos de fe
  *   /fe fijar <jugadores> <puntos>       -> pone los puntos a un valor exacto (puede ser negativo)
  *   /fe nivel <jugadores> <nivel>        -> pone al jugador justo al principio de un nivel (-100 a 100)
+ *   /fe mana <jugadores> <cantidad>      -> pone el maná (o maná oscuro) a esa cantidad (como mucho, el máximo del rango)
  */
 public final class FeComando {
 
@@ -70,6 +71,23 @@ public final class FeComando {
                                             double puntos = Math.signum(nivel) * FeNiveles.puntosParaNivel(Math.abs(nivel));
                                             return cambiar(ctx.getSource(), EntityArgument.getPlayers(ctx, "jugadores"),
                                                     jugador -> puntos);
+                                        }))))
+
+                .then(Commands.literal("mana")
+                        .then(Commands.argument("jugadores", EntityArgument.players())
+                                .then(Commands.argument("cantidad", DoubleArgumentType.doubleArg(0))
+                                        .executes(ctx -> {
+                                            double cantidad = DoubleArgumentType.getDouble(ctx, "cantidad");
+                                            Collection<ServerPlayer> jugadores = EntityArgument.getPlayers(ctx, "jugadores");
+                                            for (ServerPlayer jugador : jugadores) {
+                                                ManaDatos.fijar(jugador, cantidad);
+                                                ctx.getSource().sendSuccess(() -> Component.translatable("yonga.fe.comando.mana",
+                                                        jugador.getDisplayName(),
+                                                        ManaDatos.tipo(jugador).nombre(),
+                                                        formatear(ManaDatos.obtener(jugador)),
+                                                        ManaDatos.maximo(jugador)), true);
+                                            }
+                                            return jugadores.size();
                                         }))))
         );
     }

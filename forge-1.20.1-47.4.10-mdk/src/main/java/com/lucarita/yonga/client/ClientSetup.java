@@ -2,15 +2,19 @@ package com.lucarita.yonga.client;
 
 import com.lucarita.yonga.YongaMain;
 import com.lucarita.yonga.client.fe.BarraFe;
+import com.lucarita.yonga.client.fe.BarraMana;
+import com.lucarita.yonga.client.fe.OrbeFeRenderer;
 import com.lucarita.yonga.client.fe.FeTeclas;
 import com.lucarita.yonga.modulos.Modulo;
 import com.lucarita.yonga.modulos.armas.ArmaYonga;
 import com.lucarita.yonga.modulos.armas.ModuloArmas;
+import com.lucarita.yonga.modulos.fe.ModuloFe;
 import com.lucarita.yonga.modulos.sangrado.ModuloSangrado;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
@@ -66,6 +70,8 @@ public final class ClientSetup {
         if (Modulo.FE.activo()) {
             // "Below" = se dibuja ANTES que los corazones, para poder subirlos y hacer hueco a la barra
             event.registerBelow(VanillaGuiOverlay.PLAYER_HEALTH.id(), "barra_fe", BarraFe::dibujarHud);
+            // "Above" la comida = se dibuja justo después, en la fila de encima
+            event.registerAbove(VanillaGuiOverlay.FOOD_LEVEL.id(), "barra_mana", BarraMana::dibujarHud);
         }
     }
 
@@ -74,6 +80,13 @@ public final class ClientSetup {
         if (Modulo.FE.activo()) {
             event.register(FeTeclas.REZAR);
             event.register(FeTeclas.BLASFEMAR);
+        }
+    }
+
+    @SubscribeEvent
+    public static void registrarRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        if (Modulo.FE.activo()) {
+            event.registerEntityRenderer(ModuloFe.ORBE_FE.get(), OrbeFeRenderer::new);
         }
     }
 }

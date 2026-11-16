@@ -42,9 +42,15 @@ public final class FeDatos {
      * (lo usa la oración, que cambia los puntos cada tick y solo sincroniza de vez en cuando).
      */
     public static void fijarPuntos(ServerPlayer jugador, double puntos, boolean sincronizarAhora) {
+        RangoFe rangoAntes = obtenerRango(jugador);
+
         CompoundTag persistentes = datosPersistentes(jugador);
         persistentes.putDouble(CLAVE, FeNiveles.limitar(puntos));
         jugador.getPersistentData().put(Player.PERSISTED_NBT_TAG, persistentes);
+
+        // Si ha cambiado de rango, el maná se ajusta (tipo y máximo dependen del rango)
+        ManaDatos.alCambiarRango(jugador, rangoAntes, obtenerRango(jugador));
+
         if (sincronizarAhora) {
             sincronizar(jugador);
         }
@@ -55,9 +61,10 @@ public final class FeDatos {
         fijarPuntos(jugador, obtenerPuntos(jugador) + cantidad);
     }
 
-    /** Envía la fe del jugador a su cliente (para la barra y el menú). */
+    /** Envía la fe y el maná del jugador a su cliente (para las barras y el menú). */
     public static void sincronizar(ServerPlayer jugador) {
-        FeRed.CANAL.send(PacketDistributor.PLAYER.with(() -> jugador), new SincronizarFePacket(obtenerPuntos(jugador)));
+        FeRed.CANAL.send(PacketDistributor.PLAYER.with(() -> jugador),
+                new SincronizarFePacket(obtenerPuntos(jugador), ManaDatos.obtener(jugador)));
     }
 
     private static CompoundTag datosPersistentes(Player jugador) {

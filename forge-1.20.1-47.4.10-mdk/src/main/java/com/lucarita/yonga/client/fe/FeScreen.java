@@ -5,6 +5,7 @@ import com.lucarita.yonga.modulos.fe.FeComando;
 import com.lucarita.yonga.modulos.fe.FeNiveles;
 import com.lucarita.yonga.modulos.fe.Oracion;
 import com.lucarita.yonga.modulos.fe.RangoFe;
+import com.lucarita.yonga.modulos.fe.TipoMana;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -31,7 +32,7 @@ public class FeScreen extends Screen {
     @Override
     protected void init() {
         int centroX = this.width / 2;
-        int y = this.height / 2 + 45;
+        int y = this.height / 2 + 56;
         int direccion = FeClienteEventos.miDireccion();
 
         // Rezar / Blasfemar (si ya lo estás haciendo, el botón sirve para parar). Cierran el menú para que veas la barra.
@@ -106,6 +107,20 @@ public class FeScreen extends Screen {
         graficos.drawCenteredString(this.font,
                 Component.translatable("yonga.fe.menu.total", FeComando.formatear(puntos)),
                 centroX, y, COLOR_SECUNDARIO);
+        y += 16;
+
+        // Maná o maná oscuro (el Ateo no tiene)
+        TipoMana tipo = rango.tipoMana();
+        if (tipo != TipoMana.NINGUNO) {
+            double mana = FeCliente.mana();
+            graficos.drawCenteredString(this.font,
+                    Component.translatable("yonga.fe.menu.mana", tipo.nombre(),
+                            (int) Math.floor(mana), rango.manaMaximo()),
+                    centroX, y, BarraMana.colorTexto(tipo));
+            y += 11;
+            BarraMana.dibujar(graficos, centroX - BarraFe.ANCHO / 2, y, BarraFe.ANCHO,
+                    (float) (mana / rango.manaMaximo()), tipo);
+        }
 
         super.render(graficos, ratonX, ratonY, parcial);
     }

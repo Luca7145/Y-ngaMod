@@ -1,6 +1,7 @@
 package com.lucarita.yonga.modulos.armas;
 
 import com.google.gson.JsonObject;
+import com.lucarita.yonga.core.JugadorFabricando;
 import com.lucarita.yonga.modulos.Modulo;
 import com.lucarita.yonga.modulos.roles.Rol;
 import com.lucarita.yonga.modulos.roles.RolDatos;
@@ -8,9 +9,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
@@ -22,8 +21,7 @@ import net.minecraft.world.level.Level;
  *
  * Si el módulo de roles está desactivado, funciona como una receta normal (cualquiera puede).
  *
- * Las recetas de Minecraft no saben quién está fabricando, así que lo averiguamos buscando qué jugador
- * tiene abierto el menú al que pertenece esa cuadrícula de fabricación.
+ * Quién está fabricando lo averigua JugadorFabricando.
  */
 public class RecetaHerrero extends ShapedRecipe {
 
@@ -42,7 +40,7 @@ public class RecetaHerrero extends ShapedRecipe {
             return true;
         }
         // Segundo: ¿quien fabrica es un Herrero con rango suficiente?
-        Player jugador = buscarJugador(cuadricula, nivel);
+        Player jugador = JugadorFabricando.buscar(cuadricula, nivel);
         return jugador != null && puedeFabricar(jugador);
     }
 
@@ -52,22 +50,6 @@ public class RecetaHerrero extends ShapedRecipe {
         }
         return RolDatos.obtenerRol(jugador) == Rol.HERRERO
                 && RolDatos.obtenerRango(jugador).ordinal() >= arma.rangoHerrero().ordinal();
-    }
-
-    // El jugador cuyo menú abierto (mesa de trabajo o inventario) contiene esta cuadrícula
-    private static Player buscarJugador(CraftingContainer cuadricula, Level nivel) {
-        for (Player jugador : nivel.players()) {
-            AbstractContainerMenu menu = jugador.containerMenu;
-            if (menu == null) {
-                continue;
-            }
-            for (Slot hueco : menu.slots) {
-                if (hueco.container == cuadricula) {
-                    return jugador;
-                }
-            }
-        }
-        return null;
     }
 
     @Override

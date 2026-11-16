@@ -3,11 +3,11 @@ package com.lucarita.yonga.modulos.armas;
 import com.lucarita.yonga.core.GolpeCargado;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -40,7 +40,8 @@ public final class CombateEventos {
 
     /** Usamos LivingAttackEvent para bloquear el 100% del daño antes de que ocurra. */
     public static void alSerAtacado(LivingAttackEvent evento) {
-        if (!(evento.getEntity() instanceof Player jugador) || !jugador.isUsingItem()) {
+        // Solo en el servidor (en un mundo de un jugador el cliente comparte la lista de contraataques)
+        if (!(evento.getEntity() instanceof ServerPlayer jugador) || !jugador.isUsingItem()) {
             return;
         }
 
@@ -76,8 +77,8 @@ public final class CombateEventos {
 
     /** Si el jugador acaba de hacer parry con un arma de contraataque, su siguiente golpe cargado hace +50%. */
     public static void alHacerDano(LivingHurtEvent evento) {
-        if (!(evento.getSource().getEntity() instanceof Player jugador)
-                || evento.getSource().getDirectEntity() != jugador) {   // solo cuerpo a cuerpo
+        if (!(evento.getSource().getEntity() instanceof ServerPlayer jugador)
+                || evento.getSource().getDirectEntity() != jugador) {   // solo cuerpo a cuerpo, solo en el servidor
             return;
         }
         Long hasta = CONTRAATAQUE_HASTA.get(jugador.getUUID());

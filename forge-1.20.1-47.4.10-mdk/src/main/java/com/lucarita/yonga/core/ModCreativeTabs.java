@@ -3,6 +3,7 @@ package com.lucarita.yonga.core;
 import com.lucarita.yonga.YongaMain;
 import com.lucarita.yonga.modulos.Modulo;
 import com.lucarita.yonga.modulos.armas.ModuloArmas;
+import com.lucarita.yonga.modulos.fe.ModuloFe;
 import com.lucarita.yonga.modulos.sangrado.ModuloSangrado;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -30,6 +31,10 @@ public class ModCreativeTabs {
                         // Las armas se añaden solas: cualquier arma nueva que registres en ModuloArmas aparece aquí.
                         if (Modulo.ARMAS.activo()) {
                             ModuloArmas.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
+                        }
+
+                        if (Modulo.FE.activo()) {
+                            ModuloFe.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
                         }
 
                         if (Modulo.SANGRADO.activo()) {

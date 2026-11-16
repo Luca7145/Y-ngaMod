@@ -12,7 +12,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
  */
 public final class FeRed {
 
-    private static final String VERSION = "2";
+    private static final String VERSION = "3";
 
     public static final SimpleChannel CANAL = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(YongaMain.MOD_ID, "fe"),

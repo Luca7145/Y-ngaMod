@@ -1,0 +1,28 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "fe"
+    }
+  ],
+  "type": "yonga:libro_hechizo",
+  "category": "misc",
+  "group": "yonga_libros_hechizo",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "minecraft:rabbit_foot"
+    },
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "item": "yonga:lucarita"
+    }
+  ],
+  "result": {
+    "item": "yonga:libro_gran_salto"
+  }
+}

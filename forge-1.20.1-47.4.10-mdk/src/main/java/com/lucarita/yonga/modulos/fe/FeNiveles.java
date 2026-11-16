@@ -6,19 +6,20 @@ import net.minecraft.util.Mth;
  * Las cuentas de la fe: cuántos puntos hacen falta para cada nivel.
  *
  * Los niveles van de -100 a 100. Los negativos funcionan igual que los positivos, pero perdiendo puntos.
- * Pasar del nivel 0 al 1 (o al -1) cuesta 10 puntos, y cada nivel cuesta un 10% más que el anterior:
- *   0 -> 1: 10    1 -> 2: 11    2 -> 3: 12.1    3 -> 4: 13.31 ...
+ * Pasar del nivel 0 al 1 (o al -1) cuesta 10 puntos, y cada nivel cuesta un 5% más que el anterior:
+ *   0 -> 1: 10    1 -> 2: 10.5    2 -> 3: 11.025    3 -> 4: 11.58 ...
+ * Puntos para estar en el nivel L: P(L) = sgn(L) * 200 * (1.05^|L| - 1)  ->  nivel 100 = 26.100 puntos.
  */
 public final class FeNiveles {
 
     public static final int NIVEL_MAXIMO = 100;
     public static final double PUNTOS_PRIMER_NIVEL = 10.0;
-    public static final double AUMENTO_POR_NIVEL = 0.1;   // +10% cada nivel
+    public static final double AUMENTO_POR_NIVEL = 0.05;   // +5% cada nivel
 
     // Pequeño margen para que los decimales (p. ej. 21.000000001) no den un nivel de menos
     private static final double MARGEN = 1.0E-6;
 
-    /** Puntos totales para llegar al nivel máximo (unos 1.377.961). */
+    /** Puntos totales para llegar al nivel máximo (unos 26.100). */
     public static final double PUNTOS_MAXIMOS = puntosParaNivel(NIVEL_MAXIMO);
 
     private FeNiveles() {}
@@ -28,7 +29,7 @@ public final class FeNiveles {
         return PUNTOS_PRIMER_NIVEL * Math.pow(1 + AUMENTO_POR_NIVEL, n);
     }
 
-    /** Puntos acumulados necesarios para estar en el nivel n (en valor absoluto). Nivel 1 = 10, nivel 2 = 21, nivel 3 = 33.1... */
+    /** Puntos acumulados necesarios para estar en el nivel n (en valor absoluto). Nivel 1 = 10, nivel 2 = 20.5, nivel 3 = 31.525... */
     public static double puntosParaNivel(int n) {
         return PUNTOS_PRIMER_NIVEL * (Math.pow(1 + AUMENTO_POR_NIVEL, n) - 1) / AUMENTO_POR_NIVEL;
     }
@@ -68,13 +69,23 @@ public final class FeNiveles {
 
     // ---------- ORACIÓN ----------
 
-    /** Puntos por segundo rezando en el nivel 0: 1 punto por minuto. */
-    public static final double VELOCIDAD_BASE_ORACION = 1.0 / 60.0;
-    /** Cuánto sube la velocidad por cada nivel alejado del cero (+7.2734%). Menos que el 10% del coste: cada nivel tarda algo más. */
-    public static final double AUMENTO_VELOCIDAD_ORACION = 1.072734;
+    // Lo que se tarda rezando en el primer nivel (0 -> ±1) y en el último (±99 -> ±100), en segundos
+    public static final double SEGUNDOS_PRIMER_NIVEL = 10 * 60;    // 10 minutos
+    public static final double SEGUNDOS_ULTIMO_NIVEL = 2 * 60 * 60; // 2 horas
+
+    /** Puntos por segundo rezando en el nivel 0: 10 puntos en 10 minutos = 1 punto por minuto. */
+    public static final double VELOCIDAD_BASE_ORACION = PUNTOS_PRIMER_NIVEL / SEGUNDOS_PRIMER_NIVEL;
 
     /**
-     * V(L) = d * (1/60) * 1.072734^|L|  -> puntos por segundo.
+     * Cuánto sube la velocidad por cada nivel alejado del cero. Se calcula solo para que se cumplan
+     * los 10 minutos y las 2 horas de arriba aunque cambies AUMENTO_POR_NIVEL.
+     * Con el coste al +5% sale 1.05 / 12^(1/99) = 1.023973 (+2.3973% por nivel).
+     */
+    public static final double AUMENTO_VELOCIDAD_ORACION = (1 + AUMENTO_POR_NIVEL)
+            / Math.pow(SEGUNDOS_ULTIMO_NIVEL / SEGUNDOS_PRIMER_NIVEL, 1.0 / (NIVEL_MAXIMO - 1));
+
+    /**
+     * V(L) = d * (1/60) * 1.023973^|L|  -> puntos por segundo.
      * nivel: nivel actual del jugador. direccion: +1 al rezar, -1 al blasfemar.
      * Del 0 al ±1 se tarda 10 minutos; del ±99 al ±100, 2 horas.
      */
