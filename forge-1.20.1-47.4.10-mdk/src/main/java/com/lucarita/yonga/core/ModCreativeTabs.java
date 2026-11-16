@@ -1,6 +1,9 @@
 package com.lucarita.yonga.core;
 
 import com.lucarita.yonga.YongaMain;
+import com.lucarita.yonga.modulos.Modulo;
+import com.lucarita.yonga.modulos.armas.ModuloArmas;
+import com.lucarita.yonga.modulos.sangrado.ModuloSangrado;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -12,39 +15,31 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ModCreativeTabs {
-    // Creamos el registro para las pestañas creativas
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, YongaMain.MOD_ID);
 
-    // Creamos nuestra pestaña personalizada
     public static final RegistryObject<CreativeModeTab> YONGA_TAB = CREATIVE_MODE_TABS.register("yonga_tab",
             () -> CreativeModeTab.builder()
-                    .icon(() -> new ItemStack(ModItems.MONEDA.get())) // El icono de la pestaña será tu moneda
-                    .title(Component.translatable("creativetab.yonga_tab")) // El nombre (lo traduciremos en el JSON)
+                    .icon(() -> new ItemStack(ModItems.MONEDA.get()))
+                    .title(Component.translatable("creativetab.yonga_tab"))
                     .displayItems((parametros, output) -> {
-                        // AQUÍ AÑADIMOS LOS ÍTEMS A LA PESTAÑA
-                        output.accept(ModItems.MONEDA.get());
-                        output.accept(ModItems.LUCARITA.get());
-                        output.accept(ModItems.RAW_LUCARITA.get());
-                        output.accept(ModItems.LUCARITA_ORE_ITEM.get());
-                        output.accept(ModItems.FALCATA.get());
-                        output.accept(ModItems.ALABARDA.get());
-                        output.accept(ModItems.GLADIO.get());
-                        output.accept(ModItems.MAZA.get());
-                        output.accept(ModItems.PUNAL.get());
-                        output.accept(ModItems.ESPADA_CABALLERESCA.get());
-                        output.accept(ModItems.ROPERA.get());
-                        output.accept(ModItems.VENDAS.get());
-                        EnchantmentInstance cortanteInstancia = new EnchantmentInstance(ModEnchantments.CORTANTE.get(), 1);
-                        ItemStack libroCortante = EnchantedBookItem.createForEnchantment(cortanteInstancia);
-                        output.accept(libroCortante);
+                        // Núcleo (siempre)
+                        ModItems.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
 
-                        // Cuando crees más ítems en el futuro, solo tendrás que añadir otra línea como esta:
-                        // output.accept(ModItems.NUEVO_ITEM.get());
+                        // Cada módulo solo añade sus cosas si está activo.
+                        // Las armas se añaden solas: cualquier arma nueva que registres en ModuloArmas aparece aquí.
+                        if (Modulo.ARMAS.activo()) {
+                            ModuloArmas.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
+                        }
+
+                        if (Modulo.SANGRADO.activo()) {
+                            ModuloSangrado.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
+                            output.accept(EnchantedBookItem.createForEnchantment(
+                                    new EnchantmentInstance(ModuloSangrado.CORTANTE.get(), 1)));
+                        }
                     })
                     .build());
 
-    // Método para conectar con el YongaMain
     public static void register(IEventBus eventBus) {
         CREATIVE_MODE_TABS.register(eventBus);
     }

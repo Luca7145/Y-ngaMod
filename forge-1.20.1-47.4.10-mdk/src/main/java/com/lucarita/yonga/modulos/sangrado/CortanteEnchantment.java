@@ -1,6 +1,5 @@
-package com.lucarita.yonga.core;
+package com.lucarita.yonga.modulos.sangrado;
 
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -33,17 +32,8 @@ public class CortanteEnchantment extends Enchantment {
     public void doPostAttack(LivingEntity atacante, Entity objetivo, int nivel) {
         // Verificamos que estamos en el servidor y que el objetivo está vivo (no es un bote o un cuadro)
         if (!atacante.level().isClientSide() && objetivo instanceof LivingEntity objetivoVivo) {
-
-            float random = atacante.getRandom().nextFloat();
-
-            // Misma lógica de probabilidad que hicimos para las armas especiales
-            if (random <= 0.04f) {
-                objetivoVivo.addEffect(new MobEffectInstance(ModEffects.SANGRADO.get(), 999999, 2, false, false, true));
-            } else if (random <= 0.14f) {
-                objetivoVivo.addEffect(new MobEffectInstance(ModEffects.SANGRADO.get(), 400, 1, false, false, true));
-            } else if (random <= 0.44f) {
-                objetivoVivo.addEffect(new MobEffectInstance(ModEffects.SANGRADO.get(), 400, 0, false, false, true));
-            }
+            // Misma lógica de probabilidad que las armas, pero con duración más corta
+            Sangrado.intentarAplicar(objetivoVivo, atacante.getRandom(), Sangrado.DURACION_CORTANTE);
         }
 
         super.doPostAttack(atacante, objetivo, nivel);

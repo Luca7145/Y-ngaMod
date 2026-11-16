@@ -1,6 +1,5 @@
-package com.lucarita.yonga.core;
+package com.lucarita.yonga.modulos.sangrado;
 
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -28,7 +27,7 @@ public class SangradoEffect extends MobEffect {
             // Suelta una gota solo el 15% de los ticks, reduciendo drásticamente la cantidad
             if (entity.getRandom().nextFloat() < 0.15f) {
                 ServerLevel level = (ServerLevel) entity.level();
-                level.sendParticles(ModParticles.SANGRE_GOTEO.get(),
+                level.sendParticles(ModuloSangrado.SANGRE_GOTEO.get(),
                         entity.getX(), entity.getY() + (entity.getBbHeight() / 1.5), entity.getZ(),
                         1, 0.15, 0.3, 0.15, 0.0);
             }

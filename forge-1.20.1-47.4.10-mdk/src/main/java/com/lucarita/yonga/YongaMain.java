@@ -1,15 +1,21 @@
 package com.lucarita.yonga;
 
-import com.lucarita.yonga.core.*;
+import com.lucarita.yonga.client.ClientSetup;
+import com.lucarita.yonga.core.ModBlocks;
+import com.lucarita.yonga.core.ModCreativeTabs;
+import com.lucarita.yonga.core.ModItems;
+import com.lucarita.yonga.modulos.Modulo;
+import com.lucarita.yonga.modulos.ModuloActivoCondition;
+import com.lucarita.yonga.modulos.ModulosConfig;
+import com.lucarita.yonga.modulos.armas.ModuloArmas;
+import com.lucarita.yonga.modulos.fe.ModuloFe;
+import com.lucarita.yonga.modulos.sangrado.ModuloSangrado;
 import com.mojang.logging.LogUtils;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.slf4j.Logger;
 
 @Mod(YongaMain.MOD_ID)
@@ -22,59 +28,36 @@ public class YongaMain
     {
         IEventBus modEventBus = context.getModEventBus();
 
-        // Registramos nuestros ítems
-        ModItems.register(modEventBus);
-        ModEffects.register(modEventBus);
+        // 1. Lo primero: leer qué módulos están activados (config/yonga-modulos.toml)
+        ModulosConfig.cargar();
+
+        // 2. Núcleo: siempre se carga
         ModBlocks.register(modEventBus);
-        ModParticles.register(modEventBus);
-        ModEnchantments.register(modEventBus);
-        // Registramos nuestra pestaña creativa
+        ModItems.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
 
-        // Aquí registraremos nuestros futuros módulos, ítems y bloques
+        // Condición "yonga:modulo_activo" para que las recetas de un módulo desactivado no se carguen
+        CraftingHelper.register(ModuloActivoCondition.Serializer.INSTANCE);
 
-        modEventBus.addListener(this::commonSetup);
-        MinecraftForge.EVENT_BUS.register(this);
+        // 3. Módulos: solo se registran si están activados
+        if (Modulo.ARMAS.activo()) {
+            ModuloArmas.registrar(modEventBus);
+        }
+        if (Modulo.SANGRADO.activo()) {
+            ModuloSangrado.registrar(modEventBus);
+        }
+        if (Modulo.FE.activo()) {
+            ModuloFe.registrar(modEventBus);
+        }
+        // Futuros módulos aquí, siguiendo el mismo patrón
 
-        // Registra el archivo de configuración modular
-        context.registerConfig(net.minecraftforge.fml.config.ModConfig.Type.COMMON, Config.SPEC);
-    }
+        for (Modulo modulo : Modulo.values()) {
+            LOGGER.info("Yonga - modulo '{}': {}", modulo.id(), modulo.activo() ? "ACTIVADO" : "desactivado");
+        }
 
-    private void commonSetup(final FMLCommonSetupEvent event)
-    {
-        LOGGER.info("Inicializando núcleo de Yonga Mod...");
-    }
-
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event)
-    {
-        LOGGER.info("Servidor de Yonga Mod iniciado correctamente");
-    }
-
-    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = net.minecraftforge.api.distmarker.Dist.CLIENT)
-    public static class ClientModEvents
-    {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
-            // event.enqueueWork asegura que esto se cargue de forma segura en el cliente
-            event.enqueueWork(() -> {
-
-                // Registramos la propiedad "blocking" para la Espada Caballeresca
-                net.minecraft.client.renderer.item.ItemProperties.register(ModItems.ESPADA_CABALLERESCA.get(),
-                        new net.minecraft.resources.ResourceLocation("yonga", "blocking"),
-                        (stack, nivel, entidad, semilla) -> {
-                            return entidad != null && entidad.isUsingItem() && entidad.getUseItem() == stack ? 1.0F : 0.0F;
-                        });
-
-                // Hacemos lo mismo para la Ropera
-                net.minecraft.client.renderer.item.ItemProperties.register(ModItems.ROPERA.get(),
-                        new net.minecraft.resources.ResourceLocation("yonga", "blocking"),
-                        (stack, nivel, entidad, semilla) -> {
-                            return entidad != null && entidad.isUsingItem() && entidad.getUseItem() == stack ? 1.0F : 0.0F;
-                        });
-
-            });
+        // 4. Cosas solo de cliente (pantalla de configuración en el menú de Mods)
+        if (FMLEnvironment.dist.isClient()) {
+            ClientSetup.registrarPantallaConfig();
         }
     }
 }

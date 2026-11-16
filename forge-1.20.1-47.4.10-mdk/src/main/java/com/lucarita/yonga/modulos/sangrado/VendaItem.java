@@ -1,4 +1,4 @@
-package com.lucarita.yonga.core;
+package com.lucarita.yonga.modulos.sangrado;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
@@ -7,6 +7,10 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
 public class VendaItem extends Item {
+
+    // Vida que recupera al usarla: 4 puntos = 2 corazones
+    private static final float CURACION = 4.0f;
+
     public VendaItem(Properties properties) {
         super(properties);
     }
@@ -17,7 +21,10 @@ public class VendaItem extends Item {
         // Solo lo ejecutamos en el servidor
         if (!level.isClientSide()) {
             // Elimina el efecto de sangrado, sin importar su nivel o duración
-            entity.removeEffect(ModEffects.SANGRADO.get());
+            entity.removeEffect(ModuloSangrado.SANGRADO.get());
+
+            // Cura 2 corazones (cada corazón son 2 puntos de vida)
+            entity.heal(CURACION);
         }
 
         // Consumir el ítem (restar 1 a la cantidad)

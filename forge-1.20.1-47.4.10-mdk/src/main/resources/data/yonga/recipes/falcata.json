@@ -1,4 +1,10 @@
 {
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "armas"
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " LL",
