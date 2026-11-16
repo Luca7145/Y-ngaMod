@@ -1,5 +1,6 @@
 package com.lucarita.yonga.modulos.sangrado;
 
+import com.lucarita.yonga.core.GolpeCargado;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,9 +32,10 @@ public class CortanteEnchantment extends Enchantment {
     @Override
     public void doPostAttack(LivingEntity atacante, Entity objetivo, int nivel) {
         // Verificamos que estamos en el servidor y que el objetivo está vivo (no es un bote o un cuadro)
-        if (!atacante.level().isClientSide() && objetivo instanceof LivingEntity objetivoVivo) {
-            // Misma lógica de probabilidad que las armas, pero con duración más corta
-            Sangrado.intentarAplicar(objetivoVivo, atacante.getRandom(), Sangrado.DURACION_CORTANTE);
+        // Solo con golpes cargados, igual que las habilidades de las armas
+        if (!atacante.level().isClientSide() && objetivo instanceof LivingEntity objetivoVivo && GolpeCargado.fue(atacante)) {
+            // Misma lógica de probabilidad que la falcata, pero con duración más corta
+            Sangrado.intentarAplicar(objetivoVivo, atacante.getRandom(), Sangrado.CORTANTE);
         }
 
         super.doPostAttack(atacante, objetivo, nivel);

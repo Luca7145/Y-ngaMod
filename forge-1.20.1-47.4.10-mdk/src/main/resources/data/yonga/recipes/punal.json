@@ -5,7 +5,7 @@
       "modulo": "armas"
     }
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "yonga:arma_herrero",
   "pattern": [
     "   ",
     " L ",

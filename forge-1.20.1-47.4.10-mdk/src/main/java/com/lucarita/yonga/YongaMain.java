@@ -1,6 +1,7 @@
 package com.lucarita.yonga;
 
 import com.lucarita.yonga.client.ClientSetup;
+import com.lucarita.yonga.core.GolpeCargado;
 import com.lucarita.yonga.core.ModBlocks;
 import com.lucarita.yonga.core.ModCreativeTabs;
 import com.lucarita.yonga.core.ModItems;
@@ -9,8 +10,10 @@ import com.lucarita.yonga.modulos.ModuloActivoCondition;
 import com.lucarita.yonga.modulos.ModulosConfig;
 import com.lucarita.yonga.modulos.armas.ModuloArmas;
 import com.lucarita.yonga.modulos.fe.ModuloFe;
+import com.lucarita.yonga.modulos.roles.ModuloRoles;
 import com.lucarita.yonga.modulos.sangrado.ModuloSangrado;
 import com.mojang.logging.LogUtils;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -35,6 +38,8 @@ public class YongaMain
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
+        MinecraftForge.EVENT_BUS.addListener(GolpeCargado::alAtacar);
+        MinecraftForge.EVENT_BUS.addListener(GolpeCargado::alSalir);
 
         // Condición "yonga:modulo_activo" para que las recetas de un módulo desactivado no se carguen
         CraftingHelper.register(ModuloActivoCondition.Serializer.INSTANCE);
@@ -48,6 +53,9 @@ public class YongaMain
         }
         if (Modulo.FE.activo()) {
             ModuloFe.registrar(modEventBus);
+        }
+        if (Modulo.ROLES.activo()) {
+            ModuloRoles.registrar(modEventBus);
         }
         // Futuros módulos aquí, siguiendo el mismo patrón
 

@@ -35,7 +35,8 @@ public class SangradoEffect extends MobEffect {
 
         // LÓGICA DE DAÑO (Cada 4 segundos)
         if (entity.tickCount % 80 == 0) {
-            float daño = (amplifier == 0) ? 1.0f : 2.0f;
+            // Sangrado I = 1, II = 2, III = 3 de daño
+            float daño = 1.0f + amplifier;
             entity.hurt(entity.damageSources().magic(), daño);
         }
 

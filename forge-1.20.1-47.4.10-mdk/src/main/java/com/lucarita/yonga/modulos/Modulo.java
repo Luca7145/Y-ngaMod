@@ -17,7 +17,8 @@ import net.minecraftforge.common.ForgeConfigSpec;
 public enum Modulo {
     ARMAS("armas"),
     SANGRADO("sangrado"),
-    FE("fe");
+    FE("fe"),
+    ROLES("roles");
 
     private final String id;
 
