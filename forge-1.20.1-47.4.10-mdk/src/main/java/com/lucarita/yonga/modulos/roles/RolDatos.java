@@ -1,5 +1,7 @@
 package com.lucarita.yonga.modulos.roles;
 
+import com.lucarita.yonga.modulos.Modulo;
+import com.lucarita.yonga.modulos.fe.FeDatos;
 import com.lucarita.yonga.modulos.roles.red.RolesRed;
 import com.lucarita.yonga.modulos.roles.red.SincronizarRolPacket;
 import net.minecraft.nbt.CompoundTag;
@@ -58,12 +60,14 @@ public final class RolDatos {
         datos.putInt(CLAVE_EXPERIENCIA, 0);
         guardar(jugador, datos);
         sincronizar(jugador, false);
+        alCambiarOficioORango(jugador);
     }
 
     /** Deja al jugador sin oficio (y le vuelve a salir el menú para elegir). */
     public static void quitarRol(ServerPlayer jugador) {
         guardar(jugador, new CompoundTag());
         sincronizar(jugador, true);
+        alCambiarOficioORango(jugador);
     }
 
     /** Pone la experiencia de oficio a un valor exacto (nunca negativo). */
@@ -79,6 +83,9 @@ public final class RolDatos {
         sincronizar(jugador, false);
 
         RangoRol rangoDespues = obtenerRango(jugador);
+        if (rangoDespues != rangoAntes) {
+            alCambiarOficioORango(jugador);
+        }
         if (rangoDespues.ordinal() > rangoAntes.ordinal()) {
             jugador.displayClientMessage(Component.translatable("yonga.rol.sube_rango",
                     rangoDespues.nombre(), obtenerRol(jugador).nombre()), true);
@@ -93,6 +100,13 @@ public final class RolDatos {
     /** Pone al jugador justo al principio de un rango. */
     public static void fijarRango(ServerPlayer jugador, RangoRol rango) {
         fijarExperiencia(jugador, rango.experienciaNecesaria());
+    }
+
+    // Cosas de otros módulos que dependen del oficio (p. ej. el nivel 101 del Sacerdote Maestro)
+    private static void alCambiarOficioORango(ServerPlayer jugador) {
+        if (Modulo.FE.activo()) {
+            FeDatos.ajustarAlLimite(jugador);
+        }
     }
 
     // ---------- RED ----------

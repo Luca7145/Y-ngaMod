@@ -54,10 +54,6 @@ public enum Hechizo {
         return Component.translatable("yonga.hechizo." + id);
     }
 
-    public Component descripcion() {
-        return Component.translatable("yonga.hechizo." + id + ".desc");
-    }
-
     /**
      * ¿Puede alguien con este nivel de fe fabricar el libro? "Desde" un rango significa ese rango o uno más extremo:
      * para los de luz, nivel igual o mayor que el principio del rango; para los oscuros, igual o menor.

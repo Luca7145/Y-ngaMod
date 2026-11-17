@@ -5,10 +5,10 @@ import com.google.common.collect.Multimap;
 import com.lucarita.yonga.core.GolpeCargado;
 import com.lucarita.yonga.modulos.Modulo;
 import com.lucarita.yonga.modulos.roles.RangoRol;
-import com.lucarita.yonga.modulos.roles.Rol;
 import com.lucarita.yonga.modulos.sangrado.Sangrado;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -27,6 +27,7 @@ import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -172,27 +173,21 @@ public class ArmaYonga extends SwordItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level nivel, List<Component> lineas, TooltipFlag flag) {
-        if (rasgos.parry == TipoParry.CUERPO_A_CUERPO) {
-            lineas.add(Component.translatable("yonga.arma.parry").withStyle(ChatFormatting.BLUE));
-        } else if (rasgos.parry == TipoParry.TAMBIEN_PROYECTILES) {
-            lineas.add(Component.translatable("yonga.arma.parry_proyectiles").withStyle(ChatFormatting.BLUE));
-        }
-        if (rasgos.contraataque) {
-            lineas.add(Component.translatable("yonga.arma.contraataque").withStyle(ChatFormatting.BLUE));
-        }
-        if (rasgos.sangrado != null && Modulo.SANGRADO.activo()) {
-            lineas.add(Component.translatable("yonga.arma.sangrado").withStyle(ChatFormatting.DARK_RED));
-        }
-        if (rasgos.probAturdir > 0) {
-            lineas.add(Component.translatable("yonga.arma.aturdir", Math.round(rasgos.probAturdir * 100))
-                    .withStyle(ChatFormatting.GOLD));
-        }
-        if (rasgos.rompeEscudos) {
-            lineas.add(Component.translatable("yonga.arma.rompe_escudos").withStyle(ChatFormatting.GOLD));
-        }
-        if (Modulo.ROLES.activo()) {
-            lineas.add(Component.translatable("yonga.arma.fabrica", Rol.HERRERO.nombre(), rasgos.rangoHerrero.nombre())
-                    .withStyle(ChatFormatting.GRAY));
+        // Una sola línea discreta con palabras clave (sin números: que se descubran jugando)
+        List<String> rasgosVisibles = new ArrayList<>();
+        if (tieneParry()) rasgosVisibles.add("yonga.arma.rasgo.parry");
+        if (rasgos.contraataque) rasgosVisibles.add("yonga.arma.rasgo.contraataque");
+        if (rasgos.sangrado != null && Modulo.SANGRADO.activo()) rasgosVisibles.add("yonga.arma.rasgo.sangrado");
+        if (rasgos.probAturdir > 0) rasgosVisibles.add("yonga.arma.rasgo.aturdir");
+        if (rasgos.rompeEscudos) rasgosVisibles.add("yonga.arma.rasgo.rompe_escudos");
+
+        if (!rasgosVisibles.isEmpty()) {
+            MutableComponent linea = Component.empty();
+            for (int i = 0; i < rasgosVisibles.size(); i++) {
+                if (i > 0) linea.append(" · ");
+                linea.append(Component.translatable(rasgosVisibles.get(i)));
+            }
+            lineas.add(linea.withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
         }
         super.appendHoverText(stack, nivel, lineas, flag);
     }

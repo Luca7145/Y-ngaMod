@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "yonga:item/parapente"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "yonga:abierto": 1
+      },
+      "model": "yonga:item/parapente_abierto"
+    }
+  ]
+}

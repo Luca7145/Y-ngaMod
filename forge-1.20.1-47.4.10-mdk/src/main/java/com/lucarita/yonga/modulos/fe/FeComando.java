@@ -20,7 +20,7 @@ import java.util.function.ToDoubleFunction;
  *   /fe sumar <jugadores> <puntos>       -> suma puntos de fe
  *   /fe restar <jugadores> <puntos>      -> resta puntos de fe
  *   /fe fijar <jugadores> <puntos>       -> pone los puntos a un valor exacto (puede ser negativo)
- *   /fe nivel <jugadores> <nivel>        -> pone al jugador justo al principio de un nivel (-100 a 100)
+ *   /fe nivel <jugadores> <nivel>        -> pone al jugador justo al principio de un nivel (-100 a 100; -101/101 solo el Sacerdote Maestro)
  *   /fe mana <jugadores> <cantidad>      -> pone el maná (o maná oscuro) a esa cantidad (como mucho, el máximo del rango)
  */
 public final class FeComando {
@@ -65,7 +65,7 @@ public final class FeComando {
 
                 .then(Commands.literal("nivel")
                         .then(Commands.argument("jugadores", EntityArgument.players())
-                                .then(Commands.argument("nivel", IntegerArgumentType.integer(-FeNiveles.NIVEL_MAXIMO, FeNiveles.NIVEL_MAXIMO))
+                                .then(Commands.argument("nivel", IntegerArgumentType.integer(-FeNiveles.NIVEL_SUPREMO, FeNiveles.NIVEL_SUPREMO))
                                         .executes(ctx -> {
                                             int nivel = IntegerArgumentType.getInteger(ctx, "nivel");
                                             double puntos = Math.signum(nivel) * FeNiveles.puntosParaNivel(Math.abs(nivel));

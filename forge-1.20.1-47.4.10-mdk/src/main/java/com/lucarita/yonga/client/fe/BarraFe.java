@@ -51,7 +51,7 @@ public final class BarraFe {
         double puntos = FeCliente.puntos();
         int x = anchoPantalla / 2 - ANCHO / 2;
         int y = altoPantalla - 40;   // la barra de experiencia está en altoPantalla - 29
-        dibujar(graficos, x, y, FeNiveles.progreso(puntos));
+        dibujar(graficos, x, y, FeNiveles.progreso(puntos, FeCliente.nivelMaximo()));
 
         // Número de nivel encima de la barra, como el de experiencia (y como él, no sale en el nivel 0)
         int nivel = FeNiveles.nivel(puntos);

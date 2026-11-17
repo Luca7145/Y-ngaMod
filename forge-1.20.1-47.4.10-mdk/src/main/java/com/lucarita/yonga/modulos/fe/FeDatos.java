@@ -1,6 +1,7 @@
 package com.lucarita.yonga.modulos.fe;
 
 import com.lucarita.yonga.modulos.fe.red.FeRed;
+import com.lucarita.yonga.modulos.roles.oficios.Sacerdote;
 import com.lucarita.yonga.modulos.fe.red.SincronizarFePacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -12,7 +13,8 @@ import net.minecraftforge.network.PacketDistributor;
  *
  * Se guarda en los datos "PlayerPersisted" del jugador, que Forge conserva al morir y al volver del End.
  * Usa SIEMPRE estos métodos para cambiar la fe: así el jugador recibe el valor nuevo en su pantalla.
- * (Más adelante, cuando hagamos las formas de ganar o perder fe, solo habrá que llamar a sumarPuntos.)
+ * Para fe que se gana o pierde por una ACCIÓN del jugador (orbes, rezar...) usa ganarFe: aplica bonificaciones
+ * como la del Sacerdote. sumarPuntos/fijarPuntos cambian la fe tal cual (los usan los comandos).
  */
 public final class FeDatos {
 
@@ -32,7 +34,20 @@ public final class FeDatos {
         return RangoFe.deNivel(obtenerNivel(jugador));
     }
 
-    /** Pone la fe a un valor exacto (se recorta entre los puntos del nivel -100 y el 100). */
+    /** Nivel máximo que puede alcanzar el jugador: 100, o 101 si es Sacerdote Maestro. */
+    public static int nivelMaximo(Player jugador) {
+        return Sacerdote.nivelMaximoFe(jugador);
+    }
+
+    /**
+     * Vuelve a recortar la fe al máximo del jugador. Se llama cuando cambia su oficio o su rango:
+     * p. ej. un Sacerdote Maestro en el nivel 101 que deja de ser sacerdote vuelve al 100.
+     */
+    public static void ajustarAlLimite(ServerPlayer jugador) {
+        fijarPuntos(jugador, obtenerPuntos(jugador));
+    }
+
+    /** Pone la fe a un valor exacto (se recorta al nivel máximo del jugador: ±100, o ±101 el Sacerdote Maestro). */
     public static void fijarPuntos(ServerPlayer jugador, double puntos) {
         fijarPuntos(jugador, puntos, true);
     }
@@ -45,7 +60,7 @@ public final class FeDatos {
         RangoFe rangoAntes = obtenerRango(jugador);
 
         CompoundTag persistentes = datosPersistentes(jugador);
-        persistentes.putDouble(CLAVE, FeNiveles.limitar(puntos));
+        persistentes.putDouble(CLAVE, FeNiveles.limitar(puntos, nivelMaximo(jugador)));
         jugador.getPersistentData().put(Player.PERSISTED_NBT_TAG, persistentes);
 
         // Si ha cambiado de rango, el maná se ajusta (tipo y máximo dependen del rango)
@@ -56,7 +71,20 @@ public final class FeDatos {
         }
     }
 
-    /** Suma puntos (usa un número negativo para restar). */
+    /**
+     * Fe ganada (o perdida, si es negativa) por una acción del jugador. Aplica el multiplicador de su oficio
+     * (p. ej. un Sacerdote Experto gana y pierde el doble). Usa esto para cualquier forma nueva de ganar fe.
+     */
+    public static void ganarFe(ServerPlayer jugador, double cantidad) {
+        sumarPuntos(jugador, cantidad * multiplicador(jugador));
+    }
+
+    /** Multiplicador de fe del jugador por su oficio (1.0 si no tiene ninguno que lo cambie). */
+    public static double multiplicador(Player jugador) {
+        return Sacerdote.multiplicadorFe(jugador);
+    }
+
+    /** Suma puntos tal cual, sin bonificaciones (usa un número negativo para restar). */
     public static void sumarPuntos(ServerPlayer jugador, double cantidad) {
         fijarPuntos(jugador, obtenerPuntos(jugador) + cantidad);
     }

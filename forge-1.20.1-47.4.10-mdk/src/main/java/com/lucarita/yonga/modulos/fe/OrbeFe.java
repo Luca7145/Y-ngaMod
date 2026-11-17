@@ -129,7 +129,7 @@ public class OrbeFe extends Entity {
         if (this.level().isClientSide() || !(jugador instanceof ServerPlayer servidor) || this.isRemoved()) {
             return;
         }
-        FeDatos.sumarPuntos(servidor, valor());
+        FeDatos.ganarFe(servidor, valor());
         float tono = esOscuro() ? 0.5f : 1.4f;
         this.level().playSound(null, jugador.getX(), jugador.getY(), jugador.getZ(),
                 SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.15f, tono + this.random.nextFloat() * 0.2f);

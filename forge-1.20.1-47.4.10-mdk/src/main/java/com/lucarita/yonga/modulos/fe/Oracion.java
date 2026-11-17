@@ -23,7 +23,7 @@ import java.util.UUID;
  *
  * Mientras el jugador reza o blasfema gana V(L) puntos por segundo (ver FeNiveles.velocidadOracion).
  * Se deja de rezar al: moverse, recibir daño, cambiar de dimensión, desconectarse, volver a pulsar
- * el botón, o llegar al nivel máximo (100 rezando / -100 blasfemando).
+ * el botón, o llegar al nivel máximo (100 / -100, o 101 / -101 el Sacerdote Maestro).
  */
 public final class Oracion {
 
@@ -69,7 +69,7 @@ public final class Oracion {
         }
 
         int nivel = FeDatos.obtenerNivel(jugador);
-        if (nivel * direccion >= FeNiveles.NIVEL_MAXIMO) {
+        if (nivel * direccion >= FeDatos.nivelMaximo(jugador)) {
             jugador.displayClientMessage(Component.translatable("yonga.fe.oracion.maximo"), true);
             return;
         }
@@ -118,7 +118,9 @@ public final class Oracion {
         // Sumamos la parte de V(L) que toca a este tick (20 ticks = 1 segundo)
         double puntos = FeDatos.obtenerPuntos(jugador);
         int nivelAntes = FeNiveles.nivel(puntos);
-        double nuevosPuntos = puntos + FeNiveles.velocidadOracion(nivelAntes, estado.direccion()) / 20.0;
+        // (multiplicado por la bonificación de su oficio, p. ej. Sacerdote)
+        double nuevosPuntos = puntos
+                + FeNiveles.velocidadOracion(nivelAntes, estado.direccion()) / 20.0 * FeDatos.multiplicador(jugador);
         int nivelDespues = FeNiveles.nivel(nuevosPuntos);
 
         // Si cambia de nivel lo mandamos ya; si no, cada medio segundo
@@ -130,7 +132,7 @@ public final class Oracion {
                     nivelDespues, RangoFe.deNivel(nivelDespues).nombre()), true);
         }
 
-        if (nivelDespues * estado.direccion() >= FeNiveles.NIVEL_MAXIMO) {
+        if (nivelDespues * estado.direccion() >= FeDatos.nivelMaximo(jugador)) {
             parar(jugador, false);
             jugador.displayClientMessage(Component.translatable("yonga.fe.oracion.maximo"), true);
             return;

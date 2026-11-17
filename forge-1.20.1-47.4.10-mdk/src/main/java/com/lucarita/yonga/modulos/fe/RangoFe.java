@@ -20,6 +20,7 @@ public enum RangoFe {
     PRELADO("prelado", 60, 79, 200),
     SUMO_SACERDOTE("sumo_sacerdote", 80, 99, 300),
     ILUMINADO("iluminado", 100, 100, 500),
+    ALFA("alfa", 101, 101, 500),                       // solo Sacerdote Maestro
 
     // Negativos -> maná oscuro
     SECULAR("secular", -9, -1, 100),
@@ -27,7 +28,8 @@ public enum RangoFe {
     HEREJE("hereje", -49, -30, 200),
     BLASFEMO("blasfemo", -69, -50, 200),
     IRREDIMIBLE("irredimible", -99, -70, 300),
-    SIERVO_DE_LAS_SOMBRAS("siervo_de_las_sombras", -100, -100, 500);
+    SIERVO_DE_LAS_SOMBRAS("siervo_de_las_sombras", -100, -100, 500),
+    OMEGA("omega", -101, -101, 500);                   // solo Sacerdote Maestro
 
     private final String id;
     private final int desde;

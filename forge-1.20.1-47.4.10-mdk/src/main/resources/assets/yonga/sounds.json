@@ -1,0 +1,20 @@
+{
+  "bajo_nota": {
+    "subtitle": "subtitles.yonga.bajo_nota",
+    "sounds": [
+      {
+        "name": "yonga:bajo_nota",
+        "stream": false
+      }
+    ]
+  },
+  "bajo_acorde": {
+    "subtitle": "subtitles.yonga.bajo_acorde",
+    "sounds": [
+      {
+        "name": "yonga:bajo_acorde",
+        "stream": false
+      }
+    ]
+  }
+}

@@ -4,12 +4,22 @@ import com.lucarita.yonga.YongaMain;
 import com.lucarita.yonga.client.fe.BarraFe;
 import com.lucarita.yonga.client.fe.BarraMana;
 import com.lucarita.yonga.client.fe.OrbeFeRenderer;
+import com.lucarita.yonga.client.roles.CapaParapente;
+import com.lucarita.yonga.client.roles.CapaAntifaz;
+import com.lucarita.yonga.client.roles.CapaMedallon;
+import com.lucarita.yonga.client.roles.MochilaScreen;
 import com.lucarita.yonga.client.fe.FeTeclas;
 import com.lucarita.yonga.modulos.Modulo;
 import com.lucarita.yonga.modulos.armas.ArmaYonga;
 import com.lucarita.yonga.modulos.armas.ModuloArmas;
 import com.lucarita.yonga.modulos.fe.ModuloFe;
+import com.lucarita.yonga.modulos.roles.ModuloRoles;
+import com.lucarita.yonga.modulos.roles.cara.HuecoCara;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import com.lucarita.yonga.modulos.sangrado.ModuloSangrado;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -31,6 +41,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public final class ClientSetup {
 
     private static final ResourceLocation PROPIEDAD_GUARDIA = new ResourceLocation(YongaMain.MOD_ID, "blocking");
+    private static final ResourceLocation PROPIEDAD_ABIERTO = new ResourceLocation(YongaMain.MOD_ID, "abierto");
 
     private ClientSetup() {}
 
@@ -42,6 +53,18 @@ public final class ClientSetup {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
+        if (Modulo.ROLES.activo()) {
+            event.enqueueWork(() -> {
+                // "yonga:abierto" = 1 mientras se planea: el modelo del objeto cambia a uno invisible en la mano
+                ItemProperties.register(ModuloRoles.PARAPENTE.get(), PROPIEDAD_ABIERTO,
+                        (stack, nivel, entidad, semilla) ->
+                                entidad != null && entidad.isUsingItem() && entidad.getUseItem() == stack ? 1.0F : 0.0F);
+                // Pantalla de la mochila
+                MenuScreens.register(ModuloRoles.MENU_MOCHILA.get(), MochilaScreen::new);
+                // El hueco de cara se oculta en el inventario creativo (allí Minecraft lo pondría encima de la barra rápida)
+                HuecoCara.ocultar = () -> Minecraft.getInstance().screen instanceof CreativeModeInventoryScreen;
+            });
+        }
         if (!Modulo.ARMAS.activo()) {
             return;
         }
@@ -87,6 +110,32 @@ public final class ClientSetup {
     public static void registrarRenderers(EntityRenderersEvent.RegisterRenderers event) {
         if (Modulo.FE.activo()) {
             event.registerEntityRenderer(ModuloFe.ORBE_FE.get(), OrbeFeRenderer::new);
+        }
+    }
+
+    // Modelo 3D de la vela del parapente
+    @SubscribeEvent
+    public static void registrarModelos(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        if (Modulo.ROLES.activo()) {
+            event.registerLayerDefinition(CapaParapente.CAPA, CapaParapente::crearCapa);
+            event.registerLayerDefinition(CapaAntifaz.CAPA, CapaAntifaz::crearCapa);
+            event.registerLayerDefinition(CapaMedallon.CAPA, CapaMedallon::crearCapa);
+        }
+    }
+
+    // Añade la vela a los dos tipos de jugador (brazos anchos y brazos finos)
+    @SubscribeEvent
+    public static void agregarCapas(EntityRenderersEvent.AddLayers event) {
+        if (!Modulo.ROLES.activo()) {
+            return;
+        }
+        for (String tipoSkin : event.getSkins()) {
+            PlayerRenderer renderJugador = event.getSkin(tipoSkin);
+            if (renderJugador != null) {
+                renderJugador.addLayer(new CapaParapente(renderJugador, event.getEntityModels()));
+                renderJugador.addLayer(new CapaAntifaz(renderJugador, event.getEntityModels()));
+                renderJugador.addLayer(new CapaMedallon(renderJugador, event.getEntityModels()));
+            }
         }
     }
 }

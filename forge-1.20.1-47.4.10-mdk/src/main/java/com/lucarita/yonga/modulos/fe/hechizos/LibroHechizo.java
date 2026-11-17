@@ -1,9 +1,13 @@
 package com.lucarita.yonga.modulos.fe.hechizos;
 
+import com.lucarita.yonga.modulos.Modulo;
 import com.lucarita.yonga.modulos.fe.ManaDatos;
 import com.lucarita.yonga.modulos.fe.TipoMana;
 import net.minecraft.ChatFormatting;
+import com.lucarita.yonga.modulos.roles.RolCliente;
+import com.lucarita.yonga.modulos.roles.oficios.Sacerdote;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -70,11 +74,15 @@ public class LibroHechizo extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level nivel, List<Component> lineas, TooltipFlag flag) {
-        ChatFormatting color = hechizo.tipo() == TipoMana.OSCURO ? ChatFormatting.DARK_PURPLE : ChatFormatting.AQUA;
-        lineas.add(hechizo.descripcion().copy().withStyle(ChatFormatting.GRAY));
-        lineas.add(Component.translatable("yonga.hechizo.coste", hechizo.coste(), hechizo.tipo().nombre()).withStyle(color));
-        lineas.add(Component.translatable("yonga.hechizo.enfriamiento", hechizo.enfriamiento() / 20).withStyle(color));
-        lineas.add(Component.translatable("yonga.hechizo.fabrica", hechizo.rangoMinimo().nombre()).withStyle(ChatFormatting.DARK_GRAY));
+        // Una sola línea discreta: coste y enfriamiento ("30 Maná · 10 s"), y "II" si tu sacerdote lo tiene mejorado
+        ChatFormatting color = hechizo.tipo() == TipoMana.OSCURO ? ChatFormatting.DARK_PURPLE : ChatFormatting.DARK_AQUA;
+        MutableComponent linea = Component.translatable("yonga.hechizo.resumen",
+                hechizo.coste(), hechizo.tipo().nombre(), hechizo.enfriamiento() / 20).withStyle(color);
+        if (nivel != null && nivel.isClientSide() && Modulo.ROLES.activo()
+                && Sacerdote.hechizoMejorado(RolCliente.rol(), RolCliente.rango(), hechizo)) {
+            linea.append(Component.literal(" · II").withStyle(ChatFormatting.GOLD));
+        }
+        lineas.add(linea);
         super.appendHoverText(stack, nivel, lineas, flag);
     }
 }

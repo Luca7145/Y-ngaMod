@@ -75,6 +75,8 @@ public final class ModuloFe {
 
         // Orbes de fe al matar mobs
         MinecraftForge.EVENT_BUS.addListener(OrbesFe::alMorir);
+        MinecraftForge.EVENT_BUS.addListener(OrbesFe::alAparecer);
+        MinecraftForge.EVENT_BUS.addListener(OrbesFe::alSalir);
 
         MinecraftForge.EVENT_BUS.addListener(ModuloFe::alRegistrarComandos);
 
@@ -98,7 +100,7 @@ public final class ModuloFe {
     private static void alEntrar(PlayerEvent.PlayerLoggedInEvent evento) {
         if (evento.getEntity() instanceof ServerPlayer jugador) {
             ManaDatos.asegurarIniciado(jugador);
-            FeDatos.sincronizar(jugador);
+            FeDatos.ajustarAlLimite(jugador);   // por si ya no puede estar en el nivel 101 (también sincroniza)
         }
     }
 

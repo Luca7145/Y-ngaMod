@@ -1,0 +1,34 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:receta_oficio",
+  "oficio": "explorador",
+  "rango": "experto",
+  "category": "equipment",
+  "pattern": [
+    "LPL",
+    "DMD",
+    "LPL"
+  ],
+  "key": {
+    "L": {
+      "item": "yonga:lucarita"
+    },
+    "P": {
+      "item": "minecraft:phantom_membrane"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "M": {
+      "item": "yonga:mochila"
+    }
+  },
+  "result": {
+    "item": "yonga:mochila_mejorada"
+  }
+}
