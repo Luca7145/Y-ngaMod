@@ -126,5 +126,8 @@
   "item.yonga.medallon_aire": "Medallón de aire",
   "item.yonga.bajo_hacha": "Bajo-hacha",
   "subtitles.yonga.bajo_nota": "Suena un bajo",
-  "subtitles.yonga.bajo_acorde": "Acorde de potencia"
+  "subtitles.yonga.bajo_acorde": "Acorde de potencia",
+  "item.yonga.espada_keytar": "Espada-keytar",
+  "entity.yonga.nota_proyectil": "Nota",
+  "subtitles.yonga.keytar_nota": "Suena un sintetizador"
 }

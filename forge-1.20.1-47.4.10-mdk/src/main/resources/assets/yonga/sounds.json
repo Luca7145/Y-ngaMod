@@ -16,5 +16,14 @@
         "stream": false
       }
     ]
+  },
+  "keytar_nota": {
+    "subtitle": "subtitles.yonga.keytar_nota",
+    "sounds": [
+      {
+        "name": "yonga:keytar_nota",
+        "stream": false
+      }
+    ]
   }
 }

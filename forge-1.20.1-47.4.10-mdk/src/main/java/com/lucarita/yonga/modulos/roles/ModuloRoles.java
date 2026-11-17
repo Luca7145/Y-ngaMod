@@ -5,6 +5,8 @@ import com.lucarita.yonga.modulos.roles.cara.Cara;
 import com.lucarita.yonga.modulos.roles.cara.Medallon;
 import com.lucarita.yonga.modulos.roles.cara.MedallonItem;
 import com.lucarita.yonga.modulos.roles.oficios.BajoHachaItem;
+import com.lucarita.yonga.modulos.roles.oficios.EspadaKeytarItem;
+import com.lucarita.yonga.modulos.roles.oficios.NotaProyectil;
 import com.lucarita.yonga.modulos.roles.oficios.Explorador;
 import com.lucarita.yonga.modulos.roles.oficios.ParapenteItem;
 import com.lucarita.yonga.modulos.roles.oficios.mochila.MochilaItem;
@@ -13,6 +15,8 @@ import net.minecraft.world.inventory.MenuType;
 import com.lucarita.yonga.modulos.roles.red.RolesRed;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.server.level.ServerPlayer;
@@ -41,6 +45,8 @@ public final class ModuloRoles {
             DeferredRegister.create(ForgeRegistries.MENU_TYPES, YongaMain.MOD_ID);
     public static final DeferredRegister<SoundEvent> SONIDOS =
             DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, YongaMain.MOD_ID);
+    public static final DeferredRegister<EntityType<?>> ENTIDADES =
+            DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, YongaMain.MOD_ID);
 
     // ---------- OBJETOS DE OFICIO ----------
 
@@ -72,10 +78,25 @@ public final class ModuloRoles {
     public static final RegistryObject<Item> BAJO_HACHA = ITEMS.register("bajo_hacha",
             () -> new BajoHachaItem(new Item.Properties()));
 
+    // Melómano: espada-keytar (dispara notas)
+    public static final RegistryObject<Item> ESPADA_KEYTAR = ITEMS.register("espada_keytar",
+            () -> new EspadaKeytarItem(new Item.Properties()));
+
+    // ---------- ENTIDADES ----------
+
+    // La nota que dispara la espada-keytar
+    public static final RegistryObject<EntityType<NotaProyectil>> NOTA_PROYECTIL = ENTIDADES.register("nota_proyectil",
+            () -> EntityType.Builder.<NotaProyectil>of(NotaProyectil::new, MobCategory.MISC)
+                    .sized(0.3f, 0.3f)
+                    .clientTrackingRange(4)
+                    .updateInterval(10)
+                    .build("nota_proyectil"));
+
     // ---------- SONIDOS (archivos en assets/yonga/sounds, nombres en assets/yonga/sounds.json) ----------
 
     public static final RegistryObject<SoundEvent> SONIDO_BAJO_NOTA = sonido("bajo_nota");
     public static final RegistryObject<SoundEvent> SONIDO_BAJO_ACORDE = sonido("bajo_acorde");
+    public static final RegistryObject<SoundEvent> SONIDO_KEYTAR_NOTA = sonido("keytar_nota");
 
     private static RegistryObject<SoundEvent> sonido(String nombre) {
         return SONIDOS.register(nombre, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(YongaMain.MOD_ID, nombre)));
@@ -99,6 +120,7 @@ public final class ModuloRoles {
         RECETAS.register(modEventBus);
         MENUS.register(modEventBus);
         SONIDOS.register(modEventBus);
+        ENTIDADES.register(modEventBus);
         RolesRed.registrar();
 
         MinecraftForge.EVENT_BUS.addListener(ModuloRoles::alRegistrarComandos);

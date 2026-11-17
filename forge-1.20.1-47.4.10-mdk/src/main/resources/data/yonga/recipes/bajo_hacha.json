@@ -10,9 +10,9 @@
   "rango": "novato",
   "category": "equipment",
   "pattern": [
-    "LNS",
-    "LPS",
-    " P "
+    " LN",
+    "SPL",
+    "PS "
   ],
   "key": {
     "L": {

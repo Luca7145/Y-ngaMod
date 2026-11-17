@@ -1,0 +1,34 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:receta_oficio",
+  "oficio": "melomano",
+  "rango": "novato",
+  "category": "equipment",
+  "pattern": [
+    " LN",
+    "LPQ",
+    "PQ "
+  ],
+  "key": {
+    "L": {
+      "item": "yonga:lucarita"
+    },
+    "N": {
+      "item": "minecraft:note_block"
+    },
+    "P": {
+      "item": "minecraft:stick"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "result": {
+    "item": "yonga:espada_keytar"
+  }
+}

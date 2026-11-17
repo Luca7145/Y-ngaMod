@@ -126,5 +126,8 @@
   "item.yonga.medallon_aire": "Air medallion",
   "item.yonga.bajo_hacha": "Axe bass",
   "subtitles.yonga.bajo_nota": "Bass plays",
-  "subtitles.yonga.bajo_acorde": "Power chord"
+  "subtitles.yonga.bajo_acorde": "Power chord",
+  "item.yonga.espada_keytar": "Keytar sword",
+  "entity.yonga.nota_proyectil": "Note",
+  "subtitles.yonga.keytar_nota": "Synth plays"
 }

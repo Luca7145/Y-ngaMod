@@ -19,6 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import com.lucarita.yonga.modulos.sangrado.ModuloSangrado;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -110,6 +111,10 @@ public final class ClientSetup {
     public static void registrarRenderers(EntityRenderersEvent.RegisterRenderers event) {
         if (Modulo.FE.activo()) {
             event.registerEntityRenderer(ModuloFe.ORBE_FE.get(), OrbeFeRenderer::new);
+        }
+        if (Modulo.ROLES.activo()) {
+            // La nota de la espada-keytar no tiene dibujo: solo su rastro de notitas
+            event.registerEntityRenderer(ModuloRoles.NOTA_PROYECTIL.get(), NoopRenderer::new);
         }
     }
 

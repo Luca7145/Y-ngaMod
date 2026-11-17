@@ -14,6 +14,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
@@ -32,19 +33,21 @@ import java.util.UUID;
 /**
  * Bajo-hacha del Melómano: un hacha de lucarita que además es un bajo.
  *
- *  - Click izquierdo: golpea como un hacha pesada (rompe escudos, como cualquier hacha).
+ *  - Click izquierdo: golpea como un hacha pesada (rompe escudos, como cualquier hacha) y suena una nota.
+ *  - Durabilidad: solo se gasta al golpear (1 por golpe, como una espada) y al romper bloques. Tocar no la gasta.
  *  - Click derecho: toca una nota. El tono depende de hacia dónde miras: abajo = grave, arriba = agudo
  *    (2 octavas). Manteniendo pulsado se repite la nota.
  *  - Ritmo: cada nota (y cada golpe cargado con el hacha) llena la barra de ritmo, si no paras más de
  *    1,5 segundos. Con la barra llena, la siguiente nota es un ACORDE DE POTENCIA: una onda que empuja
- *    y daña a los monstruos de alrededor (no afecta a jugadores, animales ni aldeanos).
+ *    y daña a los monstruos y a los jugadores de alrededor (no a animales ni aldeanos). A los jugadores
+ *    solo les afecta si se les puede hacer daño (respeta el PvP del servidor y los equipos).
  */
 public class BajoHachaItem extends AxeItem {
 
     // ---- Ajustes ----
     private static final float DANO_EXTRA = 6.0f;          // daño en el juego: 1 + 4 (lucarita) + 6 = 11
     private static final float VELOCIDAD = -3.0f;          // velocidad en el juego: 4 - 3 = 1.0
-    public static final int DURABILIDAD = 2200;
+    public static final int DURABILIDAD = 2200;            // un poco más que la netherita (2031)
 
     private static final int SEMITONOS = 24;               // 2 octavas
     private static final int RITMO_MAXIMO = 100;
@@ -80,21 +83,24 @@ public class BajoHachaItem extends AxeItem {
         return InteractionResultHolder.consume(bajo);
     }
 
-    // Golpe con el hacha: también suma ritmo (si es un golpe cargado)
+    // Golpe con el hacha: suena una nota (como al tocar) y, si es un golpe cargado, suma ritmo
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity objetivo, LivingEntity atacante) {
-        if (atacante instanceof ServerPlayer jugador && GolpeCargado.fue(jugador)) {
-            int ritmo = sumarRitmo(jugador, RITMO_POR_GOLPE);
-            mostrarRitmo(jugador, ritmo);
+        if (atacante instanceof ServerPlayer jugador) {
+            sonarNota(jugador);
+            if (GolpeCargado.fue(jugador)) {
+                int ritmo = sumarRitmo(jugador, RITMO_POR_GOLPE);
+                mostrarRitmo(jugador, ritmo);
+            }
         }
-        return super.hurtEnemy(stack, objetivo, atacante);
+        // Gasta 1 de durabilidad por golpe, como una espada (las hachas de Minecraft gastan 2)
+        stack.hurtAndBreak(1, atacante, e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+        return true;
     }
 
     // ---------- TOCAR ----------
 
     private static void tocar(ServerPlayer jugador) {
-        ServerLevel nivel = jugador.serverLevel();
-
         // ¿Barra llena? Entonces esta nota es el acorde de potencia
         if (ritmoActual(jugador) >= RITMO_MAXIMO) {
             acordeDePotencia(jugador);
@@ -103,6 +109,14 @@ public class BajoHachaItem extends AxeItem {
             return;
         }
 
+        sonarNota(jugador);
+        int ritmo = sumarRitmo(jugador, RITMO_POR_NOTA);
+        mostrarRitmo(jugador, ritmo);
+    }
+
+    /** Suena una nota de bajo según hacia dónde mira el jugador, con su notita de color. */
+    private static void sonarNota(ServerPlayer jugador) {
+        ServerLevel nivel = jugador.serverLevel();
         // Nota según la mirada: getXRot() va de -90 (arriba) a 90 (abajo)
         int semitono = Mth.clamp(Math.round((90.0f - jugador.getXRot()) / 180.0f * SEMITONOS), 0, SEMITONOS);
         float tono = (float) Math.pow(2.0, (semitono - SEMITONOS / 2) / 12.0);   // 0,5 (grave) a 2,0 (agudo)
@@ -111,21 +125,19 @@ public class BajoHachaItem extends AxeItem {
         // Notita musical encima de la cabeza, del color de la nota (como en los bloques musicales)
         nivel.sendParticles(ParticleTypes.NOTE, jugador.getX(), jugador.getEyeY() + 0.6, jugador.getZ(),
                 0, semitono / (double) SEMITONOS, 0.0, 0.0, 1.0);
-
-        int ritmo = sumarRitmo(jugador, RITMO_POR_NOTA);
-        mostrarRitmo(jugador, ritmo);
     }
 
-    // Onda sonora: empuja y daña a los monstruos cercanos
+    // Onda sonora: empuja y daña a los monstruos y jugadores cercanos
     private static void acordeDePotencia(ServerPlayer jugador) {
         ServerLevel nivel = jugador.serverLevel();
-        List<LivingEntity> monstruos = nivel.getEntitiesOfClass(LivingEntity.class,
+        List<LivingEntity> objetivos = nivel.getEntitiesOfClass(LivingEntity.class,
                 new AABB(jugador.blockPosition()).inflate(RADIO_ACORDE + 1),
-                e -> e instanceof Enemy && e.isAlive() && e.distanceTo(jugador) <= RADIO_ACORDE);
-        for (LivingEntity monstruo : monstruos) {
-            monstruo.hurt(jugador.damageSources().playerAttack(jugador), DANO_ACORDE);
-            monstruo.knockback(EMPUJE_ACORDE, jugador.getX() - monstruo.getX(), jugador.getZ() - monstruo.getZ());
-            monstruo.hurtMarked = true;
+                e -> e != jugador && e.isAlive() && !e.isSpectator() && e.distanceTo(jugador) <= RADIO_ACORDE
+                        && (e instanceof Enemy || (e instanceof Player otro && jugador.canHarmPlayer(otro))));
+        for (LivingEntity objetivo : objetivos) {
+            objetivo.hurt(jugador.damageSources().playerAttack(jugador), DANO_ACORDE);
+            objetivo.knockback(EMPUJE_ACORDE, jugador.getX() - objetivo.getX(), jugador.getZ() - objetivo.getZ());
+            objetivo.hurtMarked = true;   // necesario para que a los jugadores les llegue el empujón
         }
         nivel.playSound(null, jugador.getX(), jugador.getY(), jugador.getZ(),
                 ModuloRoles.SONIDO_BAJO_ACORDE.get(), SoundSource.RECORDS, 1.5f, 1.0f);
