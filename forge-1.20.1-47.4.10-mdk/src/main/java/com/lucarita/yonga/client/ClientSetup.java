@@ -6,9 +6,11 @@ import com.lucarita.yonga.client.fe.BarraMana;
 import com.lucarita.yonga.client.fe.OrbeFeRenderer;
 import com.lucarita.yonga.client.roles.CapaParapente;
 import com.lucarita.yonga.client.roles.CapaAntifaz;
+import com.lucarita.yonga.client.roles.CapaArmonica;
 import com.lucarita.yonga.client.roles.CapaMedallon;
 import com.lucarita.yonga.client.roles.MochilaScreen;
 import com.lucarita.yonga.client.fe.FeTeclas;
+import com.lucarita.yonga.client.roles.RolesTeclas;
 import com.lucarita.yonga.modulos.Modulo;
 import com.lucarita.yonga.modulos.armas.ArmaYonga;
 import com.lucarita.yonga.modulos.armas.ModuloArmas;
@@ -60,6 +62,17 @@ public final class ClientSetup {
                 ItemProperties.register(ModuloRoles.PARAPENTE.get(), PROPIEDAD_ABIERTO,
                         (stack, nivel, entidad, semilla) ->
                                 entidad != null && entidad.isUsingItem() && entidad.getUseItem() == stack ? 1.0F : 0.0F);
+                // "yonga:blocking" = 1 mientras se levanta el escudo-tambor: cambia al modelo de bloquear
+                ItemProperties.register(ModuloRoles.ESCUDO_TAMBOR.get(), PROPIEDAD_GUARDIA,
+                        (stack, nivel, entidad, semilla) ->
+                                entidad != null && entidad.isUsingItem() && entidad.getUseItem() == stack ? 1.0F : 0.0F);
+                // Arco-lira: las mismas propiedades que el arco normal para las texturas de tensar
+                ItemProperties.register(ModuloRoles.ARCO_LIRA.get(), new ResourceLocation("pull"),
+                        (stack, nivel, entidad, semilla) -> entidad == null || entidad.getUseItem() != stack ? 0.0F
+                                : (stack.getUseDuration() - entidad.getUseItemRemainingTicks()) / 20.0F);
+                ItemProperties.register(ModuloRoles.ARCO_LIRA.get(), new ResourceLocation("pulling"),
+                        (stack, nivel, entidad, semilla) ->
+                                entidad != null && entidad.isUsingItem() && entidad.getUseItem() == stack ? 1.0F : 0.0F);
                 // Pantalla de la mochila
                 MenuScreens.register(ModuloRoles.MENU_MOCHILA.get(), MochilaScreen::new);
                 // El hueco de cara se oculta en el inventario creativo (allí Minecraft lo pondría encima de la barra rápida)
@@ -105,6 +118,10 @@ public final class ClientSetup {
             event.register(FeTeclas.REZAR);
             event.register(FeTeclas.BLASFEMAR);
         }
+        if (Modulo.ROLES.activo()) {
+            event.register(RolesTeclas.SILENCIAR_NOTAS);
+            event.register(RolesTeclas.TOCAR_ARMONICA);
+        }
     }
 
     @SubscribeEvent
@@ -124,6 +141,7 @@ public final class ClientSetup {
         if (Modulo.ROLES.activo()) {
             event.registerLayerDefinition(CapaParapente.CAPA, CapaParapente::crearCapa);
             event.registerLayerDefinition(CapaAntifaz.CAPA, CapaAntifaz::crearCapa);
+            event.registerLayerDefinition(CapaArmonica.CAPA, CapaArmonica::crearCapa);
             event.registerLayerDefinition(CapaMedallon.CAPA, CapaMedallon::crearCapa);
         }
     }
@@ -139,6 +157,7 @@ public final class ClientSetup {
             if (renderJugador != null) {
                 renderJugador.addLayer(new CapaParapente(renderJugador, event.getEntityModels()));
                 renderJugador.addLayer(new CapaAntifaz(renderJugador, event.getEntityModels()));
+                renderJugador.addLayer(new CapaArmonica(renderJugador, event.getEntityModels()));
                 renderJugador.addLayer(new CapaMedallon(renderJugador, event.getEntityModels()));
             }
         }

@@ -1,0 +1,34 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:receta_oficio",
+  "oficio": "melomano",
+  "rango": "novato",
+  "category": "equipment",
+  "pattern": [
+    " L ",
+    "SNS",
+    " P "
+  ],
+  "key": {
+    "L": {
+      "item": "yonga:lucarita"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "N": {
+      "item": "minecraft:note_block"
+    },
+    "P": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "yonga:banjo_pala"
+  }
+}

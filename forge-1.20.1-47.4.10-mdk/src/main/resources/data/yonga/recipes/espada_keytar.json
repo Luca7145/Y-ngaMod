@@ -7,7 +7,7 @@
   ],
   "type": "yonga:receta_oficio",
   "oficio": "melomano",
-  "rango": "novato",
+  "rango": "maestro",
   "category": "equipment",
   "pattern": [
     " LN",

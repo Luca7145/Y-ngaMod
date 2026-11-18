@@ -1,0 +1,31 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:receta_oficio",
+  "oficio": "melomano",
+  "rango": "aprendiz",
+  "category": "equipment",
+  "pattern": [
+    "LNL",
+    " P ",
+    " P "
+  ],
+  "key": {
+    "L": {
+      "item": "yonga:lucarita"
+    },
+    "N": {
+      "item": "minecraft:note_block"
+    },
+    "P": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "yonga:pico_guitarra"
+  }
+}

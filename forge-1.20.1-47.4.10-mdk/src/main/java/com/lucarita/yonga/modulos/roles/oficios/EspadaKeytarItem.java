@@ -1,13 +1,12 @@
 package com.lucarita.yonga.modulos.roles.oficios;
 
+import com.lucarita.yonga.core.GolpeCargado;
 import com.lucarita.yonga.core.ModTiers;
 import com.lucarita.yonga.modulos.roles.ModuloRoles;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -19,48 +18,65 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * Espada-keytar del Melómano: el arma rápida y a distancia (el bajo-hacha es la pesada y de área).
+ * Espada-keytar del Melómano. Funciona como el bajo-hacha, pero su ataque especial es A DISTANCIA:
  *
- *  - Click izquierdo: golpea como una espada rápida y suena una nota.
- *  - Click derecho: toca una nota de sintetizador (abajo = grave, arriba = agudo, 2 octavas) y la nota
- *    sale disparada hacia donde miras, haciendo daño a lo primero que toque.
+ *  - Click izquierdo: golpea como una espada y suena una nota.
+ *  - Click derecho: toca una nota de sintetizador (abajo = grave, arriba = agudo, 2 octavas).
+ *  - Ritmo (ver Musica): cada nota y cada golpe cargado llenan la barra. Con la barra llena, la siguiente
+ *    nota lanza una ONDA SONORA hacia donde miras, que atraviesa y daña a todos los mobs y jugadores
+ *    que pille por el camino (el bajo-hacha, en cambio, hace su onda alrededor).
  *  - Durabilidad: la misma que el bajo-hacha (2200) y se gasta igual: 1 por golpe y 1 por bloque roto.
- *    Tocar y disparar no la gastan.
+ *    Tocar no la gasta.
  */
 public class EspadaKeytarItem extends SwordItem {
 
     // ---- Ajustes ----
-    private static final int DANO_EXTRA = 3;                // daño en el juego: 1 + 4 (lucarita) + 3 = 8
+    private static final int DANO_EXTRA = 4;                // daño en el juego: 1 + 4 (lucarita) + 4 = 9
     private static final float VELOCIDAD = -2.2f;           // velocidad en el juego: 4 - 2,2 = 1,8
     public static final int DURABILIDAD = 2200;             // como el bajo-hacha, un poco más que la netherita
 
-    private static final int SEMITONOS = 24;                // 2 octavas
-    private static final float VELOCIDAD_NOTA = 1.6f;       // bloques por tick del proyectil
-    private static final int ENFRIAMIENTO_DISPARO = 8;      // ticks entre disparos (2,5 por segundo)
+    private static final float VELOCIDAD_ONDA = 1.8f;       // bloques por tick
 
     public EspadaKeytarItem(Properties propiedades) {
         super(ModTiers.LUCARITA, DANO_EXTRA, VELOCIDAD, propiedades.durability(DURABILIDAD));
     }
 
-    // Click derecho: tocar y disparar la nota
+    // Click derecho: tocar (o lanzar la onda si la barra de ritmo está llena)
     @Override
     public InteractionResultHolder<ItemStack> use(Level nivel, Player jugador, InteractionHand mano) {
         ItemStack keytar = jugador.getItemInHand(mano);
         if (!nivel.isClientSide() && jugador instanceof ServerPlayer servidor) {
-            float color = sonarNota(servidor);
-            NotaProyectil nota = new NotaProyectil(nivel, servidor, color);
-            nota.shootFromRotation(servidor, servidor.getXRot(), servidor.getYRot(), 0.0f, VELOCIDAD_NOTA, 0.0f);
-            nivel.addFreshEntity(nota);
-            servidor.getCooldowns().addCooldown(this, ENFRIAMIENTO_DISPARO);
+            if (Musica.ritmoLleno(servidor)) {
+                lanzarOnda(servidor);
+                Musica.vaciarRitmo(servidor);
+            } else {
+                Musica.tocarNota(servidor, ModuloRoles.SONIDO_KEYTAR_NOTA.get());
+                Musica.sumarRitmo(servidor, Musica.RITMO_POR_NOTA);
+            }
         }
+        // "consume" = no hace el gesto de golpear al tocar
         return InteractionResultHolder.consume(keytar);
     }
 
-    // Golpe con la espada: suena una nota (la durabilidad la gasta la espada normal, 1 por golpe)
+    private static void lanzarOnda(ServerPlayer jugador) {
+        Level nivel = jugador.level();
+        NotaProyectil onda = new NotaProyectil(nivel, jugador);
+        onda.shootFromRotation(jugador, jugador.getXRot(), jugador.getYRot(), 0.0f, VELOCIDAD_ONDA, 0.0f);
+        nivel.addFreshEntity(onda);
+        nivel.playSound(null, jugador.getX(), jugador.getY(), jugador.getZ(),
+                ModuloRoles.SONIDO_KEYTAR_NOTA.get(), SoundSource.RECORDS, 1.5f, 0.5f);
+        nivel.playSound(null, jugador.getX(), jugador.getY(), jugador.getZ(),
+                SoundEvents.WARDEN_SONIC_BOOM, SoundSource.PLAYERS, 0.8f, 1.4f);
+    }
+
+    // Golpe con la espada: suena una nota y, si es un golpe cargado, suma ritmo (la durabilidad la gasta la espada: 1)
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity objetivo, LivingEntity atacante) {
         if (atacante instanceof ServerPlayer jugador) {
-            sonarNota(jugador);
+            Musica.tocarNota(jugador, ModuloRoles.SONIDO_KEYTAR_NOTA.get());
+            if (GolpeCargado.fue(jugador)) {
+                Musica.sumarRitmo(jugador, Musica.RITMO_POR_GOLPE);
+            }
         }
         return super.hurtEnemy(stack, objetivo, atacante);
     }
@@ -72,18 +88,5 @@ public class EspadaKeytarItem extends SwordItem {
             stack.hurtAndBreak(1, quien, e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
         }
         return true;
-    }
-
-    /** Suena una nota de sintetizador según hacia dónde mira el jugador. Devuelve el color de la nota (0 a 1). */
-    private static float sonarNota(ServerPlayer jugador) {
-        ServerLevel nivel = jugador.serverLevel();
-        // getXRot() va de -90 (arriba) a 90 (abajo)
-        int semitono = Mth.clamp(Math.round((90.0f - jugador.getXRot()) / 180.0f * SEMITONOS), 0, SEMITONOS);
-        float tono = (float) Math.pow(2.0, (semitono - SEMITONOS / 2) / 12.0);   // 0,5 (grave) a 2,0 (agudo)
-        nivel.playSound(null, jugador.getX(), jugador.getY(), jugador.getZ(),
-                ModuloRoles.SONIDO_KEYTAR_NOTA.get(), SoundSource.RECORDS, 1.0f, tono);
-        float color = semitono / (float) SEMITONOS;
-        nivel.sendParticles(ParticleTypes.NOTE, jugador.getX(), jugador.getEyeY() + 0.6, jugador.getZ(), 0, color, 0.0, 0.0, 1.0);
-        return color;
     }
 }

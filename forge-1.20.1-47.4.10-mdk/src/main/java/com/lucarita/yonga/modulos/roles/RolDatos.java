@@ -2,6 +2,7 @@ package com.lucarita.yonga.modulos.roles;
 
 import com.lucarita.yonga.modulos.Modulo;
 import com.lucarita.yonga.modulos.fe.FeDatos;
+import com.lucarita.yonga.modulos.roles.oficios.Fantasma;
 import com.lucarita.yonga.modulos.roles.red.RolesRed;
 import com.lucarita.yonga.modulos.roles.red.SincronizarRolPacket;
 import net.minecraft.nbt.CompoundTag;
@@ -106,6 +107,9 @@ public final class RolDatos {
     private static void alCambiarOficioORango(ServerPlayer jugador) {
         if (Modulo.FE.activo()) {
             FeDatos.ajustarAlLimite(jugador);
+        }
+        if (obtenerRol(jugador) != Rol.FANTASMA) {
+            Fantasma.quitarEfectos(jugador);
         }
     }
 

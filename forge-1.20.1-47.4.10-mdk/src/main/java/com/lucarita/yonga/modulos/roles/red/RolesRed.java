@@ -9,7 +9,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 /** Canal de red del módulo de roles. Si cambias el formato de un paquete, sube VERSION. */
 public final class RolesRed {
 
-    private static final String VERSION = "3";
+    private static final String VERSION = "5";
 
     public static final SimpleChannel CANAL = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(YongaMain.MOD_ID, "roles"),
@@ -40,6 +40,16 @@ public final class RolesRed {
                 .encoder(CaraPacket::codificar)
                 .decoder(CaraPacket::decodificar)
                 .consumerMainThread(CaraPacket::manejar)
+                .add();
+        CANAL.messageBuilder(SilenciarNotasPacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SilenciarNotasPacket::codificar)
+                .decoder(SilenciarNotasPacket::decodificar)
+                .consumerMainThread(SilenciarNotasPacket::manejar)
+                .add();
+        CANAL.messageBuilder(TocarArmonicaPacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(TocarArmonicaPacket::codificar)
+                .decoder(TocarArmonicaPacket::decodificar)
+                .consumerMainThread(TocarArmonicaPacket::manejar)
                 .add();
     }
 }

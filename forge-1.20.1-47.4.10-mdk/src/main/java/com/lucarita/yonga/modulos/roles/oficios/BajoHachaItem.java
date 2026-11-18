@@ -3,32 +3,24 @@ package com.lucarita.yonga.modulos.roles.oficios;
 import com.lucarita.yonga.core.GolpeCargado;
 import com.lucarita.yonga.core.ModTiers;
 import com.lucarita.yonga.modulos.roles.ModuloRoles;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * Bajo-hacha del Melómano: un hacha de lucarita que además es un bajo.
@@ -37,10 +29,10 @@ import java.util.UUID;
  *  - Durabilidad: solo se gasta al golpear (1 por golpe, como una espada) y al romper bloques. Tocar no la gasta.
  *  - Click derecho: toca una nota. El tono depende de hacia dónde miras: abajo = grave, arriba = agudo
  *    (2 octavas). Manteniendo pulsado se repite la nota.
- *  - Ritmo: cada nota (y cada golpe cargado con el hacha) llena la barra de ritmo, si no paras más de
- *    1,5 segundos. Con la barra llena, la siguiente nota es un ACORDE DE POTENCIA: una onda que empuja
- *    y daña a los monstruos y a los jugadores de alrededor (no a animales ni aldeanos). A los jugadores
- *    solo les afecta si se les puede hacer daño (respeta el PvP del servidor y los equipos).
+ *  - Ritmo (ver Musica): cada nota y cada golpe cargado llenan la barra. Con la barra llena,
+ *    la siguiente nota es un ACORDE DE POTENCIA: una onda alrededor que empuja y daña a TODOS los mobs
+ *    (monstruos, animales, aldeanos...) y jugadores cercanos. A los jugadores solo les afecta si se les
+ *    puede hacer daño (respeta el PvP del servidor y los equipos). Los soportes de armadura no cuentan.
  */
 public class BajoHachaItem extends AxeItem {
 
@@ -49,18 +41,9 @@ public class BajoHachaItem extends AxeItem {
     private static final float VELOCIDAD = -3.0f;          // velocidad en el juego: 4 - 3 = 1.0
     public static final int DURABILIDAD = 2200;            // un poco más que la netherita (2031)
 
-    private static final int SEMITONOS = 24;               // 2 octavas
-    private static final int RITMO_MAXIMO = 100;
-    private static final int RITMO_POR_NOTA = 10;
-    private static final int RITMO_POR_GOLPE = 15;
-    private static final long PAUSA_MAXIMA = 30;           // ticks (1,5 s) sin tocar ni golpear y el ritmo se pierde
-
     private static final double RADIO_ACORDE = 4.0;
     private static final double EMPUJE_ACORDE = 1.5;
     private static final float DANO_ACORDE = 6.0f;          // 3 corazones
-
-    private record Ritmo(int valor, long ultimo) {}
-    private static final Map<UUID, Ritmo> RITMOS = new HashMap<>();
 
     public BajoHachaItem(Properties propiedades) {
         super(ModTiers.LUCARITA, DANO_EXTRA, VELOCIDAD, propiedades.durability(DURABILIDAD));
@@ -87,10 +70,9 @@ public class BajoHachaItem extends AxeItem {
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity objetivo, LivingEntity atacante) {
         if (atacante instanceof ServerPlayer jugador) {
-            sonarNota(jugador);
+            Musica.tocarNota(jugador, ModuloRoles.SONIDO_BAJO_NOTA.get());
             if (GolpeCargado.fue(jugador)) {
-                int ritmo = sumarRitmo(jugador, RITMO_POR_GOLPE);
-                mostrarRitmo(jugador, ritmo);
+                Musica.sumarRitmo(jugador, Musica.RITMO_POR_GOLPE);
             }
         }
         // Gasta 1 de durabilidad por golpe, como una espada (las hachas de Minecraft gastan 2)
@@ -102,38 +84,23 @@ public class BajoHachaItem extends AxeItem {
 
     private static void tocar(ServerPlayer jugador) {
         // ¿Barra llena? Entonces esta nota es el acorde de potencia
-        if (ritmoActual(jugador) >= RITMO_MAXIMO) {
+        if (Musica.ritmoLleno(jugador)) {
             acordeDePotencia(jugador);
-            RITMOS.remove(jugador.getUUID());
-            mostrarRitmo(jugador, 0);
+            Musica.vaciarRitmo(jugador);
             return;
         }
-
-        sonarNota(jugador);
-        int ritmo = sumarRitmo(jugador, RITMO_POR_NOTA);
-        mostrarRitmo(jugador, ritmo);
+        Musica.tocarNota(jugador, ModuloRoles.SONIDO_BAJO_NOTA.get());
+        Musica.sumarRitmo(jugador, Musica.RITMO_POR_NOTA);
     }
 
-    /** Suena una nota de bajo según hacia dónde mira el jugador, con su notita de color. */
-    private static void sonarNota(ServerPlayer jugador) {
-        ServerLevel nivel = jugador.serverLevel();
-        // Nota según la mirada: getXRot() va de -90 (arriba) a 90 (abajo)
-        int semitono = Mth.clamp(Math.round((90.0f - jugador.getXRot()) / 180.0f * SEMITONOS), 0, SEMITONOS);
-        float tono = (float) Math.pow(2.0, (semitono - SEMITONOS / 2) / 12.0);   // 0,5 (grave) a 2,0 (agudo)
-        nivel.playSound(null, jugador.getX(), jugador.getY(), jugador.getZ(),
-                ModuloRoles.SONIDO_BAJO_NOTA.get(), SoundSource.RECORDS, 1.0f, tono);
-        // Notita musical encima de la cabeza, del color de la nota (como en los bloques musicales)
-        nivel.sendParticles(ParticleTypes.NOTE, jugador.getX(), jugador.getEyeY() + 0.6, jugador.getZ(),
-                0, semitono / (double) SEMITONOS, 0.0, 0.0, 1.0);
-    }
-
-    // Onda sonora: empuja y daña a los monstruos y jugadores cercanos
+    // Onda sonora: empuja y daña a todos los mobs y jugadores cercanos
     private static void acordeDePotencia(ServerPlayer jugador) {
         ServerLevel nivel = jugador.serverLevel();
         List<LivingEntity> objetivos = nivel.getEntitiesOfClass(LivingEntity.class,
                 new AABB(jugador.blockPosition()).inflate(RADIO_ACORDE + 1),
-                e -> e != jugador && e.isAlive() && !e.isSpectator() && e.distanceTo(jugador) <= RADIO_ACORDE
-                        && (e instanceof Enemy || (e instanceof Player otro && jugador.canHarmPlayer(otro))));
+                e -> e != jugador && e.isAlive() && !e.isSpectator() && !(e instanceof ArmorStand)
+                        && e.distanceTo(jugador) <= RADIO_ACORDE
+                        && (!(e instanceof Player otro) || jugador.canHarmPlayer(otro)));
         for (LivingEntity objetivo : objetivos) {
             objetivo.hurt(jugador.damageSources().playerAttack(jugador), DANO_ACORDE);
             objetivo.knockback(EMPUJE_ACORDE, jugador.getX() - objetivo.getX(), jugador.getZ() - objetivo.getZ());
@@ -152,32 +119,4 @@ public class BajoHachaItem extends AxeItem {
         }
     }
 
-    // ---------- RITMO ----------
-
-    private static int ritmoActual(ServerPlayer jugador) {
-        Ritmo ritmo = RITMOS.get(jugador.getUUID());
-        if (ritmo == null || jugador.level().getGameTime() - ritmo.ultimo() > PAUSA_MAXIMA) {
-            return 0;
-        }
-        return ritmo.valor();
-    }
-
-    private static int sumarRitmo(ServerPlayer jugador, int cantidad) {
-        int nuevo = Math.min(RITMO_MAXIMO, ritmoActual(jugador) + cantidad);
-        RITMOS.put(jugador.getUUID(), new Ritmo(nuevo, jugador.level().getGameTime()));
-        return nuevo;
-    }
-
-    // Barra de ritmo en la barra de acción (encima del inventario rápido): ■■■■■□□□□□
-    private static void mostrarRitmo(ServerPlayer jugador, int ritmo) {
-        int llenos = ritmo / 10;
-        MutableComponent barra = Component.literal("■".repeat(llenos))
-                .withStyle(ritmo >= RITMO_MAXIMO ? ChatFormatting.GOLD : ChatFormatting.LIGHT_PURPLE);
-        barra.append(Component.literal("□".repeat(10 - llenos)).withStyle(ChatFormatting.DARK_GRAY));
-        jugador.displayClientMessage(barra, true);
-    }
-
-    public static void alSalir(PlayerEvent.PlayerLoggedOutEvent evento) {
-        RITMOS.remove(evento.getEntity().getUUID());
-    }
 }

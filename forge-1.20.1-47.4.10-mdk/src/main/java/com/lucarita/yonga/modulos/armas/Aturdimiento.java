@@ -16,7 +16,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 
 /**
- * Aturdir (lo usa la maza): el objetivo no puede moverse, saltar ni atacar durante un momento.
+ * Aturdir (lo usan la maza y el escudo-tambor): el objetivo no puede moverse, saltar ni atacar durante un momento.
  * Después queda inmune un rato para que no se pueda encadenar un aturdimiento tras otro.
  */
 public final class Aturdimiento {
@@ -36,13 +36,18 @@ public final class Aturdimiento {
     }
 
     public static void aturdir(LivingEntity objetivo) {
+        aturdir(objetivo, DURACION);
+    }
+
+    /** Aturde durante {@code duracion} ticks (el escudo-tambor aturde más que la maza). */
+    public static void aturdir(LivingEntity objetivo, int duracion) {
         long ahora = objetivo.level().getGameTime();
         if (ahora < objetivo.getPersistentData().getLong(CLAVE_INMUNE_HASTA)) {
             return;   // todavía inmune
         }
-        objetivo.getPersistentData().putLong(CLAVE_INMUNE_HASTA, ahora + DURACION + INMUNIDAD);
+        objetivo.getPersistentData().putLong(CLAVE_INMUNE_HASTA, ahora + duracion + INMUNIDAD);
 
-        objetivo.addEffect(new MobEffectInstance(ModuloArmas.ATURDIDO.get(), DURACION, 0, false, false, true));
+        objetivo.addEffect(new MobEffectInstance(ModuloArmas.ATURDIDO.get(), duracion, 0, false, false, true));
         if (objetivo instanceof Mob mob) {
             mob.getNavigation().stop();
         }

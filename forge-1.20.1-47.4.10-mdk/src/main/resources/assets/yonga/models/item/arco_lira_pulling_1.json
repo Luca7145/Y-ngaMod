@@ -1,0 +1,6 @@
+{
+  "parent": "yonga:item/arco_lira",
+  "textures": {
+    "layer0": "yonga:item/arco_lira_pulling_1"
+  }
+}

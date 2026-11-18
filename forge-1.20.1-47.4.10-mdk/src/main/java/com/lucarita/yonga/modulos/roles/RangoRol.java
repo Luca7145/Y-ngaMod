@@ -5,15 +5,15 @@ import net.minecraft.network.chat.Component;
 /**
  * Rangos dentro de un oficio, como los de los aldeanos.
  *
- * El rango sale de la experiencia de oficio que lleva el jugador. Las cifras son las mismas que usan
- * los aldeanos en Minecraft (10, 70, 150, 250); cámbialas cuando decidamos cómo se gana experiencia.
+ * El rango sale de la experiencia de oficio que lleva el jugador. Cada salto cuesta unas 2,5-3 veces el
+ * anterior (100, 300, 800, 2000): llegar a Maestro es largo. Cómo se gana la experiencia: ExperienciaOficio.
  */
 public enum RangoRol {
     NOVATO("novato", 0),
-    APRENDIZ("aprendiz", 10),
-    OFICIAL("oficial", 70),
-    EXPERTO("experto", 150),
-    MAESTRO("maestro", 250);
+    APRENDIZ("aprendiz", 100),
+    OFICIAL("oficial", 400),
+    EXPERTO("experto", 1200),
+    MAESTRO("maestro", 3200);
 
     private final String id;
     private final int experienciaNecesaria;

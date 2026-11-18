@@ -17,7 +17,8 @@ public enum Rol {
     EXPLORADOR("explorador", Items.COMPASS),
     SACERDOTE("sacerdote", Items.CANDLE),
     INGENIERO("ingeniero", Items.PISTON),
-    MELOMANO("melomano", Items.JUKEBOX);
+    MELOMANO("melomano", Items.JUKEBOX),
+    FANTASMA("fantasma", Items.PHANTOM_MEMBRANE);
 
     private final String id;
     private final ItemLike icono;

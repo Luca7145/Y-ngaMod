@@ -25,5 +25,104 @@
         "stream": false
       }
     ]
+  },
+  "guitarra_nota": {
+    "subtitle": "subtitles.yonga.guitarra_nota",
+    "sounds": [
+      {
+        "name": "yonga:guitarra_nota",
+        "stream": false
+      }
+    ]
+  },
+  "guitarra_acorde": {
+    "subtitle": "subtitles.yonga.guitarra_acorde",
+    "sounds": [
+      {
+        "name": "yonga:guitarra_acorde",
+        "stream": false
+      }
+    ]
+  },
+  "banjo_nota": {
+    "subtitle": "subtitles.yonga.banjo_nota",
+    "sounds": [
+      {
+        "name": "yonga:banjo_nota",
+        "stream": false
+      }
+    ]
+  },
+  "banjo_punteo": {
+    "subtitle": "subtitles.yonga.banjo_punteo",
+    "sounds": [
+      {
+        "name": "yonga:banjo_punteo",
+        "stream": false
+      }
+    ]
+  },
+  "tambor_golpe": {
+    "subtitle": "subtitles.yonga.tambor_golpe",
+    "sounds": [
+      {
+        "name": "yonga:tambor_golpe",
+        "stream": false
+      }
+    ]
+  },
+  "tambor_redoble": {
+    "subtitle": "subtitles.yonga.tambor_redoble",
+    "sounds": [
+      {
+        "name": "yonga:tambor_redoble",
+        "stream": false
+      }
+    ]
+  },
+  "lira_nota": {
+    "subtitle": "subtitles.yonga.lira_nota",
+    "sounds": [
+      {
+        "name": "yonga:lira_nota",
+        "stream": false
+      }
+    ]
+  },
+  "lira_sonica": {
+    "subtitle": "subtitles.yonga.lira_sonica",
+    "sounds": [
+      {
+        "name": "yonga:lira_sonica",
+        "stream": false
+      }
+    ]
+  },
+  "armonica_nota": {
+    "subtitle": "subtitles.yonga.armonica_nota",
+    "sounds": [
+      {
+        "name": "yonga:armonica_nota",
+        "stream": false
+      }
+    ]
+  },
+  "armonica_quejido": {
+    "subtitle": "subtitles.yonga.armonica_quejido",
+    "sounds": [
+      {
+        "name": "yonga:armonica_quejido",
+        "stream": false
+      }
+    ]
+  },
+  "armonica_lamento": {
+    "subtitle": "subtitles.yonga.armonica_lamento",
+    "sounds": [
+      {
+        "name": "yonga:armonica_lamento",
+        "stream": false
+      }
+    ]
   }
 }

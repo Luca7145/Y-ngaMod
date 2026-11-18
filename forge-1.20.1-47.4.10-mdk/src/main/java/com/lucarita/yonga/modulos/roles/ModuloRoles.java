@@ -6,6 +6,16 @@ import com.lucarita.yonga.modulos.roles.cara.Medallon;
 import com.lucarita.yonga.modulos.roles.cara.MedallonItem;
 import com.lucarita.yonga.modulos.roles.oficios.BajoHachaItem;
 import com.lucarita.yonga.modulos.roles.oficios.EspadaKeytarItem;
+import com.lucarita.yonga.modulos.roles.oficios.PicoGuitarraItem;
+import com.lucarita.yonga.modulos.roles.oficios.BanjoPalaItem;
+import com.lucarita.yonga.modulos.roles.oficios.EscudoTamborItem;
+import com.lucarita.yonga.modulos.roles.oficios.ArcoLiraItem;
+import com.lucarita.yonga.modulos.roles.oficios.Armonica;
+import com.lucarita.yonga.modulos.roles.oficios.ArmonicaItem;
+import com.lucarita.yonga.modulos.roles.oficios.Fantasma;
+import com.lucarita.yonga.modulos.roles.oficios.ArmonicaItem;
+import com.lucarita.yonga.modulos.roles.oficios.Fantasma;
+import com.lucarita.yonga.modulos.roles.oficios.Musica;
 import com.lucarita.yonga.modulos.roles.oficios.NotaProyectil;
 import com.lucarita.yonga.modulos.roles.oficios.Explorador;
 import com.lucarita.yonga.modulos.roles.oficios.ParapenteItem;
@@ -82,6 +92,26 @@ public final class ModuloRoles {
     public static final RegistryObject<Item> ESPADA_KEYTAR = ITEMS.register("espada_keytar",
             () -> new EspadaKeytarItem(new Item.Properties()));
 
+    // Melómano: pico-guitarra (picar recarga el ritmo; con la barra llena pica todo alrededor)
+    public static final RegistryObject<Item> PICO_GUITARRA = ITEMS.register("pico_guitarra",
+            () -> new PicoGuitarraItem(new Item.Properties()));
+
+    // Melómano: banjo-pala (cavar recarga el ritmo; con la barra llena cava lo blando a 2 bloques)
+    public static final RegistryObject<Item> BANJO_PALA = ITEMS.register("banjo_pala",
+            () -> new BanjoPalaItem(new Item.Properties()));
+
+    // Melómano: escudo-tambor (para golpes; al parar 3, redoble que aturde)
+    public static final RegistryObject<Item> ESCUDO_TAMBOR = ITEMS.register("escudo_tambor",
+            () -> new EscudoTamborItem(new Item.Properties()));
+
+    // Melómano: arco-lira (cada flecha es una nota; la que llena el ritmo es una flecha sónica)
+    public static final RegistryObject<Item> ARCO_LIRA = ITEMS.register("arco_lira",
+            () -> new ArcoLiraItem(new Item.Properties()));
+
+    // Melómano: armónica. Va en el hueco de cara y se ve en la boca (ver Armonica: tecla H, blues y lamento)
+    public static final RegistryObject<Item> ARMONICA = ITEMS.register("armonica",
+            () -> new ArmonicaItem(new Item.Properties()));
+
     // ---------- ENTIDADES ----------
 
     // La nota que dispara la espada-keytar
@@ -97,6 +127,17 @@ public final class ModuloRoles {
     public static final RegistryObject<SoundEvent> SONIDO_BAJO_NOTA = sonido("bajo_nota");
     public static final RegistryObject<SoundEvent> SONIDO_BAJO_ACORDE = sonido("bajo_acorde");
     public static final RegistryObject<SoundEvent> SONIDO_KEYTAR_NOTA = sonido("keytar_nota");
+    public static final RegistryObject<SoundEvent> SONIDO_GUITARRA_NOTA = sonido("guitarra_nota");
+    public static final RegistryObject<SoundEvent> SONIDO_GUITARRA_ACORDE = sonido("guitarra_acorde");
+    public static final RegistryObject<SoundEvent> SONIDO_BANJO_NOTA = sonido("banjo_nota");
+    public static final RegistryObject<SoundEvent> SONIDO_BANJO_PUNTEO = sonido("banjo_punteo");
+    public static final RegistryObject<SoundEvent> SONIDO_TAMBOR_GOLPE = sonido("tambor_golpe");
+    public static final RegistryObject<SoundEvent> SONIDO_TAMBOR_REDOBLE = sonido("tambor_redoble");
+    public static final RegistryObject<SoundEvent> SONIDO_LIRA_NOTA = sonido("lira_nota");
+    public static final RegistryObject<SoundEvent> SONIDO_LIRA_SONICA = sonido("lira_sonica");
+    public static final RegistryObject<SoundEvent> SONIDO_ARMONICA_NOTA = sonido("armonica_nota");
+    public static final RegistryObject<SoundEvent> SONIDO_ARMONICA_QUEJIDO = sonido("armonica_quejido");
+    public static final RegistryObject<SoundEvent> SONIDO_ARMONICA_LAMENTO = sonido("armonica_lamento");
 
     private static RegistryObject<SoundEvent> sonido(String nombre) {
         return SONIDOS.register(nombre, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(YongaMain.MOD_ID, nombre)));
@@ -134,7 +175,32 @@ public final class ModuloRoles {
 
         // Habilidades de oficio
         MinecraftForge.EVENT_BUS.addListener(Explorador::alRecibirDano);
-        MinecraftForge.EVENT_BUS.addListener(BajoHachaItem::alSalir);
+        MinecraftForge.EVENT_BUS.addListener(Musica::alSalir);
+        MinecraftForge.EVENT_BUS.addListener(EscudoTamborItem::alBloquear);
+        MinecraftForge.EVENT_BUS.addListener(EscudoTamborItem::alSalir);
+        MinecraftForge.EVENT_BUS.addListener(ArcoLiraItem::alImpactar);
+        MinecraftForge.EVENT_BUS.addListener(Armonica::alRecibirDano);
+        MinecraftForge.EVENT_BUS.addListener(Armonica::alTickMob);
+        MinecraftForge.EVENT_BUS.addListener(Armonica::alCambiarObjetivo);
+        MinecraftForge.EVENT_BUS.addListener(Armonica::alSalir);
+        // Experiencia de oficio (ver ExperienciaOficio)
+        MinecraftForge.EVENT_BUS.addListener(ExperienciaOficio::alTick);
+        MinecraftForge.EVENT_BUS.addListener(ExperienciaOficio::alSalir);
+        MinecraftForge.EVENT_BUS.addListener(ExperienciaOficio::alHacerDano);
+        // Fantasma
+        MinecraftForge.EVENT_BUS.addListener(Fantasma::alCalcularVisibilidad);
+        MinecraftForge.EVENT_BUS.addListener(Fantasma::alCambiarObjetivo);
+        MinecraftForge.EVENT_BUS.addListener(Fantasma::alAtacar);
+        MinecraftForge.EVENT_BUS.addListener(Fantasma::alGolpear);
+        MinecraftForge.EVENT_BUS.addListener(Fantasma::alRomper);
+        MinecraftForge.EVENT_BUS.addListener(Fantasma::alCalcularVelocidadRomper);
+        MinecraftForge.EVENT_BUS.addListener(Fantasma::alPisotear);
+        MinecraftForge.EVENT_BUS.addListener(Fantasma::alUsarCubo);
+        MinecraftForge.EVENT_BUS.addListener(Fantasma::alClickDerechoBloque);
+        MinecraftForge.EVENT_BUS.addListener(Fantasma::alClickDerechoObjeto);
+        MinecraftForge.EVENT_BUS.addListener(Fantasma::alUsarEntidad);
+        MinecraftForge.EVENT_BUS.addListener(Fantasma::alUsarEntidadExacto);
+        MinecraftForge.EVENT_BUS.addListener(Fantasma::alTick);
         MinecraftForge.EVENT_BUS.addListener(ModuloRoles::alEntrar);
         MinecraftForge.EVENT_BUS.addListener(ModuloRoles::alReaparecer);
         MinecraftForge.EVENT_BUS.addListener(ModuloRoles::alCambiarDimension);

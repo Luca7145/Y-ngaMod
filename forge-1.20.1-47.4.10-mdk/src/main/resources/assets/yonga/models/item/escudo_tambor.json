@@ -1,0 +1,359 @@
+{
+  "textures": {
+    "parche": "yonga:item/tambor_parche",
+    "lateral": "yonga:item/tambor_lateral",
+    "particle": "yonga:item/tambor_lateral"
+  },
+  "elements": [
+    {
+      "from": [
+        2,
+        4,
+        5
+      ],
+      "to": [
+        14,
+        12,
+        11
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2,
+            4,
+            14,
+            12
+          ],
+          "texture": "#parche"
+        },
+        "south": {
+          "uv": [
+            2,
+            4,
+            14,
+            12
+          ],
+          "texture": "#parche"
+        },
+        "east": {
+          "uv": [
+            5,
+            4,
+            11,
+            12
+          ],
+          "texture": "#lateral"
+        },
+        "west": {
+          "uv": [
+            5,
+            4,
+            11,
+            12
+          ],
+          "texture": "#lateral"
+        },
+        "up": {
+          "uv": [
+            2,
+            5,
+            14,
+            11
+          ],
+          "texture": "#lateral"
+        },
+        "down": {
+          "uv": [
+            2,
+            5,
+            14,
+            11
+          ],
+          "texture": "#lateral"
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        2,
+        5
+      ],
+      "to": [
+        12,
+        14,
+        11
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            4,
+            2,
+            12,
+            14
+          ],
+          "texture": "#parche"
+        },
+        "south": {
+          "uv": [
+            4,
+            2,
+            12,
+            14
+          ],
+          "texture": "#parche"
+        },
+        "east": {
+          "uv": [
+            5,
+            2,
+            11,
+            14
+          ],
+          "texture": "#lateral"
+        },
+        "west": {
+          "uv": [
+            5,
+            2,
+            11,
+            14
+          ],
+          "texture": "#lateral"
+        },
+        "up": {
+          "uv": [
+            4,
+            5,
+            12,
+            11
+          ],
+          "texture": "#lateral"
+        },
+        "down": {
+          "uv": [
+            4,
+            5,
+            12,
+            11
+          ],
+          "texture": "#lateral"
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        3,
+        5
+      ],
+      "to": [
+        13,
+        13,
+        11
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ],
+          "texture": "#parche"
+        },
+        "south": {
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ],
+          "texture": "#parche"
+        },
+        "east": {
+          "uv": [
+            5,
+            3,
+            11,
+            13
+          ],
+          "texture": "#lateral"
+        },
+        "west": {
+          "uv": [
+            5,
+            3,
+            11,
+            13
+          ],
+          "texture": "#lateral"
+        },
+        "up": {
+          "uv": [
+            3,
+            5,
+            13,
+            11
+          ],
+          "texture": "#lateral"
+        },
+        "down": {
+          "uv": [
+            3,
+            5,
+            13,
+            11
+          ],
+          "texture": "#lateral"
+        }
+      }
+    }
+  ],
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        -1
+      ],
+      "scale": [
+        0.75,
+        0.75,
+        0.75
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        -1
+      ],
+      "scale": [
+        0.75,
+        0.75,
+        0.75
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        15,
+        0
+      ],
+      "translation": [
+        1,
+        1,
+        0
+      ],
+      "scale": [
+        0.6,
+        0.6,
+        0.6
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        -15,
+        0
+      ],
+      "translation": [
+        1,
+        1,
+        0
+      ],
+      "scale": [
+        0.6,
+        0.6,
+        0.6
+      ]
+    },
+    "gui": {
+      "rotation": [
+        20,
+        30,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    },
+    "ground": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    },
+    "head": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        10,
+        -6
+      ],
+      "scale": [
+        0.9,
+        0.9,
+        0.9
+      ]
+    }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "yonga:blocking": 1
+      },
+      "model": "yonga:item/escudo_tambor_bloqueando"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:receta_oficio",
+  "oficio": "melomano",
+  "rango": "oficial",
+  "category": "equipment",
+  "pattern": [
+    " LS",
+    "N S",
+    " LS"
+  ],
+  "key": {
+    "L": {
+      "item": "yonga:lucarita"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "N": {
+      "item": "minecraft:note_block"
+    }
+  },
+  "result": {
+    "item": "yonga:arco_lira"
+  }
+}

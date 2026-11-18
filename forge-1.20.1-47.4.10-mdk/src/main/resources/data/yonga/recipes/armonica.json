@@ -1,0 +1,33 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:receta_oficio",
+  "oficio": "melomano",
+  "rango": "aprendiz",
+  "category": "equipment",
+  "pattern": [
+    "ILI",
+    "QNQ"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "L": {
+      "item": "yonga:lucarita"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "N": {
+      "item": "minecraft:note_block"
+    }
+  },
+  "result": {
+    "item": "yonga:armonica"
+  }
+}

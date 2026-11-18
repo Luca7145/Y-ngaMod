@@ -3,6 +3,9 @@ package com.lucarita.yonga.client.roles;
 import com.lucarita.yonga.YongaMain;
 import com.lucarita.yonga.modulos.Modulo;
 import com.lucarita.yonga.modulos.roles.RolCliente;
+import com.lucarita.yonga.modulos.roles.red.RolesRed;
+import com.lucarita.yonga.modulos.roles.red.SilenciarNotasPacket;
+import com.lucarita.yonga.modulos.roles.red.TocarArmonicaPacket;
 import com.lucarita.yonga.modulos.roles.cara.CaraCliente;
 import com.lucarita.yonga.modulos.roles.cara.HuecoCara;
 import net.minecraft.client.Minecraft;
@@ -94,6 +97,14 @@ public final class RolesClienteEventos {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player != null && minecraft.screen == null && RolCliente.consumirPeticionMenu()) {
             minecraft.setScreen(new RolScreen(RolCliente.rol() == null));
+        }
+        if (minecraft.player != null && minecraft.screen == null) {
+            while (RolesTeclas.SILENCIAR_NOTAS.consumeClick()) {
+                RolesRed.CANAL.sendToServer(new SilenciarNotasPacket());
+            }
+            while (RolesTeclas.TOCAR_ARMONICA.consumeClick()) {
+                RolesRed.CANAL.sendToServer(new TocarArmonicaPacket());
+            }
         }
     }
 
