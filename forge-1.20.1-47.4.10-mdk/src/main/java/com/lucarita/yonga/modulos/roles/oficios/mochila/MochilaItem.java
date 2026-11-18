@@ -20,8 +20,8 @@ import java.util.List;
 
 /**
  * Mochila del Explorador. Click derecho para abrirla.
- *  - Mochila: 16 huecos, hasta 100 de cada objeto por hueco.
- *  - Mochila mejorada: 26 huecos, hasta 200 por hueco.
+ *  - Mochila: 18 huecos (2 filas completas), hasta 100 de cada objeto por hueco.
+ *  - Mochila mejorada: 27 huecos (3 filas completas), hasta 200 por hueco.
  * Lo que lleva dentro se guarda en el propio objeto, así que puedes dejarla en un cofre y no pierdes nada.
  */
 public class MochilaItem extends Item {

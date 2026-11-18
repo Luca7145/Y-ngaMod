@@ -1,7 +1,7 @@
 """Enanos (textura de entidad 64x32 para ModeloEnano): un bloque con cara, bracitos y patitas.
 Amarillo brillante (luminoso) y rojo brillante (oscuro). Arriba más claro, abajo más oscuro, grano suave
 y bordes marcados en cada cara; la cara (dos ojos de raya y la boca) va en el frente del cuerpo.
-También guarda una vista en perspectiva aproximada (enanos_vista.png).
+También las de la enana madre (enano_madre*.png: diadema y pestañas) y una vista en perspectiva (enanos_vista.png).
 Uso: python3 dibujar_enanos.py <carpeta_salida>"""
 import sys
 from PIL import Image
@@ -63,6 +63,30 @@ def dibujar(pal):
     return im
 
 
+def madre(tex, oscura):
+    """La enana madre: la misma textura con una diadema alrededor de lo alto del cuerpo (dorada o de sangre),
+    picos por delante, pestañas y una marca en la frente."""
+    im = tex.copy()
+    p = im.load()
+    corona = [(255, 255, 245), (196, 132, 18), (255, 250, 210)] if not oscura else [(150, 14, 20), (110, 8, 14), (200, 40, 40)]
+    # techo del cuerpo (12..23, 0..11): borde de la diadema
+    for k in range(12):
+        for (x, y) in ((12 + k, 0), (12 + k, 11), (12, k), (23, k)):
+            p[x, y] = corona[k % 2] + (255,)
+    # fila de arriba de las cuatro caras laterales (v = 12) con picos en el frente
+    for x in range(0, 48):
+        p[x, 12] = corona[x % 2] + (255,)
+    for x in (13, 16, 19, 22):
+        p[x, 13] = corona[2] + (255,)
+    # pestañas sobre los ojos y marca en la frente
+    rasgo = (40, 20, 10, 255) if not oscura else (20, 0, 4, 255)
+    for x in (14, 16, 19, 21):
+        p[x, 13] = rasgo
+    p[17, 13] = corona[2] + (255,)
+    p[18, 13] = corona[2] + (255,)
+    return im
+
+
 def vista(tex, e=9):
     """Perspectiva (caballera) del modelo: cada píxel de cada cara visible se dibuja como un polígono."""
     from PIL import ImageDraw
@@ -105,7 +129,10 @@ for nombre, pal in PALETAS.items():
     t = dibujar(pal)
     t.save(f"{salida}/{nombre}.png")
     vistas.append(vista(t))
-fondo = Image.new("RGBA", (vistas[0].width * 2 + 10, vistas[0].height), (60, 60, 60, 255))
+    m = madre(t, nombre == "enano_oscuro")
+    m.save(f"{salida}/{nombre.replace('enano', 'enano_madre')}.png")
+    vistas.append(vista(m))
+fondo = Image.new("RGBA", (vistas[0].width * 4 + 30, vistas[0].height), (60, 60, 60, 255))
 for i, v in enumerate(vistas):
     fondo.paste(v, (i * (v.width + 10), 0))
 fondo.save(f"{salida}/enanos_vista.png")

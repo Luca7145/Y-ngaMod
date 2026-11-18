@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#forge:is_desert",
+  "features": "yonga:estatua_desierto",
+  "step": "surface_structures"
+}

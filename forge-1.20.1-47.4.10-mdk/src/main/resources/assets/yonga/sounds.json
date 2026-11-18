@@ -142,5 +142,414 @@
         "stream": false
       }
     ]
+  },
+  "astado_respiracion": {
+    "subtitle": "subtitles.yonga.astado_respiracion",
+    "sounds": [
+      {
+        "name": "yonga:astado_respiracion",
+        "stream": false
+      }
+    ]
+  },
+  "astado_rama": {
+    "subtitle": "subtitles.yonga.astado_rama",
+    "sounds": [
+      {
+        "name": "yonga:astado_rama",
+        "stream": false
+      }
+    ]
+  },
+  "astado_paso": {
+    "subtitle": "subtitles.yonga.astado_paso",
+    "sounds": [
+      {
+        "name": "yonga:astado_paso",
+        "stream": false
+      }
+    ]
+  },
+  "astado_grunido": {
+    "subtitle": "subtitles.yonga.astado_grunido",
+    "sounds": [
+      {
+        "name": "yonga:astado_grunido",
+        "stream": false
+      }
+    ]
+  },
+  "astado_chillido": {
+    "subtitle": "subtitles.yonga.astado_chillido",
+    "sounds": [
+      {
+        "name": "yonga:astado_chillido",
+        "stream": false
+      }
+    ]
+  },
+  "astado_caza": {
+    "subtitle": "subtitles.yonga.astado_caza",
+    "sounds": [
+      {
+        "name": "yonga:astado_caza",
+        "stream": false
+      }
+    ]
+  },
+  "astado_mordisco": {
+    "subtitle": "subtitles.yonga.astado_mordisco",
+    "sounds": [
+      {
+        "name": "yonga:astado_mordisco",
+        "stream": false
+      }
+    ]
+  },
+  "astado_golpe": {
+    "subtitle": "subtitles.yonga.astado_golpe",
+    "sounds": [
+      {
+        "name": "yonga:astado_golpe",
+        "stream": false
+      }
+    ]
+  },
+  "astado_herido": {
+    "subtitle": "subtitles.yonga.astado_herido",
+    "sounds": [
+      {
+        "name": "yonga:astado_herido",
+        "stream": false
+      }
+    ]
+  },
+  "astado_muerte": {
+    "subtitle": "subtitles.yonga.astado_muerte",
+    "sounds": [
+      {
+        "name": "yonga:astado_muerte",
+        "stream": false
+      }
+    ]
+  },
+  "astado_susto": {
+    "subtitle": "subtitles.yonga.astado_susto",
+    "sounds": [
+      {
+        "name": "yonga:astado_susto",
+        "stream": false
+      }
+    ]
+  },
+  "leon_rugido": {
+    "subtitle": "subtitles.yonga.leon_rugido",
+    "sounds": [
+      {
+        "name": "yonga:leon_rugido",
+        "stream": false
+      }
+    ]
+  },
+  "leon_grunido": {
+    "subtitle": "subtitles.yonga.leon_grunido",
+    "sounds": [
+      {
+        "name": "yonga:leon_grunido",
+        "stream": false
+      }
+    ]
+  },
+  "leon_herido": {
+    "subtitle": "subtitles.yonga.leon_herido",
+    "sounds": [
+      {
+        "name": "yonga:leon_herido",
+        "stream": false
+      }
+    ]
+  },
+  "leon_muerte": {
+    "subtitle": "subtitles.yonga.leon_muerte",
+    "sounds": [
+      {
+        "name": "yonga:leon_muerte",
+        "stream": false
+      }
+    ]
+  },
+  "leon_tajo": {
+    "subtitle": "subtitles.yonga.leon_tajo",
+    "sounds": [
+      {
+        "name": "yonga:leon_tajo",
+        "stream": false
+      }
+    ]
+  },
+  "duende_risa": {
+    "subtitle": "subtitles.yonga.duende_risa",
+    "sounds": [
+      {
+        "name": "yonga:duende_risa",
+        "stream": false
+      }
+    ]
+  },
+  "duende_soplido": {
+    "subtitle": "subtitles.yonga.duende_soplido",
+    "sounds": [
+      {
+        "name": "yonga:duende_soplido",
+        "stream": false
+      }
+    ]
+  },
+  "duende_puf": {
+    "subtitle": "subtitles.yonga.duende_puf",
+    "sounds": [
+      {
+        "name": "yonga:duende_puf",
+        "stream": false
+      }
+    ]
+  },
+  "duende_herido": {
+    "subtitle": "subtitles.yonga.duende_herido",
+    "sounds": [
+      {
+        "name": "yonga:duende_herido",
+        "stream": false
+      }
+    ]
+  },
+  "duende_muerte": {
+    "subtitle": "subtitles.yonga.duende_muerte",
+    "sounds": [
+      {
+        "name": "yonga:duende_muerte",
+        "stream": false
+      }
+    ]
+  },
+  "centinela_despertar": {
+    "subtitle": "subtitles.yonga.centinela_despertar",
+    "sounds": [
+      {
+        "name": "yonga:centinela_despertar",
+        "stream": false
+      }
+    ]
+  },
+  "centinela_carga": {
+    "subtitle": "subtitles.yonga.centinela_carga",
+    "sounds": [
+      {
+        "name": "yonga:centinela_carga",
+        "stream": false
+      }
+    ]
+  },
+  "centinela_rayo": {
+    "subtitle": "subtitles.yonga.centinela_rayo",
+    "sounds": [
+      {
+        "name": "yonga:centinela_rayo",
+        "stream": false
+      }
+    ]
+  },
+  "gnomo_grito": {
+    "subtitle": "subtitles.yonga.gnomo_grito",
+    "sounds": [
+      {
+        "name": "yonga:gnomo_grito",
+        "stream": false
+      }
+    ]
+  },
+  "gnomo_esfuerzo": {
+    "subtitle": "subtitles.yonga.gnomo_esfuerzo",
+    "sounds": [
+      {
+        "name": "yonga:gnomo_esfuerzo",
+        "stream": false
+      }
+    ]
+  },
+  "gnomo_herido": {
+    "subtitle": "subtitles.yonga.gnomo_herido",
+    "sounds": [
+      {
+        "name": "yonga:gnomo_herido",
+        "stream": false
+      }
+    ]
+  },
+  "gnomo_muerte": {
+    "subtitle": "subtitles.yonga.gnomo_muerte",
+    "sounds": [
+      {
+        "name": "yonga:gnomo_muerte",
+        "stream": false
+      }
+    ]
+  },
+  "gargola_chillido": {
+    "subtitle": "subtitles.yonga.gargola_chillido",
+    "sounds": [
+      {
+        "name": "yonga:gargola_chillido",
+        "stream": false
+      }
+    ]
+  },
+  "gargola_grunido": {
+    "subtitle": "subtitles.yonga.gargola_grunido",
+    "sounds": [
+      {
+        "name": "yonga:gargola_grunido",
+        "stream": false
+      }
+    ]
+  },
+  "gargola_muerte": {
+    "subtitle": "subtitles.yonga.gargola_muerte",
+    "sounds": [
+      {
+        "name": "yonga:gargola_muerte",
+        "stream": false
+      }
+    ]
+  },
+  "pez_canto": {
+    "subtitle": "subtitles.yonga.pez_canto",
+    "sounds": [
+      {
+        "name": "yonga:pez_canto",
+        "stream": false,
+        "attenuation_distance": 96
+      }
+    ]
+  },
+  "pez_bramido": {
+    "subtitle": "subtitles.yonga.pez_bramido",
+    "sounds": [
+      {
+        "name": "yonga:pez_bramido",
+        "stream": false,
+        "attenuation_distance": 96
+      }
+    ]
+  },
+  "pez_rayo": {
+    "subtitle": "subtitles.yonga.pez_rayo",
+    "sounds": [
+      {
+        "name": "yonga:pez_rayo",
+        "stream": false,
+        "attenuation_distance": 96
+      }
+    ]
+  },
+  "pez_golpe": {
+    "subtitle": "subtitles.yonga.pez_golpe",
+    "sounds": [
+      {
+        "name": "yonga:pez_golpe",
+        "stream": false,
+        "attenuation_distance": 96
+      }
+    ]
+  },
+  "pez_ilusion": {
+    "subtitle": "subtitles.yonga.pez_ilusion",
+    "sounds": [
+      {
+        "name": "yonga:pez_ilusion",
+        "stream": false,
+        "attenuation_distance": 96
+      }
+    ]
+  },
+  "pez_herido": {
+    "subtitle": "subtitles.yonga.pez_herido",
+    "sounds": [
+      {
+        "name": "yonga:pez_herido",
+        "stream": false,
+        "attenuation_distance": 96
+      }
+    ]
+  },
+  "pez_muerte": {
+    "subtitle": "subtitles.yonga.pez_muerte",
+    "sounds": [
+      {
+        "name": "yonga:pez_muerte",
+        "stream": false,
+        "attenuation_distance": 96
+      }
+    ]
+  },
+  "zor_rugido": {
+    "subtitle": "subtitles.yonga.zor_rugido",
+    "sounds": [
+      {
+        "name": "yonga:zor_rugido",
+        "stream": false,
+        "attenuation_distance": 96
+      }
+    ]
+  },
+  "zor_fuego": {
+    "subtitle": "subtitles.yonga.zor_fuego",
+    "sounds": [
+      {
+        "name": "yonga:zor_fuego",
+        "stream": false,
+        "attenuation_distance": 96
+      }
+    ]
+  },
+  "zor_excavar": {
+    "subtitle": "subtitles.yonga.zor_excavar",
+    "sounds": [
+      {
+        "name": "yonga:zor_excavar",
+        "stream": false,
+        "attenuation_distance": 96
+      }
+    ]
+  },
+  "zor_emerger": {
+    "subtitle": "subtitles.yonga.zor_emerger",
+    "sounds": [
+      {
+        "name": "yonga:zor_emerger",
+        "stream": false,
+        "attenuation_distance": 96
+      }
+    ]
+  },
+  "zor_herido": {
+    "subtitle": "subtitles.yonga.zor_herido",
+    "sounds": [
+      {
+        "name": "yonga:zor_herido",
+        "stream": false,
+        "attenuation_distance": 96
+      }
+    ]
+  },
+  "zor_muerte": {
+    "subtitle": "subtitles.yonga.zor_muerte",
+    "sounds": [
+      {
+        "name": "yonga:zor_muerte",
+        "stream": false,
+        "attenuation_distance": 96
+      }
+    ]
   }
 }

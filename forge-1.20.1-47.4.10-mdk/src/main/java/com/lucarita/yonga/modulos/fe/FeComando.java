@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.commands.CommandSourceStack;
+import com.lucarita.yonga.modulos.fe.mobs.AcechoAstado;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
@@ -89,6 +90,23 @@ public final class FeComando {
                                             }
                                             return jugadores.size();
                                         }))))
+                // Para probar el Astado sin esperar a que toque: empezar ya el acecho o hacerlo aparecer
+                .then(Commands.literal("astado")
+                        .then(Commands.literal("acecho")
+                                .executes(ctx -> {
+                                    ServerPlayer jugador = ctx.getSource().getPlayerOrException();
+                                    AcechoAstado.empezar(jugador);
+                                    ctx.getSource().sendSuccess(() -> Component.translatable("yonga.fe.comando.astado_acecho"), true);
+                                    return 1;
+                                }))
+                        .then(Commands.literal("aparecer")
+                                .executes(ctx -> {
+                                    ServerPlayer jugador = ctx.getSource().getPlayerOrException();
+                                    boolean ok = AcechoAstado.aparecer(jugador, false);
+                                    ctx.getSource().sendSuccess(() -> Component.translatable(
+                                            ok ? "yonga.fe.comando.astado_aparece" : "yonga.fe.comando.astado_sin_sitio"), true);
+                                    return ok ? 1 : 0;
+                                })))
         );
     }
 

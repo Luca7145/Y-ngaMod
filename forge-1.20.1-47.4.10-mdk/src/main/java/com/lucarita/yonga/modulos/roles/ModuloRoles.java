@@ -90,9 +90,9 @@ public final class ModuloRoles {
 
     // Explorador: mochila (Aprendiz) y mochila mejorada (Experto). (huecos, máximo por hueco)
     public static final RegistryObject<Item> MOCHILA = ITEMS.register("mochila",
-            () -> new MochilaItem(16, 100, new Item.Properties()));
+            () -> new MochilaItem(18, 100, new Item.Properties()));
     public static final RegistryObject<Item> MOCHILA_MEJORADA = ITEMS.register("mochila_mejorada",
-            () -> new MochilaItem(26, 200, new Item.Properties()));
+            () -> new MochilaItem(27, 200, new Item.Properties()));
 
     // Explorador: antifaz (Novato). Va en el hueco de cara; los mobs te detectan a la mitad de distancia.
     public static final RegistryObject<Item> ANTIFAZ = ITEMS.register("antifaz",

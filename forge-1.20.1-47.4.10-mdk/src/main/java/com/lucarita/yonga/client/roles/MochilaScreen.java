@@ -9,7 +9,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 /**
  * Pantalla de la mochila. Usa el fondo del cofre de Minecraft (filas de 9) y tapa los huecos sobrantes
- * de la última fila (16 huecos = 2 filas con 2 tapados; 26 = 3 filas con 1 tapado).
+ * de la última fila si no estuviera completa (ahora 18 = 2 filas y 27 = 3 filas, sin huecos tapados).
  */
 public class MochilaScreen extends AbstractContainerScreen<MochilaMenu> {
 

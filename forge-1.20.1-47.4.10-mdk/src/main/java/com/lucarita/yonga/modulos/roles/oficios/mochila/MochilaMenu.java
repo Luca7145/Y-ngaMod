@@ -50,7 +50,15 @@ public class MochilaMenu extends AbstractContainerMenu {
         this.filas = (huecos + 8) / 9;
         this.huecoBloqueado = mano == InteractionHand.MAIN_HAND ? inventario.selected : -1;
 
-        this.contenido = new SimpleContainer(huecos);
+        // Ojo: un contenedor normal recorta cualquier montón a 64 al meterlo (setItem). Sin esto, al soltar
+        // un montón con el ratón sobre otro (o al abrir una mochila con montones de más de 64) se perdía lo
+        // que pasaba de 64.
+        this.contenido = new SimpleContainer(huecos) {
+            @Override
+            public int getMaxStackSize() {
+                return limite;
+            }
+        };
         if (!jugador.level().isClientSide()) {
             MochilaContenido.cargar(mochila, contenido);
             contenido.addListener(c -> MochilaContenido.guardar(mochila, contenido));

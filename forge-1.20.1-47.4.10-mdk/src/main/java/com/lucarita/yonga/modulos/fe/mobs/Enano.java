@@ -53,7 +53,7 @@ public class Enano extends PathfinderMob implements MobFe {
     public static final double DISTANCIA_MAX = 14.0;
 
     /** Estado sincronizado para la animación: 0 = normal, 1 = preparándose, 2 = embistiendo. */
-    public static final int NORMAL = 0, PREPARANDO = 1, EMBISTIENDO = 2;
+    public static final int NORMAL = 0, PREPARANDO = 1, EMBISTIENDO = 2, ATURDIDO = 3, PISOTON = 4;   // los dos últimos, solo la madre
     private static final EntityDataAccessor<Integer> ESTADO = SynchedEntityData.defineId(Enano.class, EntityDataSerializers.INT);
 
     private static final Vector3f COLOR_LUZ = new Vector3f(1.0f, 0.85f, 0.3f);
@@ -65,6 +65,7 @@ public class Enano extends PathfinderMob implements MobFe {
         super(tipo, nivel);
         this.oscuro = oscuro;
         this.setMaxUpStep(1.0f);
+        this.xpReward = 5;
     }
 
     public static AttributeSupplier.Builder atributos() {
@@ -88,6 +89,22 @@ public class Enano extends PathfinderMob implements MobFe {
 
     public int estado() {
         return this.entityData.get(ESTADO);
+    }
+
+    /** Para la enana madre (EnanoMadre), que tiene su propia forma de atacar. */
+    protected void fijarEstado(int estado) {
+        this.entityData.set(ESTADO, estado);
+    }
+
+    /** Cuándo empezó el estado actual (cliente), para las animaciones. */
+    public int inicioEstadoCliente;
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> dato) {
+        super.onSyncedDataUpdated(dato);
+        if (ESTADO.equals(dato)) {
+            this.inicioEstadoCliente = this.tickCount;
+        }
     }
 
     @Override

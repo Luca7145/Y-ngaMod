@@ -11,6 +11,7 @@ import com.lucarita.yonga.modulos.ModulosConfig;
 import com.lucarita.yonga.modulos.armas.ModuloArmas;
 import com.lucarita.yonga.modulos.fe.ModuloFe;
 import com.lucarita.yonga.modulos.fe.mobs.AparicionMobsFe;
+import com.lucarita.yonga.modulos.fe.mobs.EstatuaCentinela;
 import com.lucarita.yonga.modulos.roles.ModuloRoles;
 import com.lucarita.yonga.modulos.sangrado.ModuloSangrado;
 import com.mojang.logging.LogUtils;
@@ -46,6 +47,8 @@ public class YongaMain
         CraftingHelper.register(ModuloActivoCondition.Serializer.INSTANCE);
         // Dónde aparecen los mobs de fe (se registra siempre: el JSON que lo usa siempre está)
         AparicionMobsFe.registrar(modEventBus);
+        // Las estatuas del desierto (el centinela de piedra): también siempre, por su JSON de generación
+        EstatuaCentinela.registrar(modEventBus);
 
         // 3. Módulos: solo se registran si están activados
         if (Modulo.ARMAS.activo()) {

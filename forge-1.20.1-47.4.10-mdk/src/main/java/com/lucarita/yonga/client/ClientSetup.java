@@ -3,7 +3,26 @@ package com.lucarita.yonga.client;
 import com.lucarita.yonga.YongaMain;
 import com.lucarita.yonga.client.fe.BarraFe;
 import com.lucarita.yonga.client.fe.BarraMana;
+import com.lucarita.yonga.client.fe.AstadoRenderer;
 import com.lucarita.yonga.client.fe.EnanoRenderer;
+import com.lucarita.yonga.client.fe.CentinelaRenderer;
+import com.lucarita.yonga.client.fe.DardoRenderer;
+import com.lucarita.yonga.client.fe.ModeloPez;
+import com.lucarita.yonga.client.fe.PezRenderer;
+import com.lucarita.yonga.client.fe.ModeloZor;
+import com.lucarita.yonga.client.fe.ModeloZorTramo;
+import com.lucarita.yonga.client.fe.ZorRenderer;
+import com.lucarita.yonga.client.fe.GargolaRenderer;
+import com.lucarita.yonga.client.fe.ModeloGargola;
+import com.lucarita.yonga.client.fe.GnomoRenderer;
+import com.lucarita.yonga.client.fe.ModeloGnomo;
+import com.lucarita.yonga.client.fe.ModeloCentinela;
+import com.lucarita.yonga.client.fe.DuendeRenderer;
+import com.lucarita.yonga.client.fe.LeonRenderer;
+import com.lucarita.yonga.client.fe.ModeloDuende;
+import com.lucarita.yonga.client.fe.ModeloAstado;
+import com.lucarita.yonga.client.fe.ModeloLeon;
+import com.lucarita.yonga.client.fe.SustoAstado;
 import com.lucarita.yonga.client.fe.HadaRenderer;
 import com.lucarita.yonga.client.fe.ModeloEnano;
 import com.lucarita.yonga.client.fe.OrbeFeRenderer;
@@ -134,6 +153,8 @@ public final class ClientSetup {
             event.registerBelow(VanillaGuiOverlay.PLAYER_HEALTH.id(), "barra_fe", BarraFe::dibujarHud);
             // "Above" la comida = se dibuja justo después, en la fila de encima
             event.registerAbove(VanillaGuiOverlay.FOOD_LEVEL.id(), "barra_mana", BarraMana::dibujarHud);
+            // El susto del Astado, por encima de todo
+            event.registerAboveAll("susto_astado", SustoAstado::dibujar);
         }
     }
 
@@ -160,6 +181,19 @@ public final class ClientSetup {
             event.registerEntityRenderer(ModuloFe.HADA_OSCURA.get(), HadaRenderer::hadaOscura);
             event.registerEntityRenderer(ModuloFe.ENANO.get(), EnanoRenderer::enano);
             event.registerEntityRenderer(ModuloFe.ENANO_OSCURO.get(), EnanoRenderer::enanoOscuro);
+            event.registerEntityRenderer(ModuloFe.ASTADO.get(), AstadoRenderer::new);
+            event.registerEntityRenderer(ModuloFe.LEON_ARQUERO.get(), LeonRenderer::new);
+            event.registerEntityRenderer(ModuloFe.LEON_ESPADACHIN.get(), LeonRenderer::new);
+            event.registerEntityRenderer(ModuloFe.DUENDE.get(), DuendeRenderer::new);
+            event.registerEntityRenderer(ModuloFe.CENTINELA.get(), CentinelaRenderer::new);
+            event.registerEntityRenderer(ModuloFe.GNOMO.get(), GnomoRenderer::new);
+            event.registerEntityRenderer(ModuloFe.GARGOLA.get(), GargolaRenderer::new);
+            event.registerEntityRenderer(ModuloFe.PEZ_DEL_VIENTO.get(), PezRenderer::new);
+            event.registerEntityRenderer(ModuloFe.PEZ_ILUSION.get(), PezRenderer::new);
+            event.registerEntityRenderer(ModuloFe.ZOR.get(), ZorRenderer::new);
+            event.registerEntityRenderer(ModuloFe.ENANO_MADRE.get(), EnanoRenderer::madre);
+            event.registerEntityRenderer(ModuloFe.ENANO_MADRE_OSCURO.get(), EnanoRenderer::madreOscura);
+            event.registerEntityRenderer(ModuloFe.DARDO.get(), DardoRenderer::new);
         }
         if (Modulo.ROLES.activo()) {
             // La nota de la espada-keytar no tiene dibujo: solo su rastro de notitas
@@ -173,6 +207,15 @@ public final class ClientSetup {
     public static void registrarModelos(EntityRenderersEvent.RegisterLayerDefinitions event) {
         if (Modulo.FE.activo()) {
             event.registerLayerDefinition(ModeloEnano.CAPA, ModeloEnano::crearCapa);
+            event.registerLayerDefinition(ModeloAstado.CAPA, ModeloAstado::crearCapa);
+            event.registerLayerDefinition(ModeloLeon.CAPA, ModeloLeon::crearCapa);
+            event.registerLayerDefinition(ModeloDuende.CAPA, ModeloDuende::crearCapa);
+            event.registerLayerDefinition(ModeloCentinela.CAPA, ModeloCentinela::crearCapa);
+            event.registerLayerDefinition(ModeloGnomo.CAPA, ModeloGnomo::crearCapa);
+            event.registerLayerDefinition(ModeloGargola.CAPA, ModeloGargola::crearCapa);
+            event.registerLayerDefinition(ModeloPez.CAPA, ModeloPez::crearCapa);
+            event.registerLayerDefinition(ModeloZor.CAPA, ModeloZor::crearCapa);
+            event.registerLayerDefinition(ModeloZorTramo.CAPA, ModeloZorTramo::crearCapa);
         }
         if (Modulo.ROLES.activo()) {
             event.registerLayerDefinition(CapaParapente.CAPA, CapaParapente::crearCapa);

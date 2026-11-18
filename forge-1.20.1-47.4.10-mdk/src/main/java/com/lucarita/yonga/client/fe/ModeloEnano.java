@@ -105,9 +105,36 @@ public class ModeloEnano extends HierarchicalModel<Enano> {
             andar = edad * 1.6f;
             amplitud = 1.2f;
         }
-        pataDelanteraIzquierda.xRot = Mth.cos(andar) * amplitud;
-        pataTraseraDerecha.xRot = Mth.cos(andar) * amplitud;
-        pataDelanteraDerecha.xRot = Mth.cos(andar + Mth.PI) * amplitud;
-        pataTraseraIzquierda.xRot = Mth.cos(andar + Mth.PI) * amplitud;
+        if (estado == Enano.ATURDIDO) {
+            // Aturdida tras fallar la embestida: se bambolea, brazos caídos, patas abiertas
+            float bamboleo = Mth.sin(edad * 0.4f);
+            cuerpo.zRot = bamboleo * 0.12f;
+            cuerpo.xRot = 0.1f + Mth.sin(edad * 0.27f) * 0.05f;
+            brazoIzquierdo.zRot = 1.1f + bamboleo * 0.15f;
+            brazoDerecho.zRot = -1.1f + bamboleo * 0.15f;
+            andar = 0.0f;
+            amplitud = 0.0f;
+            pataDelanteraIzquierda.zRot = -0.2f;
+            pataDelanteraDerecha.zRot = 0.2f;
+            pataTraseraIzquierda.zRot = -0.2f;
+            pataTraseraDerecha.zRot = 0.2f;
+        } else if (estado == Enano.PISOTON) {
+            // Se alza de delante (aviso) y cae con todo su peso
+            float t = edad - enano.inicioEstadoCliente;
+            float alza = t < 14 ? Mth.clamp(t / 10.0f, 0.0f, 1.0f) : Math.max(0.0f, 1.0f - (t - 14) / 2.0f);
+            float golpe = t >= 14 ? Math.max(0.0f, 1.0f - (t - 16) / 6.0f) : 0.0f;
+            cuerpo.xRot = -0.55f * alza + 0.15f * golpe;
+            cuerpo.y = 21.0f - 2.5f * alza;
+            pataDelanteraIzquierda.xRot = -1.0f * alza;
+            pataDelanteraDerecha.xRot = -1.0f * alza;
+            brazoIzquierdo.zRot = 0.1f + 0.9f * golpe;
+            brazoDerecho.zRot = -0.1f - 0.9f * golpe;
+            andar = 0.0f;
+            amplitud = 0.0f;
+        }
+        pataDelanteraIzquierda.xRot += Mth.cos(andar) * amplitud;
+        pataTraseraDerecha.xRot += Mth.cos(andar) * amplitud;
+        pataDelanteraDerecha.xRot += Mth.cos(andar + Mth.PI) * amplitud;
+        pataTraseraIzquierda.xRot += Mth.cos(andar + Mth.PI) * amplitud;
     }
 }

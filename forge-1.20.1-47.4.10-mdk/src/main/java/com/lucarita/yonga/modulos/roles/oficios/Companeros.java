@@ -15,6 +15,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
@@ -168,9 +169,22 @@ public final class Companeros {
         guardados.fijar(jugador.getUUID(), mob);
         mob.setPersistenceRequired();
         mob.setTarget(null);
+        desinflar(mob);
         anadirComportamiento(mob);
         tocar(jugador, mob, true);
         aviso(jugador, "yonga.flauta.domado", ChatFormatting.LIGHT_PURPLE, mob.getDisplayName());
+    }
+
+    /**
+     * Si es un creeper que se estaba hinchando para explotar, se deshincha. Hace falta porque quien lo
+     * deshincha normalmente es su propio comportamiento de explotar, y al domarlo los de compañero (quieto,
+     * seguir al dueño) le quitan el sitio: sin esto, el creeper explotaba aunque te alejaras.
+     * Si lo han encendido con un mechero, explota igual (eso no tiene vuelta atrás en Minecraft).
+     */
+    private static void desinflar(Mob mob) {
+        if (mob instanceof Creeper creeper && !creeper.isIgnited() && creeper.getSwellDir() > 0) {
+            creeper.setSwellDir(-1);
+        }
     }
 
     /**
@@ -321,6 +335,10 @@ public final class Companeros {
             if (apuntado != null && apuntado.mob().equals(mob.getUUID())) {
                 guardados.fijar(dueno(mob), mob);
             }
+        }
+        // Un creeper compañero sin nadie a quien atacar no sigue hinchándose
+        if (mob.getTarget() == null) {
+            desinflar(mob);
         }
         // ¿Se acabó la pelea? (el enemigo ha muerto, ya no puede atacarlo o el dueño se ha alejado)
         LivingEntity enemigo = mob.getTarget();

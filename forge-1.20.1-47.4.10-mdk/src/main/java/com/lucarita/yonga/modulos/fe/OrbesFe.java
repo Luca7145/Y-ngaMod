@@ -85,6 +85,10 @@ public final class OrbesFe {
             return;
         }
 
+        // Los jefes no dan ni quitan fe (sería muchísima): su premio es la experiencia y el botín
+        if (muerto instanceof com.lucarita.yonga.modulos.fe.mobs.Jefe) {
+            return;
+        }
         float signo;
         float porcentaje;
         if (muerto instanceof MobFe mobFe) {

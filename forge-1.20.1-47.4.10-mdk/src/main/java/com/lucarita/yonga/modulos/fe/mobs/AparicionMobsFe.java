@@ -9,6 +9,7 @@ import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -30,6 +31,16 @@ public final class AparicionMobsFe implements BiomeModifier {
     private static final int GRUPO_MAX = 3;   // solas, en pareja o de tres en tres
     // Enanos: en cualquier bioma del mundo normal, pocos y casi siempre solos
     private static final int PESO_ENANOS = 3;
+    // Leones de guerra: en la sabana, entre los demás animales (pocos: 1 o 2)
+    private static final int PESO_LEONES = 3;
+    // Duendes: en los bosques, a cualquier hora, solos o en pareja
+    private static final int PESO_DUENDES = 8;
+    // Enanas madre: en llanuras (sin árboles que las frenen), poco frecuentes y siempre solas
+    private static final int PESO_MADRES = 1;
+    // Gnomos: un poco en cualquier sitio con vegetación (bosques, llanuras, taigas, junglas), solos o en pareja
+    private static final int PESO_GNOMOS = 3;
+    // Gárgolas (de noche, como los monstruos): sobre todo en montañas, y algo en llanuras, bosques y taigas (pueblos)
+    private static final int PESO_GARGOLAS_MONTANA = 20, PESO_GARGOLAS_PUEBLOS = 5;
 
     public static final AparicionMobsFe INSTANCIA = new AparicionMobsFe();
 
@@ -56,6 +67,34 @@ public final class AparicionMobsFe implements BiomeModifier {
                     new MobSpawnSettings.SpawnerData(ModuloFe.HADA.get(), PESO_HADAS, GRUPO_MIN, GRUPO_MAX));
             apariciones.addSpawn(MobCategory.AMBIENT,
                     new MobSpawnSettings.SpawnerData(ModuloFe.HADA_OSCURA.get(), PESO_HADAS, GRUPO_MIN, GRUPO_MAX));
+            apariciones.addSpawn(MobCategory.AMBIENT,
+                    new MobSpawnSettings.SpawnerData(ModuloFe.DUENDE.get(), PESO_DUENDES, 1, 2));
+        }
+        if (bioma.is(BiomeTags.IS_FOREST) || bioma.is(BiomeTags.IS_TAIGA) || bioma.is(BiomeTags.IS_JUNGLE)
+                || bioma.is(Tags.Biomes.IS_PLAINS)) {
+            constructor.getMobSpawnSettings().addSpawn(MobCategory.AMBIENT,
+                    new MobSpawnSettings.SpawnerData(ModuloFe.GNOMO.get(), PESO_GNOMOS, 1, 2));
+        }
+        if (bioma.is(BiomeTags.IS_MOUNTAIN)) {
+            constructor.getMobSpawnSettings().addSpawn(MobCategory.MONSTER,
+                    new MobSpawnSettings.SpawnerData(ModuloFe.GARGOLA.get(), PESO_GARGOLAS_MONTANA, 1, 2));
+        } else if (bioma.is(Tags.Biomes.IS_PLAINS) || bioma.is(BiomeTags.IS_FOREST) || bioma.is(BiomeTags.IS_TAIGA)) {
+            constructor.getMobSpawnSettings().addSpawn(MobCategory.MONSTER,
+                    new MobSpawnSettings.SpawnerData(ModuloFe.GARGOLA.get(), PESO_GARGOLAS_PUEBLOS, 1, 1));
+        }
+        if (bioma.is(Tags.Biomes.IS_PLAINS)) {
+            var apariciones = constructor.getMobSpawnSettings();
+            apariciones.addSpawn(MobCategory.CREATURE,
+                    new MobSpawnSettings.SpawnerData(ModuloFe.ENANO_MADRE.get(), PESO_MADRES, 1, 1));
+            apariciones.addSpawn(MobCategory.CREATURE,
+                    new MobSpawnSettings.SpawnerData(ModuloFe.ENANO_MADRE_OSCURO.get(), PESO_MADRES, 1, 1));
+        }
+        if (bioma.is(BiomeTags.IS_SAVANNA)) {
+            var apariciones = constructor.getMobSpawnSettings();
+            apariciones.addSpawn(MobCategory.CREATURE,
+                    new MobSpawnSettings.SpawnerData(ModuloFe.LEON_ARQUERO.get(), PESO_LEONES, 1, 2));
+            apariciones.addSpawn(MobCategory.CREATURE,
+                    new MobSpawnSettings.SpawnerData(ModuloFe.LEON_ESPADACHIN.get(), PESO_LEONES, 1, 1));
         }
         if (bioma.is(BiomeTags.IS_OVERWORLD)) {
             var apariciones = constructor.getMobSpawnSettings();

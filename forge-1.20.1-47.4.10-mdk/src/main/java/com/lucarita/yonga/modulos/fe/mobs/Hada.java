@@ -55,6 +55,7 @@ public class Hada extends PathfinderMob implements MobFe, FlyingAnimal {
         this.oscura = oscura;
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.setNoGravity(true);
+        this.xpReward = 3;
     }
 
     public static AttributeSupplier.Builder atributos() {
