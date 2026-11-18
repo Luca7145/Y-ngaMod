@@ -1,0 +1,15 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:banco_ingeniero",
+  "ingredient": {
+    "item": "yonga:lucarita"
+  },
+  "result": "yonga:lucarita_pulida",
+  "count": 8,
+  "rango": "maestro"
+}

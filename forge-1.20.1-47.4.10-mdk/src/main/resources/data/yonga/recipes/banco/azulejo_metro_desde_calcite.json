@@ -1,0 +1,15 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:banco_ingeniero",
+  "ingredient": {
+    "item": "minecraft:calcite"
+  },
+  "result": "yonga:azulejo_metro",
+  "count": 1,
+  "rango": "aprendiz"
+}

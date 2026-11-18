@@ -1,0 +1,15 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:banco_ingeniero",
+  "ingredient": {
+    "item": "minecraft:quartz_block"
+  },
+  "result": "yonga:denticulos",
+  "count": 1,
+  "rango": "oficial"
+}

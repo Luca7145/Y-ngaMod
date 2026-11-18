@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "yonga:block/revoco_blanco",
+    "top": "yonga:block/revoco_blanco",
+    "side": "yonga:block/revoco_blanco"
+  }
+}

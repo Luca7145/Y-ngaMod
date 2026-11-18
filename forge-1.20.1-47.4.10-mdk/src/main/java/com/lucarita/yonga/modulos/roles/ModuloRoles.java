@@ -13,8 +13,20 @@ import com.lucarita.yonga.modulos.roles.oficios.ArcoLiraItem;
 import com.lucarita.yonga.modulos.roles.oficios.Armonica;
 import com.lucarita.yonga.modulos.roles.oficios.ArmonicaItem;
 import com.lucarita.yonga.modulos.roles.oficios.Fantasma;
+import com.lucarita.yonga.modulos.roles.oficios.Herrero;
+import com.lucarita.yonga.modulos.roles.oficios.TaladroItem;
+import com.lucarita.yonga.modulos.roles.oficios.TaladroMenu;
+import com.lucarita.yonga.modulos.roles.oficios.BotafumeiroItem;
+import com.lucarita.yonga.modulos.roles.oficios.IncensarioEntity;
+import com.lucarita.yonga.modulos.roles.oficios.FlautaItem;
+import com.lucarita.yonga.modulos.roles.oficios.Companeros;
 import com.lucarita.yonga.modulos.roles.oficios.ArmonicaItem;
 import com.lucarita.yonga.modulos.roles.oficios.Fantasma;
+import com.lucarita.yonga.modulos.roles.oficios.Herrero;
+import com.lucarita.yonga.modulos.roles.oficios.BotafumeiroItem;
+import com.lucarita.yonga.modulos.roles.oficios.IncensarioEntity;
+import com.lucarita.yonga.modulos.roles.oficios.FlautaItem;
+import com.lucarita.yonga.modulos.roles.oficios.Companeros;
 import com.lucarita.yonga.modulos.roles.oficios.Musica;
 import com.lucarita.yonga.modulos.roles.oficios.NotaProyectil;
 import com.lucarita.yonga.modulos.roles.oficios.Explorador;
@@ -28,6 +40,16 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.crafting.RecipeType;
+import com.lucarita.yonga.modulos.roles.construccion.RecetaBanco;
+import com.lucarita.yonga.modulos.roles.construccion.Construccion;
+import com.lucarita.yonga.modulos.roles.construccion.BancoMenu;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.ArmorItem;
+import com.lucarita.yonga.core.ModTiers;
+import com.lucarita.yonga.core.ModArmaduras;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.MinecraftForge;
@@ -51,6 +73,8 @@ public final class ModuloRoles {
             DeferredRegister.create(ForgeRegistries.ITEMS, YongaMain.MOD_ID);
     public static final DeferredRegister<RecipeSerializer<?>> RECETAS =
             DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, YongaMain.MOD_ID);
+    public static final DeferredRegister<RecipeType<?>> TIPOS_RECETA =
+            DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, YongaMain.MOD_ID);
     public static final DeferredRegister<MenuType<?>> MENUS =
             DeferredRegister.create(ForgeRegistries.MENU_TYPES, YongaMain.MOD_ID);
     public static final DeferredRegister<SoundEvent> SONIDOS =
@@ -112,6 +136,36 @@ public final class ModuloRoles {
     public static final RegistryObject<Item> ARMONICA = ITEMS.register("armonica",
             () -> new ArmonicaItem(new Item.Properties()));
 
+    // ---------- HERRERO: armadura y herramientas de lucarita (un poco mejores que las de netherita) ----------
+
+    public static final RegistryObject<Item> CASCO_LUCARITA = ITEMS.register("casco_lucarita",
+            () -> new ArmorItem(ModArmaduras.LUCARITA, ArmorItem.Type.HELMET, new Item.Properties().fireResistant()));
+    public static final RegistryObject<Item> PETO_LUCARITA = ITEMS.register("peto_lucarita",
+            () -> new ArmorItem(ModArmaduras.LUCARITA, ArmorItem.Type.CHESTPLATE, new Item.Properties().fireResistant()));
+    public static final RegistryObject<Item> PANTALONES_LUCARITA = ITEMS.register("pantalones_lucarita",
+            () -> new ArmorItem(ModArmaduras.LUCARITA, ArmorItem.Type.LEGGINGS, new Item.Properties().fireResistant()));
+    public static final RegistryObject<Item> BOTAS_LUCARITA = ITEMS.register("botas_lucarita",
+            () -> new ArmorItem(ModArmaduras.LUCARITA, ArmorItem.Type.BOOTS, new Item.Properties().fireResistant()));
+    // Pico: 6 de daño (como el de netherita); pala: 6,5. Más rápidos y duraderos (ver ModTiers)
+    public static final RegistryObject<Item> PICO_LUCARITA = ITEMS.register("pico_lucarita",
+            () -> new PickaxeItem(ModTiers.LUCARITA, 1, -2.8f, new Item.Properties().fireResistant()));
+    public static final RegistryObject<Item> PALA_LUCARITA = ITEMS.register("pala_lucarita",
+            () -> new ShovelItem(ModTiers.LUCARITA, 1.5f, -3.0f, new Item.Properties().fireResistant()));
+
+    // ---------- INGENIERO ----------
+
+    // Taladro: pico a motor con combustible (3x3)
+    public static final RegistryObject<Item> TALADRO = ITEMS.register("taladro",
+            () -> new TaladroItem(new Item.Properties().fireResistant()));
+
+    // Sacerdote: botafumeiro (mangual con incensario que se lanza unido por la cadena)
+    public static final RegistryObject<Item> BOTAFUMEIRO = ITEMS.register("botafumeiro",
+            () -> new BotafumeiroItem(new Item.Properties()));
+
+    // Melómano: flauta (doma un mob como compañero; ver Companeros)
+    public static final RegistryObject<Item> FLAUTA = ITEMS.register("flauta",
+            () -> new FlautaItem(new Item.Properties()));
+
     // ---------- ENTIDADES ----------
 
     // La nota que dispara la espada-keytar
@@ -121,6 +175,12 @@ public final class ModuloRoles {
                     .clientTrackingRange(4)
                     .updateInterval(10)
                     .build("nota_proyectil"));
+
+    // El incensario del botafumeiro cuando está lanzado
+    public static final RegistryObject<EntityType<IncensarioEntity>> INCENSARIO = ENTIDADES.register("incensario",
+            () -> EntityType.Builder.<IncensarioEntity>of(IncensarioEntity::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f).clientTrackingRange(8).updateInterval(2)
+                    .build("incensario"));
 
     // ---------- SONIDOS (archivos en assets/yonga/sounds, nombres en assets/yonga/sounds.json) ----------
 
@@ -138,6 +198,8 @@ public final class ModuloRoles {
     public static final RegistryObject<SoundEvent> SONIDO_ARMONICA_NOTA = sonido("armonica_nota");
     public static final RegistryObject<SoundEvent> SONIDO_ARMONICA_QUEJIDO = sonido("armonica_quejido");
     public static final RegistryObject<SoundEvent> SONIDO_ARMONICA_LAMENTO = sonido("armonica_lamento");
+    public static final RegistryObject<SoundEvent> SONIDO_FLAUTA_NOTA = sonido("flauta_nota");
+    public static final RegistryObject<SoundEvent> SONIDO_FLAUTA_ENCANTO = sonido("flauta_encanto");
 
     private static RegistryObject<SoundEvent> sonido(String nombre) {
         return SONIDOS.register(nombre, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(YongaMain.MOD_ID, nombre)));
@@ -147,6 +209,21 @@ public final class ModuloRoles {
 
     public static final RegistryObject<MenuType<MochilaMenu>> MENU_MOCHILA = MENUS.register("mochila",
             () -> IForgeMenuType.create(MochilaMenu::desdeRed));
+
+    // ---------- BANCO DE INGENIERO (bloques de construcción: ver construccion/Construccion) ----------
+    public static final RegistryObject<Block> BANCO_INGENIERO = Construccion.BANCO_INGENIERO;
+    public static final RegistryObject<Item> BANCO_INGENIERO_ITEM = RegistryObject.create(
+            new ResourceLocation(YongaMain.MOD_ID, "banco_ingeniero"), ForgeRegistries.ITEMS);
+    public static final RegistryObject<RecipeType<RecetaBanco>> TIPO_BANCO = TIPOS_RECETA.register("banco_ingeniero",
+            () -> RecipeType.simple(new ResourceLocation(YongaMain.MOD_ID, "banco_ingeniero")));
+    public static final RegistryObject<RecipeSerializer<RecetaBanco>> RECETA_BANCO = RECETAS.register("banco_ingeniero",
+            RecetaBanco.Serializer::new);
+    public static final RegistryObject<MenuType<BancoMenu>> MENU_BANCO = MENUS.register("banco_ingeniero",
+            () -> IForgeMenuType.create((id, inventario, datos) -> new BancoMenu(id, inventario)));
+
+    // Depósito de combustible del taladro
+    public static final RegistryObject<MenuType<TaladroMenu>> MENU_TALADRO = MENUS.register("taladro",
+            () -> IForgeMenuType.create(TaladroMenu::desdeRed));
 
     // ---------- RECETAS ----------
 
@@ -162,6 +239,8 @@ public final class ModuloRoles {
         MENUS.register(modEventBus);
         SONIDOS.register(modEventBus);
         ENTIDADES.register(modEventBus);
+        TIPOS_RECETA.register(modEventBus);
+        Construccion.registrar(modEventBus);
         RolesRed.registrar();
 
         MinecraftForge.EVENT_BUS.addListener(ModuloRoles::alRegistrarComandos);
@@ -187,6 +266,15 @@ public final class ModuloRoles {
         MinecraftForge.EVENT_BUS.addListener(ExperienciaOficio::alTick);
         MinecraftForge.EVENT_BUS.addListener(ExperienciaOficio::alSalir);
         MinecraftForge.EVENT_BUS.addListener(ExperienciaOficio::alHacerDano);
+        MinecraftForge.EVENT_BUS.addListener(ExperienciaOficio::alFundir);
+        MinecraftForge.EVENT_BUS.addListener(ExperienciaOficio::alFabricar);
+        MinecraftForge.EVENT_BUS.addListener(ExperienciaOficio::alUsarYunque);
+        MinecraftForge.EVENT_BUS.addListener(ExperienciaOficio::alUsarPiedraAfilar);
+        MinecraftForge.EVENT_BUS.addListener(Herrero::alFundir);
+        MinecraftForge.EVENT_BUS.addListener(TaladroItem::alRomper);
+        MinecraftForge.EVENT_BUS.addListener(TaladroItem::alTickMundo);
+        MinecraftForge.EVENT_BUS.addListener(ExperienciaOficio::alPonerBloque);
+        MinecraftForge.EVENT_BUS.addListener(ExperienciaOficio::alRomperBloque);
         // Fantasma
         MinecraftForge.EVENT_BUS.addListener(Fantasma::alCalcularVisibilidad);
         MinecraftForge.EVENT_BUS.addListener(Fantasma::alCambiarObjetivo);
@@ -201,6 +289,14 @@ public final class ModuloRoles {
         MinecraftForge.EVENT_BUS.addListener(Fantasma::alUsarEntidad);
         MinecraftForge.EVENT_BUS.addListener(Fantasma::alUsarEntidadExacto);
         MinecraftForge.EVENT_BUS.addListener(Fantasma::alTick);
+        // Compañeros (flauta)
+        MinecraftForge.EVENT_BUS.addListener(Companeros::alInteractuar);
+        MinecraftForge.EVENT_BUS.addListener(Companeros::alUnirseAlMundo);
+        MinecraftForge.EVENT_BUS.addListener(Companeros::alTickMob);
+        MinecraftForge.EVENT_BUS.addListener(Companeros::alCambiarObjetivo);
+        MinecraftForge.EVENT_BUS.addListener(Companeros::alRecibirDano);
+        MinecraftForge.EVENT_BUS.addListener(Companeros::alSalirDelMundo);
+        MinecraftForge.EVENT_BUS.addListener(Companeros::alConvertirse);
         MinecraftForge.EVENT_BUS.addListener(ModuloRoles::alEntrar);
         MinecraftForge.EVENT_BUS.addListener(ModuloRoles::alReaparecer);
         MinecraftForge.EVENT_BUS.addListener(ModuloRoles::alCambiarDimension);

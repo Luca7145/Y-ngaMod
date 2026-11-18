@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "yonga:block/sillares",
+    "top": "yonga:block/sillares",
+    "side": "yonga:block/sillares"
+  }
+}

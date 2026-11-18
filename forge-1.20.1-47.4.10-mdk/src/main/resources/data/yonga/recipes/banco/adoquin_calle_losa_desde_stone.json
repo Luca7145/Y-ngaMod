@@ -1,0 +1,15 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:banco_ingeniero",
+  "ingredient": {
+    "item": "minecraft:stone"
+  },
+  "result": "yonga:adoquin_calle_losa",
+  "count": 2,
+  "rango": "todos"
+}

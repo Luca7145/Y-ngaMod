@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "yonga:block/adobe_losa"
+    },
+    "type=top": {
+      "model": "yonga:block/adobe_losa_arriba"
+    },
+    "type=double": {
+      "model": "yonga:block/adobe"
+    }
+  }
+}

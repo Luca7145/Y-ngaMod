@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "yonga:block/pilastra_tapa",
+    "side": "yonga:block/pilastra"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:receta_oficio",
+  "oficio": "herrero",
+  "rango": "experto",
+  "category": "equipment",
+  "pattern": [
+    "LGL",
+    "L L",
+    "L L"
+  ],
+  "key": {
+    "L": {
+      "item": "yonga:lucarita"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "yonga:pantalones_lucarita"
+  }
+}

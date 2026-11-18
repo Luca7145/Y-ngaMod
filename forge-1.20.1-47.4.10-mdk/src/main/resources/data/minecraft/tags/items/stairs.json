@@ -1,0 +1,23 @@
+{
+  "replace": false,
+  "values": [
+    "yonga:adoquin_calle_escaleras",
+    "yonga:adoquin_espiga_escaleras",
+    "yonga:sillares_escaleras",
+    "yonga:planchas_remachadas_escaleras",
+    "yonga:chapa_estriada_escaleras",
+    "yonga:damero_escaleras",
+    "yonga:ladrillos_lucarita_escaleras",
+    "yonga:piedra_seca_escaleras",
+    "yonga:adobe_escaleras",
+    "yonga:marmol_escaleras",
+    "yonga:ladrillo_romano_escaleras",
+    "yonga:hormigon_pulido_escaleras",
+    "yonga:revoco_blanco_escaleras",
+    "yonga:piedra_gotica_escaleras",
+    "yonga:suelo_ajedrez_escaleras",
+    "yonga:almohadillado_escaleras",
+    "yonga:marmol_negro_escaleras",
+    "yonga:marmol_verde_escaleras"
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "variants": {
+    "facing=east,half=bottom,shape=straight": {
+      "model": "yonga:block/marmol_negro_escaleras"
+    },
+    "facing=east,half=bottom,shape=inner_left": {
+      "model": "yonga:block/marmol_negro_escaleras_interior",
+      "y": 270,
+      "uvlock": true
+    },
+    "facing=east,half=bottom,shape=inner_right": {
+      "model": "yonga:block/marmol_negro_escaleras_interior"
+    },
+    "facing=east,half=bottom,shape=outer_left": {
+      "model": "yonga:block/marmol_negro_escaleras_exterior",
+      "y": 270,
+      "uvlock": true
+    },
+    "facing=east,half=bottom,shape=outer_right": {
+      "model": "yonga:block/marmol_negro_escaleras_exterior"
+    },
+    "facing=east,half=top,shape=straight": {
+      "model": "yonga:block/marmol_negro_escaleras",
+      "x": 180,
+      "uvlock": true
+    },
+    "facing=east,half=top,shape=inner_left": {
+      "model": "yonga:block/marmol_negro_escaleras_interior",
+      "x": 180,
+      "uvlock": true
+    },
+    "facing=east,half=top,shape=inner_right": {
+      "model": "yonga:block/marmol_negro_escaleras_interior",
+      "x": 180,
+      "y": 90,
+      "uvlock": true
+    },
+    "facing=east,half=top,shape=outer_left": {
+      "model": "yonga:block/marmol_negro_escaleras_exterior",
+      "x": 180,
+      "uvlock": true
+    },
+    "facing=east,half=top,shape=outer_right": {
+      "model": "yonga:block/marmol_negro_escaleras_exterior",
+      "x": 180,
+      "y": 90,
+      "uvlock": true
+    },
+    "facing=south,half=bottom,shape=straight": {
+      "model": "yonga:block/marmol_negro_escaleras",
+      "y": 90,
+      "uvlock": true
+    },
+    "facing=south,half=bottom,shape=inner_left": {
+      "model": "yonga:block/marmol_negro_escaleras_interior"
+    },
+    "facing=south,half=bottom,shape=inner_right": {
+      "model": "yonga:block/marmol_negro_escaleras_interior",
+      "y": 90,
+      "uvlock": true
+    },
+    "facing=south,half=bottom,shape=outer_left": {
+      "model": "yonga:block/marmol_negro_escaleras_exterior"
+    },
+    "facing=south,half=bottom,shape=outer_right": {
+      "model": "yonga:block/marmol_negro_escaleras_exterior",
+      "y": 90,
+      "uvlock": true
+    },
+    "facing=south,half=top,shape=straight": {
+      "model": "yonga:block/marmol_negro_escaleras",
+      "x": 180,
+      "y": 90,
+      "uvlock": true
+    },
+    "facing=south,half=top,shape=inner_left": {
+      "model": "yonga:block/marmol_negro_escaleras_interior",
+      "x": 180,
+      "y": 90,
+      "uvlock": true
+    },
+    "facing=south,half=top,shape=inner_right": {
+      "model": "yonga:block/marmol_negro_escaleras_interior",
+      "x": 180,
+      "y": 180,
+      "uvlock": true
+    },
+    "facing=south,half=top,shape=outer_left": {
+      "model": "yonga:block/marmol_negro_escaleras_exterior",
+      "x": 180,
+      "y": 90,
+      "uvlock": true
+    },
+    "facing=south,half=top,shape=outer_right": {
+      "model": "yonga:block/marmol_negro_escaleras_exterior",
+      "x": 180,
+      "y": 180,
+      "uvlock": true
+    },
+    "facing=west,half=bottom,shape=straight": {
+      "model": "yonga:block/marmol_negro_escaleras",
+      "y": 180,
+      "uvlock": true
+    },
+    "facing=west,half=bottom,shape=inner_left": {
+      "model": "yonga:block/marmol_negro_escaleras_interior",
+      "y": 90,
+      "uvlock": true
+    },
+    "facing=west,half=bottom,shape=inner_right": {
+      "model": "yonga:block/marmol_negro_escaleras_interior",
+      "y": 180,
+      "uvlock": true
+    },
+    "facing=west,half=bottom,shape=outer_left": {
+      "model": "yonga:block/marmol_negro_escaleras_exterior",
+      "y": 90,
+      "uvlock": true
+    },
+    "facing=west,half=bottom,shape=outer_right": {
+      "model": "yonga:block/marmol_negro_escaleras_exterior",
+      "y": 180,
+      "uvlock": true
+    },
+    "facing=west,half=top,shape=straight": {
+      "model": "yonga:block/marmol_negro_escaleras",
+      "x": 180,
+      "y": 180,
+      "uvlock": true
+    },
+    "facing=west,half=top,shape=inner_left": {
+      "model": "yonga:block/marmol_negro_escaleras_interior",
+      "x": 180,
+      "y": 180,
+      "uvlock": true
+    },
+    "facing=west,half=top,shape=inner_right": {
+      "model": "yonga:block/marmol_negro_escaleras_interior",
+      "x": 180,
+      "y": 270,
+      "uvlock": true
+    },
+    "facing=west,half=top,shape=outer_left": {
+      "model": "yonga:block/marmol_negro_escaleras_exterior",
+      "x": 180,
+      "y": 180,
+      "uvlock": true
+    },
+    "facing=west,half=top,shape=outer_right": {
+      "model": "yonga:block/marmol_negro_escaleras_exterior",
+      "x": 180,
+      "y": 270,
+      "uvlock": true
+    },
+    "facing=north,half=bottom,shape=straight": {
+      "model": "yonga:block/marmol_negro_escaleras",
+      "y": 270,
+      "uvlock": true
+    },
+    "facing=north,half=bottom,shape=inner_left": {
+      "model": "yonga:block/marmol_negro_escaleras_interior",
+      "y": 180,
+      "uvlock": true
+    },
+    "facing=north,half=bottom,shape=inner_right": {
+      "model": "yonga:block/marmol_negro_escaleras_interior",
+      "y": 270,
+      "uvlock": true
+    },
+    "facing=north,half=bottom,shape=outer_left": {
+      "model": "yonga:block/marmol_negro_escaleras_exterior",
+      "y": 180,
+      "uvlock": true
+    },
+    "facing=north,half=bottom,shape=outer_right": {
+      "model": "yonga:block/marmol_negro_escaleras_exterior",
+      "y": 270,
+      "uvlock": true
+    },
+    "facing=north,half=top,shape=straight": {
+      "model": "yonga:block/marmol_negro_escaleras",
+      "x": 180,
+      "y": 270,
+      "uvlock": true
+    },
+    "facing=north,half=top,shape=inner_left": {
+      "model": "yonga:block/marmol_negro_escaleras_interior",
+      "x": 180,
+      "y": 270,
+      "uvlock": true
+    },
+    "facing=north,half=top,shape=inner_right": {
+      "model": "yonga:block/marmol_negro_escaleras_interior",
+      "x": 180,
+      "uvlock": true
+    },
+    "facing=north,half=top,shape=outer_left": {
+      "model": "yonga:block/marmol_negro_escaleras_exterior",
+      "x": 180,
+      "y": 270,
+      "uvlock": true
+    },
+    "facing=north,half=top,shape=outer_right": {
+      "model": "yonga:block/marmol_negro_escaleras_exterior",
+      "x": 180,
+      "uvlock": true
+    }
+  }
+}

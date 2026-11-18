@@ -1,0 +1,15 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:banco_ingeniero",
+  "ingredient": {
+    "item": "minecraft:black_concrete"
+  },
+  "result": "yonga:zigzag_deco",
+  "count": 1,
+  "rango": "maestro"
+}

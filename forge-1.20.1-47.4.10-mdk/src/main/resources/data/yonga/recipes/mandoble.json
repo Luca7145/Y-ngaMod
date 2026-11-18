@@ -1,0 +1,26 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "armas"
+    }
+  ],
+  "type": "yonga:arma_herrero",
+  "pattern": [
+    " LL",
+    "LLL",
+    "SL "
+  ],
+  "key": {
+    "L": {
+      "item": "yonga:lucarita"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "yonga:mandoble",
+    "count": 1
+  }
+}

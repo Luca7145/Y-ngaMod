@@ -10,6 +10,7 @@ import com.lucarita.yonga.modulos.ModuloActivoCondition;
 import com.lucarita.yonga.modulos.ModulosConfig;
 import com.lucarita.yonga.modulos.armas.ModuloArmas;
 import com.lucarita.yonga.modulos.fe.ModuloFe;
+import com.lucarita.yonga.modulos.fe.mobs.AparicionMobsFe;
 import com.lucarita.yonga.modulos.roles.ModuloRoles;
 import com.lucarita.yonga.modulos.sangrado.ModuloSangrado;
 import com.mojang.logging.LogUtils;
@@ -43,6 +44,8 @@ public class YongaMain
 
         // Condición "yonga:modulo_activo" para que las recetas de un módulo desactivado no se carguen
         CraftingHelper.register(ModuloActivoCondition.Serializer.INSTANCE);
+        // Dónde aparecen los mobs de fe (se registra siempre: el JSON que lo usa siempre está)
+        AparicionMobsFe.registrar(modEventBus);
 
         // 3. Módulos: solo se registran si están activados
         if (Modulo.ARMAS.activo()) {

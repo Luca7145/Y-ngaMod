@@ -1,0 +1,31 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:receta_oficio",
+  "oficio": "herrero",
+  "rango": "aprendiz",
+  "category": "equipment",
+  "pattern": [
+    "LDL",
+    " P ",
+    " P "
+  ],
+  "key": {
+    "L": {
+      "item": "yonga:lucarita"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "P": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "yonga:pico_lucarita"
+  }
+}

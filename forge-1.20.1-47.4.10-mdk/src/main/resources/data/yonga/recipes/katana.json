@@ -1,0 +1,26 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "armas"
+    }
+  ],
+  "type": "yonga:arma_herrero",
+  "pattern": [
+    "  L",
+    " L ",
+    "H  "
+  ],
+  "key": {
+    "L": {
+      "item": "yonga:lucarita"
+    },
+    "H": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "yonga:katana",
+    "count": 1
+  }
+}

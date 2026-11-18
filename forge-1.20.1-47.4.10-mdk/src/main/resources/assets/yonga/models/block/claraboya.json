@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "yonga:block/claraboya"
+  },
+  "render_type": "minecraft:translucent"
+}

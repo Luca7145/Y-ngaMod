@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "yonga:block/suelo_ajedrez_losa"
+    },
+    "type=top": {
+      "model": "yonga:block/suelo_ajedrez_losa_arriba"
+    },
+    "type=double": {
+      "model": "yonga:block/suelo_ajedrez"
+    }
+  }
+}

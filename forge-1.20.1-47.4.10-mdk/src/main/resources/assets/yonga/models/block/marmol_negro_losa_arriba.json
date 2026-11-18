@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "yonga:block/marmol_negro",
+    "top": "yonga:block/marmol_negro",
+    "side": "yonga:block/marmol_negro"
+  }
+}

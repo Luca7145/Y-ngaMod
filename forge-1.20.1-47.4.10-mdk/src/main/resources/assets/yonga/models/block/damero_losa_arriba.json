@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "yonga:block/damero",
+    "top": "yonga:block/damero",
+    "side": "yonga:block/damero"
+  }
+}

@@ -13,6 +13,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.InteractionHand;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +39,71 @@ public final class CombateEventos {
     // Jugador -> momento (en ticks del mundo) hasta el que puede contraatacar
     private static final Map<UUID, Long> CONTRAATAQUE_HASTA = new HashMap<>();
 
+    // Combo de la katana: a quién le lleva golpes seguidos, cuántos y cuándo fue el último
+    private static final int VENTANA_COMBO = 40;          // 2 segundos entre golpe y golpe
+    private static final float MULTIPLICADOR_COMBO = 1.75f;
+    private record Combo(UUID objetivo, int golpes, long ultimo) {}
+    private static final Map<UUID, Combo> COMBOS = new HashMap<>();
+    // Jugador -> el enemigo al que el próximo golpe le hace el ×1,75 (lo decide alGolpear y lo cobra alHacerDano)
+    private static final Map<UUID, UUID> GOLPE_DE_COMBO = new HashMap<>();
+
     private CombateEventos() {}
+
+    // ---------- COMBO (katana) ----------
+
+    /** Cada click de ataque: lleva la cuenta del combo (solo golpes cargados al mismo enemigo, sin pausas largas). */
+    public static void alGolpear(AttackEntityEvent evento) {
+        if (!(evento.getEntity() instanceof ServerPlayer jugador)) {
+            return;
+        }
+        GOLPE_DE_COMBO.remove(jugador.getUUID());
+        if (!(jugador.getMainHandItem().getItem() instanceof ArmaYonga arma) || !arma.rasgos().combo
+                || !(evento.getTarget() instanceof LivingEntity objetivo)) {
+            COMBOS.remove(jugador.getUUID());
+            return;
+        }
+        boolean cargado = jugador.getAttackStrengthScale(0.5f) > 0.9f;
+        long ahora = jugador.level().getGameTime();
+        Combo antes = COMBOS.get(jugador.getUUID());
+        if (!cargado) {
+            COMBOS.remove(jugador.getUUID());                 // aporrear corta el combo
+            return;
+        }
+        int golpes = (antes != null && antes.objetivo().equals(objetivo.getUUID()) && ahora - antes.ultimo() <= VENTANA_COMBO)
+                ? antes.golpes() + 1 : 1;
+        if (golpes >= 3) {
+            GOLPE_DE_COMBO.put(jugador.getUUID(), objetivo.getUUID());
+            COMBOS.remove(jugador.getUUID());                 // vuelve a empezar
+        } else {
+            COMBOS.put(jugador.getUUID(), new Combo(objetivo.getUUID(), golpes, ahora));
+        }
+    }
+
+    // ---------- DOS MANOS (mandoble) ----------
+
+    private static boolean manosOcupadas(Player jugador) {
+        return jugador.getMainHandItem().getItem() instanceof ArmaYonga arma && arma.rasgos().dosManos;
+    }
+
+    /** Con un arma a dos manos no se puede usar nada de la otra mano (ni escudo, ni comida, ni bloques). */
+    public static void alUsarObjeto(PlayerInteractEvent.RightClickItem evento) {
+        if (evento.getHand() == InteractionHand.OFF_HAND && manosOcupadas(evento.getEntity())) {
+            evento.setCanceled(true);
+        }
+    }
+
+    public static void alUsarEnBloque(PlayerInteractEvent.RightClickBlock evento) {
+        if (evento.getHand() == InteractionHand.OFF_HAND && manosOcupadas(evento.getEntity())) {
+            evento.setCanceled(true);
+        }
+    }
+
+    public static void alEmpezarAUsar(LivingEntityUseItemEvent.Start evento) {
+        if (evento.getEntity() instanceof Player jugador && jugador.getUsedItemHand() == InteractionHand.OFF_HAND
+                && manosOcupadas(jugador)) {
+            evento.setCanceled(true);
+        }
+    }
 
     // ---------- PARRY ----------
 
@@ -81,6 +150,18 @@ public final class CombateEventos {
                 || evento.getSource().getDirectEntity() != jugador) {   // solo cuerpo a cuerpo, solo en el servidor
             return;
         }
+        // El tercer golpe del combo de la katana
+        UUID combo = GOLPE_DE_COMBO.get(jugador.getUUID());
+        if (combo != null && combo.equals(evento.getEntity().getUUID())) {
+            GOLPE_DE_COMBO.remove(jugador.getUUID());
+            evento.setAmount(evento.getAmount() * MULTIPLICADOR_COMBO);
+            LivingEntity golpeado = evento.getEntity();
+            jugador.level().playSound(null, golpeado.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 1.0f, 1.6f);
+            if (jugador.level() instanceof ServerLevel nivel) {
+                nivel.sendParticles(ParticleTypes.SWEEP_ATTACK, golpeado.getX(), golpeado.getY(0.5), golpeado.getZ(), 1, 0, 0, 0, 0);
+                nivel.sendParticles(ParticleTypes.CRIT, golpeado.getX(), golpeado.getY(0.5), golpeado.getZ(), 15, 0.3, 0.4, 0.3, 0.3);
+            }
+        }
         Long hasta = CONTRAATAQUE_HASTA.get(jugador.getUUID());
         if (hasta == null) {
             return;
@@ -103,5 +184,7 @@ public final class CombateEventos {
 
     public static void alSalir(PlayerEvent.PlayerLoggedOutEvent evento) {
         CONTRAATAQUE_HASTA.remove(evento.getEntity().getUUID());
+        COMBOS.remove(evento.getEntity().getUUID());
+        GOLPE_DE_COMBO.remove(evento.getEntity().getUUID());
     }
 }

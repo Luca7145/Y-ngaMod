@@ -27,7 +27,17 @@ public final class Sangrado {
     public static final Tabla PUNAL = new Tabla(0.00f, 0.00f, 0.15f, DURACION_ARMAS);     // débil: solo Sangrado I
     public static final Tabla ALABARDA = new Tabla(0.02f, 0.06f, 0.20f, DURACION_ARMAS);  // medio
     public static final Tabla FALCATA = new Tabla(0.04f, 0.10f, 0.30f, DURACION_ARMAS);   // fuerte: la especialista
-    public static final Tabla CORTANTE = new Tabla(0.04f, 0.10f, 0.30f, 400);             // encantamiento, 20 segundos
+    // Encantamiento Cortante (20 segundos). Más flojo que las armas especialistas: es para cualquier arma.
+    //   Cortante I:   10% de Sangrado I
+    //   Cortante II:  13% (8% Sangrado I, 5% Sangrado II)
+    //   Cortante III: 15% (8% Sangrado I, 5% Sangrado II, 2% Sangrado III)
+    public static final Tabla CORTANTE_I = new Tabla(0.00f, 0.00f, 0.10f, 400);
+    public static final Tabla CORTANTE_II = new Tabla(0.00f, 0.05f, 0.08f, 400);
+    public static final Tabla CORTANTE_III = new Tabla(0.02f, 0.05f, 0.08f, 400);
+
+    public static Tabla cortante(int nivel) {
+        return nivel >= 3 ? CORTANTE_III : (nivel == 2 ? CORTANTE_II : CORTANTE_I);
+    }
 
     private Sangrado() {}
 

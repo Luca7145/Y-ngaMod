@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "yonga:block/hormigon_pulido",
+    "top": "yonga:block/hormigon_pulido",
+    "side": "yonga:block/hormigon_pulido"
+  }
+}

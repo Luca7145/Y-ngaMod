@@ -1,0 +1,34 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:receta_oficio",
+  "oficio": "sacerdote",
+  "rango": "experto",
+  "category": "equipment",
+  "pattern": [
+    "B  ",
+    " C ",
+    "GLG"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:blaze_rod"
+    },
+    "C": {
+      "item": "minecraft:chain"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "L": {
+      "item": "yonga:lucarita"
+    }
+  },
+  "result": {
+    "item": "yonga:botafumeiro"
+  }
+}

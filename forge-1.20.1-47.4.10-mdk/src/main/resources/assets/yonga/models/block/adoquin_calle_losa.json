@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "yonga:block/adoquin_calle",
+    "top": "yonga:block/adoquin_calle",
+    "side": "yonga:block/adoquin_calle"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "yonga:block/ladrillos_lucarita_losa"
+    },
+    "type=top": {
+      "model": "yonga:block/ladrillos_lucarita_losa_arriba"
+    },
+    "type=double": {
+      "model": "yonga:block/ladrillos_lucarita"
+    }
+  }
+}

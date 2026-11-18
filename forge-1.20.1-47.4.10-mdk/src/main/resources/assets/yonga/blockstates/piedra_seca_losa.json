@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "yonga:block/piedra_seca_losa"
+    },
+    "type=top": {
+      "model": "yonga:block/piedra_seca_losa_arriba"
+    },
+    "type=double": {
+      "model": "yonga:block/piedra_seca"
+    }
+  }
+}

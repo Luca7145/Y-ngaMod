@@ -1,5 +1,6 @@
 package com.lucarita.yonga.modulos.fe;
 
+import com.lucarita.yonga.modulos.fe.mobs.MobFe;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,8 +22,9 @@ import java.util.UUID;
  * Orbes de fe al matar mobs:
  *  - Monstruos (zombis, esqueletos, slimes, ghasts...): orbes AZULES que suman fe.
  *  - El resto (animales, aldeanos, gólems, peces, murciélagos...): orbes NEGROS que restan fe.
+ *  - Mobs de fe: los seres oscuros sueltan orbes AZULES y los luminosos NEGROS, y valen toda su vida (100%).
  *
- * Valor total = vida máxima del mob × porcentaje (monstruos 50%, resto 80%) × penalización por repetir.
+ * Valor total = vida máxima del mob × porcentaje (monstruos 50%, resto 80%, mobs de fe 100%) × penalización por repetir.
  *   Ej.: zombi (20 de vida) = +10, vaca (10 de vida) = -8.
  * El valor es fijo: no depende del nivel de quien mata ni de quien recoge.
  *
@@ -38,6 +40,8 @@ public final class OrbesFe {
     // ---- Ajustes ----
     private static final float PORCENTAJE_MONSTRUOS = 0.5f;
     private static final float PORCENTAJE_RESTO = 0.8f;
+    // Mobs de fe (hadas, etc.): dan toda su vida en fe. Los oscuros suman y los luminosos restan.
+    private static final float PORCENTAJE_MOBS_FE = 1.0f;
 
     private static final long VENTANA_REPETICION = 10 * 60 * 20;   // 10 minutos en ticks
     private static final float PENALIZACION_POR_REPETICION = 0.05f;
@@ -81,9 +85,16 @@ public final class OrbesFe {
             return;
         }
 
-        boolean esMonstruo = muerto instanceof Enemy;
-        float signo = esMonstruo ? 1.0f : -1.0f;
-        float porcentaje = esMonstruo ? PORCENTAJE_MONSTRUOS : PORCENTAJE_RESTO;
+        float signo;
+        float porcentaje;
+        if (muerto instanceof MobFe mobFe) {
+            signo = mobFe.esOscuro() ? 1.0f : -1.0f;
+            porcentaje = PORCENTAJE_MOBS_FE;
+        } else {
+            boolean esMonstruo = muerto instanceof Enemy;
+            signo = esMonstruo ? 1.0f : -1.0f;
+            porcentaje = esMonstruo ? PORCENTAJE_MONSTRUOS : PORCENTAJE_RESTO;
+        }
         float factor = factorRepeticion(asesino, muerto.getType(), nivel.getGameTime());
         float restante = muerto.getMaxHealth() * porcentaje * factor;
 

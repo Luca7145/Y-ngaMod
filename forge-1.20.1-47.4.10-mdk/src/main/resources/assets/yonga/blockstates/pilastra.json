@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "yonga:block/pilastra"
+    },
+    "axis=z": {
+      "model": "yonga:block/pilastra_horizontal",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "yonga:block/pilastra_horizontal",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

@@ -35,11 +35,11 @@ public final class Musica {
     public static final int RITMO_POR_GOLPE = 15;
     private static final long PAUSA_MAXIMA = 30;           // ticks (1,5 s) sin tocar ni golpear y el ritmo se pierde
 
-    public static final long PAUSA_PICANDO = 60;
+    public static final long PAUSA_PICANDO = 60;           // picando bloques se aguanta más (3 s), que romper tarda
     // Los Melómanos llevan el ritmo en la sangre: a ellos la barra les aguanta el doble sin vaciarse
     // (3 s en vez de 1,5; 6 s picando; 12 s con el arco-lira). Los demás roles pueden usar los
     // instrumentos que les den, pero con el tiempo normal.
-    public static final long MULTIPLICADOR_MELOMANO = 2;           // picando bloques se aguanta más (3 s), que romper tarda
+    public static final long MULTIPLICADOR_MELOMANO = 2;
 
     private record Ritmo(int valor, long ultimo, long pausa) {}
     private static final Map<UUID, Ritmo> RITMOS = new HashMap<>();

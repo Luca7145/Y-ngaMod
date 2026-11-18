@@ -1,0 +1,15 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:banco_ingeniero",
+  "ingredient": {
+    "item": "yonga:lucarita"
+  },
+  "result": "yonga:ladrillos_lucarita_losa",
+  "count": 16,
+  "rango": "maestro"
+}

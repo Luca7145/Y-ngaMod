@@ -46,17 +46,25 @@ public class RecetaOficio extends ShapedRecipe {
                 && RolDatos.obtenerRango(jugador).ordinal() >= rangoMinimo.ordinal();
     }
 
-    /** Si en la receta hay una mochila (p. ej. para hacer la mejorada), lo que llevaba dentro pasa a la nueva. */
+    /**
+     * Mejorar un objeto conserva lo que tenía:
+     *  - una mochila (para hacer la mejorada): lo que llevaba dentro pasa a la nueva.
+     *  - una herramienta o pieza de armadura (p. ej. de netherita a lucarita): encantamientos, nombre y
+     *    desgaste pasan a la nueva.
+     */
     @Override
     public ItemStack assemble(CraftingContainer cuadricula, RegistryAccess registros) {
         ItemStack resultado = super.assemble(cuadricula, registros);
-        if (resultado.getItem() instanceof MochilaItem) {
-            for (int i = 0; i < cuadricula.getContainerSize(); i++) {
-                ItemStack ingrediente = cuadricula.getItem(i);
-                if (ingrediente.getItem() instanceof MochilaItem && ingrediente.hasTag()) {
-                    resultado.setTag(ingrediente.getTag().copy());
-                    break;
-                }
+        for (int i = 0; i < cuadricula.getContainerSize(); i++) {
+            ItemStack ingrediente = cuadricula.getItem(i);
+            if (!ingrediente.hasTag()) {
+                continue;
+            }
+            boolean mochila = resultado.getItem() instanceof MochilaItem && ingrediente.getItem() instanceof MochilaItem;
+            boolean mejora = resultado.isDamageableItem() && ingrediente.isDamageableItem();
+            if (mochila || mejora) {
+                resultado.setTag(ingrediente.getTag().copy());
+                break;
             }
         }
         return resultado;

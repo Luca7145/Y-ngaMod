@@ -3,10 +3,19 @@ package com.lucarita.yonga.client;
 import com.lucarita.yonga.YongaMain;
 import com.lucarita.yonga.client.fe.BarraFe;
 import com.lucarita.yonga.client.fe.BarraMana;
+import com.lucarita.yonga.client.fe.EnanoRenderer;
+import com.lucarita.yonga.client.fe.HadaRenderer;
+import com.lucarita.yonga.client.fe.ModeloEnano;
 import com.lucarita.yonga.client.fe.OrbeFeRenderer;
 import com.lucarita.yonga.client.roles.CapaParapente;
 import com.lucarita.yonga.client.roles.CapaAntifaz;
 import com.lucarita.yonga.client.roles.CapaArmonica;
+import com.lucarita.yonga.client.roles.IncensarioRenderer;
+import com.lucarita.yonga.client.armas.LanzaRenderer;
+import com.lucarita.yonga.client.roles.TaladroScreen;
+import com.lucarita.yonga.client.roles.BancoScreen;
+import com.lucarita.yonga.modulos.roles.oficios.BotafumeiroItem;
+import com.lucarita.yonga.modulos.roles.oficios.TaladroItem;
 import com.lucarita.yonga.client.roles.CapaMedallon;
 import com.lucarita.yonga.client.roles.MochilaScreen;
 import com.lucarita.yonga.client.fe.FeTeclas;
@@ -45,6 +54,7 @@ public final class ClientSetup {
 
     private static final ResourceLocation PROPIEDAD_GUARDIA = new ResourceLocation(YongaMain.MOD_ID, "blocking");
     private static final ResourceLocation PROPIEDAD_ABIERTO = new ResourceLocation(YongaMain.MOD_ID, "abierto");
+    private static final ResourceLocation PROPIEDAD_USANDO = new ResourceLocation(YongaMain.MOD_ID, "usando");
 
     private ClientSetup() {}
 
@@ -73,8 +83,20 @@ public final class ClientSetup {
                 ItemProperties.register(ModuloRoles.ARCO_LIRA.get(), new ResourceLocation("pulling"),
                         (stack, nivel, entidad, semilla) ->
                                 entidad != null && entidad.isUsingItem() && entidad.getUseItem() == stack ? 1.0F : 0.0F);
+                // Taladro: con combustible se ve encendido
+                ItemProperties.register(ModuloRoles.TALADRO.get(), new ResourceLocation(YongaMain.MOD_ID, "cargado"),
+                        (stack, nivel, entidad, semilla) -> TaladroItem.cargado(stack) ? 1.0F : 0.0F);
+                // Botafumeiro: entero / solo el mango (incensario lanzado) / solo el incensario
+                ItemProperties.register(ModuloRoles.BOTAFUMEIRO.get(), new ResourceLocation(YongaMain.MOD_ID, "parte"),
+                        (stack, nivel, entidad, semilla) -> BotafumeiroItem.parte(stack));
+                // "yonga:usando" = 1 mientras se carga: con el brazo levantado se usa el dibujo sin reflejar
+                ItemProperties.register(ModuloRoles.BOTAFUMEIRO.get(), PROPIEDAD_USANDO,
+                        (stack, nivel, entidad, semilla) ->
+                                entidad != null && entidad.isUsingItem() && entidad.getUseItem() == stack ? 1.0F : 0.0F);
                 // Pantalla de la mochila
                 MenuScreens.register(ModuloRoles.MENU_MOCHILA.get(), MochilaScreen::new);
+                MenuScreens.register(ModuloRoles.MENU_TALADRO.get(), TaladroScreen::new);
+                MenuScreens.register(ModuloRoles.MENU_BANCO.get(), BancoScreen::new);
                 // El hueco de cara se oculta en el inventario creativo (allí Minecraft lo pondría encima de la barra rápida)
                 HuecoCara.ocultar = () -> Minecraft.getInstance().screen instanceof CreativeModeInventoryScreen;
             });
@@ -85,6 +107,9 @@ public final class ClientSetup {
         event.enqueueWork(() -> {
             // Propiedad "yonga:blocking" (1 mientras se hace guardia) para TODAS las armas con parry.
             // El JSON del modelo la usa para cambiar al modelo de guardia (p. ej. espada_caballeresca_guardia).
+            ItemProperties.register(ModuloArmas.LANZA.get(), PROPIEDAD_USANDO,
+                    (stack, nivel, entidad, semilla) ->
+                            entidad != null && entidad.isUsingItem() && entidad.getUseItem() == stack ? 1.0F : 0.0F);
             ModuloArmas.ITEMS.getEntries().forEach(registro -> {
                 if (registro.get() instanceof ArmaYonga arma && arma.tieneParry()) {
                     ItemProperties.register(arma, PROPIEDAD_GUARDIA,
@@ -126,18 +151,29 @@ public final class ClientSetup {
 
     @SubscribeEvent
     public static void registrarRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        if (Modulo.ARMAS.activo()) {
+            event.registerEntityRenderer(ModuloArmas.LANZA_ENTIDAD.get(), LanzaRenderer::new);
+        }
         if (Modulo.FE.activo()) {
             event.registerEntityRenderer(ModuloFe.ORBE_FE.get(), OrbeFeRenderer::new);
+            event.registerEntityRenderer(ModuloFe.HADA.get(), HadaRenderer::hada);
+            event.registerEntityRenderer(ModuloFe.HADA_OSCURA.get(), HadaRenderer::hadaOscura);
+            event.registerEntityRenderer(ModuloFe.ENANO.get(), EnanoRenderer::enano);
+            event.registerEntityRenderer(ModuloFe.ENANO_OSCURO.get(), EnanoRenderer::enanoOscuro);
         }
         if (Modulo.ROLES.activo()) {
             // La nota de la espada-keytar no tiene dibujo: solo su rastro de notitas
             event.registerEntityRenderer(ModuloRoles.NOTA_PROYECTIL.get(), NoopRenderer::new);
+            event.registerEntityRenderer(ModuloRoles.INCENSARIO.get(), IncensarioRenderer::new);
         }
     }
 
     // Modelo 3D de la vela del parapente
     @SubscribeEvent
     public static void registrarModelos(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        if (Modulo.FE.activo()) {
+            event.registerLayerDefinition(ModeloEnano.CAPA, ModeloEnano::crearCapa);
+        }
         if (Modulo.ROLES.activo()) {
             event.registerLayerDefinition(CapaParapente.CAPA, CapaParapente::crearCapa);
             event.registerLayerDefinition(CapaAntifaz.CAPA, CapaAntifaz::crearCapa);

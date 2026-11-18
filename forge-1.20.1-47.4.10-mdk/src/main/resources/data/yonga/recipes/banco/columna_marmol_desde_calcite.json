@@ -1,0 +1,15 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:banco_ingeniero",
+  "ingredient": {
+    "item": "minecraft:calcite"
+  },
+  "result": "yonga:columna_marmol",
+  "count": 1,
+  "rango": "aprendiz"
+}

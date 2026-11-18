@@ -7,9 +7,9 @@ import net.minecraftforge.common.ForgeTier;
 
 public class ModTiers {
     public static final Tier LUCARITA = new ForgeTier(
-            3,                                              // Nivel de minado (3 = Diamante/Netherite)
-            2300,                                           // Durabilidad (Usos)
-            8.0f,                                           // Velocidad de picado
+            4,                                              // Nivel de minado (4 = como la netherita)
+            2300,                                           // Durabilidad (Usos)  (netherita: 2031)
+            9.5f,                                           // Velocidad de picado (netherita: 9)
             4.0f,                                           // Daño base del material
             15,                                             // Encantabilidad
             BlockTags.NEEDS_DIAMOND_TOOL,                   // <-- Cambiado aquí

@@ -41,6 +41,10 @@ import java.util.UUID;
  *  - rompe escudos:  desactiva el escudo del rival, como un hacha
  *  - barrido:        si hace el ataque de barrido de las espadas
  *  - rango herrero:  rango mínimo de Herrero necesario para fabricarla
+ *  - lanzable:       mantener click derecho y soltar para lanzarla (como un tridente; hay que recogerla)
+ *  - combo:          3 golpes cargados seguidos al mismo enemigo (sin pasar 2 s entre ellos): el 3º hace ×1,75
+ *  - barrido amplio: los golpes cargados dañan con el 50% a todos los que tengas delante (2,5 bloques)
+ *  - dos manos:      mientras la llevas en la mano principal no puedes usar lo de la otra mano
  *
  * Las habilidades (sangrado, aturdir, contraataque) solo funcionan con golpes cargados.
  */
@@ -58,6 +62,10 @@ public class ArmaYonga extends SwordItem {
         boolean rompeEscudos = false;
         boolean barrido = true;
         RangoRol rangoHerrero = RangoRol.NOVATO;
+        boolean lanzable = false;
+        boolean combo = false;
+        boolean barridoAmplio = false;
+        boolean dosManos = false;
 
         public static Rasgos nuevo() { return new Rasgos(); }
 
@@ -70,6 +78,10 @@ public class ArmaYonga extends SwordItem {
         public Rasgos rompeEscudos() { this.rompeEscudos = true; return this; }
         public Rasgos sinBarrido() { this.barrido = false; return this; }
         public Rasgos herrero(RangoRol rango) { this.rangoHerrero = rango; return this; }
+        public Rasgos lanzable() { this.lanzable = true; return this; }
+        public Rasgos combo() { this.combo = true; return this; }
+        public Rasgos barridoAmplio() { this.barridoAmplio = true; this.barrido = false; return this; }
+        public Rasgos dosManos() { this.dosManos = true; return this; }
     }
 
     // UUID fijo para el modificador de alcance (Minecraft lo necesita para no duplicarlo)
@@ -99,6 +111,10 @@ public class ArmaYonga extends SwordItem {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level nivel, Player jugador, InteractionHand mano) {
+        if (rasgos.lanzable) {
+            jugador.startUsingItem(mano);
+            return InteractionResultHolder.consume(jugador.getItemInHand(mano));
+        }
         if (!tieneParry()) {
             return super.use(nivel, jugador, mano);
         }
@@ -109,13 +125,67 @@ public class ArmaYonga extends SwordItem {
 
     @Override
     public UseAnim getUseAnimation(ItemStack stack) {
+        if (rasgos.lanzable) return UseAnim.SPEAR;
         return tieneParry() ? UseAnim.BLOCK : super.getUseAnimation(stack);
     }
 
-    // 72000 ticks = se mantiene la guardia hasta que el jugador suelte el botón
+    // 72000 ticks = se mantiene la guardia (o se carga el lanzamiento) hasta que el jugador suelte el botón
     @Override
     public int getUseDuration(ItemStack stack) {
-        return tieneParry() ? 72000 : super.getUseDuration(stack);
+        return tieneParry() || rasgos.lanzable ? 72000 : super.getUseDuration(stack);
+    }
+
+    // ---------- LANZAR (lanza) ----------
+
+    private static final int CARGA_MINIMA_LANZAR = 10;   // medio segundo, como el tridente
+
+    @Override
+    public void releaseUsing(ItemStack stack, Level nivel, LivingEntity usuario, int ticksRestantes) {
+        if (!rasgos.lanzable || !(usuario instanceof Player jugador) || getUseDuration(stack) - ticksRestantes < CARGA_MINIMA_LANZAR) {
+            return;
+        }
+        if (!nivel.isClientSide()) {
+            stack.hurtAndBreak(1, jugador, j -> j.broadcastBreakEvent(jugador.getUsedItemHand()));
+            if (stack.isEmpty()) {
+                return;
+            }
+            LanzaEntity lanza = new LanzaEntity(nivel, jugador, stack);
+            lanza.shootFromRotation(jugador, jugador.getXRot(), jugador.getYRot(), 0.0f, 2.5f, 1.0f);
+            if (jugador.getAbilities().instabuild) {
+                lanza.pickup = net.minecraft.world.entity.projectile.AbstractArrow.Pickup.CREATIVE_ONLY;
+            }
+            nivel.addFreshEntity(lanza);
+            nivel.playSound(null, lanza, net.minecraft.sounds.SoundEvents.TRIDENT_THROW, net.minecraft.sounds.SoundSource.PLAYERS, 1.0f, 0.9f);
+            if (!jugador.getAbilities().instabuild) {
+                jugador.getInventory().removeItem(stack);
+            }
+        }
+    }
+
+    // ---------- BARRIDO AMPLIO (mandoble) ----------
+
+    private static final double RADIO_BARRIDO = 2.5;
+    private static final float PARTE_BARRIDO = 0.5f;
+
+    private void barridoAmplio(LivingEntity objetivo, LivingEntity atacante) {
+        float dano = (float) atacante.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE) * PARTE_BARRIDO;
+        net.minecraft.world.phys.Vec3 mirada = atacante.getLookAngle().multiply(1, 0, 1).normalize();
+        for (LivingEntity otro : atacante.level().getEntitiesOfClass(LivingEntity.class, atacante.getBoundingBox().inflate(RADIO_BARRIDO + 1, 1, RADIO_BARRIDO + 1))) {
+            if (otro == atacante || otro == objetivo || !otro.isAlive() || otro instanceof net.minecraft.world.entity.decoration.ArmorStand
+                    || atacante.distanceTo(otro) > RADIO_BARRIDO + 0.5) continue;
+            net.minecraft.world.phys.Vec3 hacia = otro.position().subtract(atacante.position()).multiply(1, 0, 1).normalize();
+            if (hacia.dot(mirada) < 0.2) continue;                         // solo los de delante
+            if (otro instanceof Player p && atacante instanceof Player a && !a.canHarmPlayer(p)) continue;
+            if (otro.hurt(atacante.damageSources().playerAttack((Player) atacante), dano)) {
+                otro.knockback(0.6, -hacia.x, -hacia.z);
+            }
+        }
+        if (atacante.level() instanceof net.minecraft.server.level.ServerLevel servidor) {
+            double x = atacante.getX() + mirada.x * 1.5, z = atacante.getZ() + mirada.z * 1.5;
+            servidor.sendParticles(net.minecraft.core.particles.ParticleTypes.SWEEP_ATTACK, x, atacante.getY(0.6), z, 3, 0.8, 0.1, 0.8, 0);
+        }
+        atacante.level().playSound(null, atacante.getX(), atacante.getY(), atacante.getZ(),
+                net.minecraft.sounds.SoundEvents.PLAYER_ATTACK_SWEEP, net.minecraft.sounds.SoundSource.PLAYERS, 1.0f, 0.7f);
     }
 
     // ---------- AL GOLPEAR: SANGRADO Y ATURDIR ----------
@@ -129,6 +199,9 @@ public class ArmaYonga extends SwordItem {
             }
             if (rasgos.probAturdir > 0 && atacante.getRandom().nextFloat() < rasgos.probAturdir) {
                 Aturdimiento.aturdir(objetivo);
+            }
+            if (rasgos.barridoAmplio && atacante instanceof Player) {
+                barridoAmplio(objetivo, atacante);
             }
         }
         // Método original: el arma pierde durabilidad al golpear
@@ -169,6 +242,15 @@ public class ArmaYonga extends SwordItem {
         return rasgos.rompeEscudos || super.canDisableShield(stack, escudo, defensor, atacante);
     }
 
+    // ---------- POSE A DOS MANOS (solo en el cliente) ----------
+
+    // Ojo: Forge llama a esto mientras se crea el arma, cuando "rasgos" todavía no está puesto.
+    // Por eso no se mira aquí si es a dos manos, sino cada vez que se dibuja (ver PoseDosManos.para).
+    @Override
+    public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.extensions.common.IClientItemExtensions> consumidor) {
+        consumidor.accept(com.lucarita.yonga.client.armas.PoseDosManos.para(() -> rasgos != null && rasgos.dosManos));
+    }
+
     // ---------- DESCRIPCIÓN (al pasar el ratón por encima) ----------
 
     @Override
@@ -180,6 +262,10 @@ public class ArmaYonga extends SwordItem {
         if (rasgos.sangrado != null && Modulo.SANGRADO.activo()) rasgosVisibles.add("yonga.arma.rasgo.sangrado");
         if (rasgos.probAturdir > 0) rasgosVisibles.add("yonga.arma.rasgo.aturdir");
         if (rasgos.rompeEscudos) rasgosVisibles.add("yonga.arma.rasgo.rompe_escudos");
+        if (rasgos.lanzable) rasgosVisibles.add("yonga.arma.rasgo.lanzable");
+        if (rasgos.combo) rasgosVisibles.add("yonga.arma.rasgo.combo");
+        if (rasgos.barridoAmplio) rasgosVisibles.add("yonga.arma.rasgo.barrido_amplio");
+        if (rasgos.dosManos) rasgosVisibles.add("yonga.arma.rasgo.dos_manos");
 
         if (!rasgosVisibles.isEmpty()) {
             MutableComponent linea = Component.empty();

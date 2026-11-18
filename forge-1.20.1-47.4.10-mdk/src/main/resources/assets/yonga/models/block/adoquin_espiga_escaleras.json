@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "yonga:block/adoquin_espiga",
+    "top": "yonga:block/adoquin_espiga",
+    "side": "yonga:block/adoquin_espiga"
+  }
+}

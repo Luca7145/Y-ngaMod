@@ -124,5 +124,23 @@
         "stream": false
       }
     ]
+  },
+  "flauta_nota": {
+    "subtitle": "subtitles.yonga.flauta_nota",
+    "sounds": [
+      {
+        "name": "yonga:flauta_nota",
+        "stream": false
+      }
+    ]
+  },
+  "flauta_encanto": {
+    "subtitle": "subtitles.yonga.flauta_encanto",
+    "sounds": [
+      {
+        "name": "yonga:flauta_encanto",
+        "stream": false
+      }
+    ]
   }
 }

@@ -1,0 +1,54 @@
+{
+  "loader": "forge:separate_transforms",
+  "gui_light": "front",
+  "base": {
+    "parent": "yonga:item/botafumeiro_mano"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "yonga:item/botafumeiro"
+      }
+    },
+    "ground": {
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "yonga:item/botafumeiro"
+      }
+    },
+    "fixed": {
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "yonga:item/botafumeiro"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "yonga:parte": 1
+      },
+      "model": "yonga:item/botafumeiro_mango"
+    },
+    {
+      "predicate": {
+        "yonga:parte": 2
+      },
+      "model": "yonga:item/botafumeiro_incensario"
+    },
+    {
+      "predicate": {
+        "yonga:usando": 1
+      },
+      "model": "yonga:item/botafumeiro_cargando"
+    },
+    {
+      "predicate": {
+        "yonga:parte": 1,
+        "yonga:usando": 1
+      },
+      "model": "yonga:item/botafumeiro_mango_cargando"
+    }
+  ]
+}

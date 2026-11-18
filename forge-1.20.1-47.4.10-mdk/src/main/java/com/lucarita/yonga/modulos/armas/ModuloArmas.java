@@ -12,6 +12,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -30,8 +33,13 @@ public final class ModuloArmas {
             DeferredRegister.create(ForgeRegistries.ITEMS, YongaMain.MOD_ID);
     public static final DeferredRegister<MobEffect> EFECTOS =
             DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, YongaMain.MOD_ID);
+    public static final DeferredRegister<Enchantment> ENCANTAMIENTOS =
+            DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, YongaMain.MOD_ID);
     public static final DeferredRegister<RecipeSerializer<?>> RECETAS =
             DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, YongaMain.MOD_ID);
+
+    public static final DeferredRegister<EntityType<?>> ENTIDADES =
+            DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, YongaMain.MOD_ID);
 
     // ---------- ARMAS (en orden de rango de herrero) ----------
     //                                     daño extra, velocidad, durabilidad
@@ -44,17 +52,25 @@ public final class ModuloArmas {
     public static final RegistryObject<Item> GLADIO = arma("gladio", 3, -2.2f, 1900,
             Rasgos.nuevo().herrero(RangoRol.APRENDIZ));
 
-    // Oficial. Daño 11, velocidad 0.9. +1 bloque de alcance, sangrado medio.
+    // Oficial. Daño 11, velocidad 0.9. +1,25 bloques de alcance, sangrado medio.
     public static final RegistryObject<Item> ALABARDA = arma("alabarda", 6, -3.1f, 2100,
-            Rasgos.nuevo().herrero(RangoRol.OFICIAL).alcance(1.0).sangrado(Sangrado.ALABARDA));
+            Rasgos.nuevo().herrero(RangoRol.OFICIAL).alcance(1.25).sangrado(Sangrado.ALABARDA));
 
     // Experto. Daño 10, velocidad 1.4. La especialista en sangrado.
+    // Oficial. Daño 8, velocidad 1.2. +1,5 bloques de alcance y se puede lanzar (10 de daño; hay que recogerla).
+    public static final RegistryObject<Item> LANZA = arma("lanza", 3, -2.8f, 2200,
+            Rasgos.nuevo().herrero(RangoRol.OFICIAL).alcance(1.5).lanzable().sinBarrido());
+
     public static final RegistryObject<Item> FALCATA = arma("falcata", 5, -2.6f, 2300,
             Rasgos.nuevo().herrero(RangoRol.EXPERTO).sangrado(Sangrado.FALCATA));
 
     // Experto. Daño 12, velocidad 0.9. 20% de aturdir, rompe escudos, sin barrido.
     public static final RegistryObject<Item> MAZA = arma("maza", 7, -3.1f, 2500,
             Rasgos.nuevo().herrero(RangoRol.EXPERTO).aturdir(0.20f).rompeEscudos().sinBarrido());
+
+    // Experto. Daño 8, velocidad 1.8. Combo: el 3er golpe cargado seguido al mismo enemigo hace ×1,75.
+    public static final RegistryObject<Item> KATANA = arma("katana", 3, -2.2f, 2400,
+            Rasgos.nuevo().herrero(RangoRol.EXPERTO).combo());
 
     // Maestro. Daño 8, velocidad 2.0. Parry + contraataque (+50% tras bloquear).
     public static final RegistryObject<Item> ROPERA = arma("ropera", 3, -2.0f, 2600,
@@ -63,6 +79,15 @@ public final class ModuloArmas {
     // Maestro. Daño 11, velocidad 1.6. Parry que también para flechas.
     public static final RegistryObject<Item> ESPADA_CABALLERESCA = arma("espada_caballeresca", 6, -2.4f, 2800,
             Rasgos.nuevo().herrero(RangoRol.MAESTRO).parryTambienProyectiles());
+
+    // Maestro. Daño 12, velocidad 1.2. A dos manos; barrido amplio (50% a todos los de delante, 2,5 bloques).
+    public static final RegistryObject<Item> MANDOBLE = arma("mandoble", 7, -2.8f, 3000,
+            Rasgos.nuevo().herrero(RangoRol.MAESTRO).barridoAmplio().dosManos());
+
+    // La lanza cuando vuela
+    public static final RegistryObject<EntityType<LanzaEntity>> LANZA_ENTIDAD = ENTIDADES.register("lanza",
+            () -> EntityType.Builder.<LanzaEntity>of(LanzaEntity::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20).build("lanza"));
 
     // ---------- EFECTOS ----------
 
@@ -84,14 +109,23 @@ public final class ModuloArmas {
                 new Item.Properties().durability(durabilidad)));
     }
 
+    // Encantamiento Conmoción (I-III): probabilidad de aturdir al golpear
+    public static final RegistryObject<Enchantment> CONMOCION = ENCANTAMIENTOS.register("conmocion", ConmocionEnchantment::new);
+
     public static void registrar(IEventBus modEventBus) {
         ITEMS.register(modEventBus);
         EFECTOS.register(modEventBus);
         RECETAS.register(modEventBus);
+        ENCANTAMIENTOS.register(modEventBus);
+        ENTIDADES.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.addListener(CombateEventos::alSerAtacado);
         MinecraftForge.EVENT_BUS.addListener(CombateEventos::alHacerDano);
         MinecraftForge.EVENT_BUS.addListener(CombateEventos::alSalir);
+        MinecraftForge.EVENT_BUS.addListener(CombateEventos::alGolpear);
+        MinecraftForge.EVENT_BUS.addListener(CombateEventos::alUsarObjeto);
+        MinecraftForge.EVENT_BUS.addListener(CombateEventos::alUsarEnBloque);
+        MinecraftForge.EVENT_BUS.addListener(CombateEventos::alEmpezarAUsar);
         MinecraftForge.EVENT_BUS.addListener(Aturdimiento::alAtacarAlguien);
         MinecraftForge.EVENT_BUS.addListener(Aturdimiento::alAtacarJugador);
         MinecraftForge.EVENT_BUS.addListener(Aturdimiento::alSaltar);

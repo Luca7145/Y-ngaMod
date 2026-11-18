@@ -1,0 +1,15 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:banco_ingeniero",
+  "ingredient": {
+    "item": "minecraft:stone_bricks"
+  },
+  "result": "yonga:adoquin_espiga",
+  "count": 1,
+  "rango": "todos"
+}

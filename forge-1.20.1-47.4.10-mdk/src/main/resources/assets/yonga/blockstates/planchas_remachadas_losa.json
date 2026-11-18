@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "yonga:block/planchas_remachadas_losa"
+    },
+    "type=top": {
+      "model": "yonga:block/planchas_remachadas_losa_arriba"
+    },
+    "type=double": {
+      "model": "yonga:block/planchas_remachadas"
+    }
+  }
+}

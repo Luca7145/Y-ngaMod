@@ -1,0 +1,28 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:receta_oficio",
+  "oficio": "herrero",
+  "rango": "maestro",
+  "category": "equipment",
+  "pattern": [
+    "L L",
+    "LDL",
+    "LLL"
+  ],
+  "key": {
+    "L": {
+      "item": "yonga:lucarita"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "yonga:peto_lucarita"
+  }
+}

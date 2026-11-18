@@ -1,0 +1,15 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:banco_ingeniero",
+  "ingredient": {
+    "item": "minecraft:smooth_stone"
+  },
+  "result": "yonga:sillar_moldura",
+  "count": 1,
+  "rango": "novato"
+}

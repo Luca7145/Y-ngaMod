@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "yonga:block/columna_marmol_tapa",
+    "side": "yonga:block/columna_marmol"
+  }
+}

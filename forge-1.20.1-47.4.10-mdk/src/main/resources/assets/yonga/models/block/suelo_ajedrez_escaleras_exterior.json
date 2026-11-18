@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "yonga:block/suelo_ajedrez",
+    "top": "yonga:block/suelo_ajedrez",
+    "side": "yonga:block/suelo_ajedrez"
+  }
+}

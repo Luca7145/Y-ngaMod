@@ -1,0 +1,27 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:receta_oficio",
+  "oficio": "herrero",
+  "rango": "oficial",
+  "category": "equipment",
+  "pattern": [
+    "LDL",
+    "L L"
+  ],
+  "key": {
+    "L": {
+      "item": "yonga:lucarita"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "yonga:casco_lucarita"
+  }
+}

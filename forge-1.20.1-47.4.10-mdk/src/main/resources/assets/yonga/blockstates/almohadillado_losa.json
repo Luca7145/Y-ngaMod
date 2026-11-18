@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "yonga:block/almohadillado_losa"
+    },
+    "type=top": {
+      "model": "yonga:block/almohadillado_losa_arriba"
+    },
+    "type=double": {
+      "model": "yonga:block/almohadillado"
+    }
+  }
+}

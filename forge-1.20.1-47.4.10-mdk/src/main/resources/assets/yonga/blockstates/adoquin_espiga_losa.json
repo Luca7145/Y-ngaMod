@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "yonga:block/adoquin_espiga_losa"
+    },
+    "type=top": {
+      "model": "yonga:block/adoquin_espiga_losa_arriba"
+    },
+    "type=double": {
+      "model": "yonga:block/adoquin_espiga"
+    }
+  }
+}

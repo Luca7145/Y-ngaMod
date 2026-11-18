@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "yonga:block/piedra_seca",
+    "top": "yonga:block/piedra_seca",
+    "side": "yonga:block/piedra_seca"
+  }
+}

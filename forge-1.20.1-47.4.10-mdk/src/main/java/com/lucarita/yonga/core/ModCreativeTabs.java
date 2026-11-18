@@ -5,6 +5,7 @@ import com.lucarita.yonga.modulos.Modulo;
 import com.lucarita.yonga.modulos.armas.ModuloArmas;
 import com.lucarita.yonga.modulos.fe.ModuloFe;
 import com.lucarita.yonga.modulos.roles.ModuloRoles;
+import com.lucarita.yonga.modulos.roles.construccion.Construccion;
 import com.lucarita.yonga.modulos.sangrado.ModuloSangrado;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -22,20 +23,26 @@ public class ModCreativeTabs {
 
     public static final RegistryObject<CreativeModeTab> YONGA_TAB = CREATIVE_MODE_TABS.register("yonga_tab",
             () -> CreativeModeTab.builder()
-                    .icon(() -> new ItemStack(ModItems.MONEDA.get()))
+                    .icon(() -> new ItemStack(ModItems.ICONO.get()))
                     .title(Component.translatable("creativetab.yonga_tab"))
                     .displayItems((parametros, output) -> {
                         // Núcleo (siempre)
-                        ModItems.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
+                        ModItems.ITEMS.getEntries().stream().filter(item -> item != ModItems.ICONO)
+                                .forEach(item -> output.accept(item.get()));
 
                         // Cada módulo solo añade sus cosas si está activo.
                         // Las armas se añaden solas: cualquier arma nueva que registres en ModuloArmas aparece aquí.
                         if (Modulo.ARMAS.activo()) {
                             ModuloArmas.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
+                            for (int nivel = 1; nivel <= 3; nivel++) {
+                                output.accept(EnchantedBookItem.createForEnchantment(
+                                        new EnchantmentInstance(ModuloArmas.CONMOCION.get(), nivel)));
+                            }
                         }
 
                         if (Modulo.ROLES.activo()) {
                             ModuloRoles.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
+                            Construccion.PARA_CREATIVO.forEach(item -> output.accept(item.get()));
                         }
 
                         if (Modulo.FE.activo()) {
@@ -44,8 +51,10 @@ public class ModCreativeTabs {
 
                         if (Modulo.SANGRADO.activo()) {
                             ModuloSangrado.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
-                            output.accept(EnchantedBookItem.createForEnchantment(
-                                    new EnchantmentInstance(ModuloSangrado.CORTANTE.get(), 1)));
+                            for (int nivel = 1; nivel <= 3; nivel++) {
+                                output.accept(EnchantedBookItem.createForEnchantment(
+                                        new EnchantmentInstance(ModuloSangrado.CORTANTE.get(), nivel)));
+                            }
                         }
                     })
                     .build());

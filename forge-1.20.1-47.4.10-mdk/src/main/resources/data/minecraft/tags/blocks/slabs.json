@@ -1,0 +1,23 @@
+{
+  "replace": false,
+  "values": [
+    "yonga:adoquin_calle_losa",
+    "yonga:adoquin_espiga_losa",
+    "yonga:sillares_losa",
+    "yonga:planchas_remachadas_losa",
+    "yonga:chapa_estriada_losa",
+    "yonga:damero_losa",
+    "yonga:ladrillos_lucarita_losa",
+    "yonga:piedra_seca_losa",
+    "yonga:adobe_losa",
+    "yonga:marmol_losa",
+    "yonga:ladrillo_romano_losa",
+    "yonga:hormigon_pulido_losa",
+    "yonga:revoco_blanco_losa",
+    "yonga:piedra_gotica_losa",
+    "yonga:suelo_ajedrez_losa",
+    "yonga:almohadillado_losa",
+    "yonga:marmol_negro_losa",
+    "yonga:marmol_verde_losa"
+  ]
+}

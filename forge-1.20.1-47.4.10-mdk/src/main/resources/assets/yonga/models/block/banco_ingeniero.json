@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "yonga:block/banco_ingeniero_arriba",
+    "side": "yonga:block/banco_ingeniero_lado",
+    "bottom": "yonga:block/banco_ingeniero_abajo"
+  }
+}

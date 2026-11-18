@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "yonga:block/marmol_losa"
+    },
+    "type=top": {
+      "model": "yonga:block/marmol_losa_arriba"
+    },
+    "type=double": {
+      "model": "yonga:block/marmol"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:banco_ingeniero",
+  "ingredient": {
+    "tag": "minecraft:planks"
+  },
+  "result": "yonga:lamas_madera",
+  "count": 1,
+  "rango": "aprendiz"
+}

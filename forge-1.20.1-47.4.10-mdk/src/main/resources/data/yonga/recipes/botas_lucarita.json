@@ -1,0 +1,24 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:receta_oficio",
+  "oficio": "herrero",
+  "rango": "aprendiz",
+  "category": "equipment",
+  "pattern": [
+    "L L",
+    "L L"
+  ],
+  "key": {
+    "L": {
+      "item": "yonga:lucarita"
+    }
+  },
+  "result": {
+    "item": "yonga:botas_lucarita"
+  }
+}

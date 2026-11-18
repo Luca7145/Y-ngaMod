@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "yonga:block/planchas_remachadas",
+    "top": "yonga:block/planchas_remachadas",
+    "side": "yonga:block/planchas_remachadas"
+  }
+}

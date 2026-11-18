@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "yonga:block/sillares_losa"
+    },
+    "type=top": {
+      "model": "yonga:block/sillares_losa_arriba"
+    },
+    "type=double": {
+      "model": "yonga:block/sillares"
+    }
+  }
+}
