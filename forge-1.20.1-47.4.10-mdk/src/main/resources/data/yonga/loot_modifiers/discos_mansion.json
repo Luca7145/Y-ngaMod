@@ -1,0 +1,32 @@
+{
+  "type": "yonga:discos_en_cofres",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/woodland_mansion"
+    }
+  ],
+  "probabilidad": 0.2,
+  "discos": [
+    "yonga:disco_mamada_sobre_mamada_v1",
+    "yonga:disco_mamada_sobre_mamada",
+    "yonga:disco_mamada_sobre_mamada_v3",
+    "yonga:disco_media_vita",
+    "yonga:disco_baka_mitai",
+    "yonga:disco_caballo_homosexual",
+    "yonga:disco_papa_palpa",
+    "yonga:disco_call_me_maybe",
+    "yonga:disco_caramelldansen",
+    "yonga:disco_virtual_insanity",
+    "yonga:disco_pipo_pipo",
+    "yonga:disco_sexbomb_rayman",
+    "yonga:disco_its_raining_men",
+    "yonga:disco_pitito_con_el_cierre",
+    "yonga:disco_somewhere_on_kamino",
+    "yonga:disco_puton_del_barrio",
+    "yonga:disco_flyday_chinatown",
+    "yonga:disco_stay_with_me",
+    "yonga:disco_drunken_sailor",
+    "yonga:disco_chum_bucket_rhumba"
+  ]
+}

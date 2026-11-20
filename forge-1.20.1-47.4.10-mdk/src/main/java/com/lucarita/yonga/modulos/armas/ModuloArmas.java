@@ -11,6 +11,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.entity.EntityType;
@@ -56,11 +57,17 @@ public final class ModuloArmas {
     public static final RegistryObject<Item> ALABARDA = arma("alabarda", 6, -3.1f, 2100,
             Rasgos.nuevo().herrero(RangoRol.OFICIAL).alcance(1.25).sangrado(Sangrado.ALABARDA));
 
-    // Experto. Daño 10, velocidad 1.4. La especialista en sangrado.
     // Oficial. Daño 8, velocidad 1.2. +1,5 bloques de alcance y se puede lanzar (10 de daño; hay que recogerla).
     public static final RegistryObject<Item> LANZA = arma("lanza", 3, -2.8f, 2200,
             Rasgos.nuevo().herrero(RangoRol.OFICIAL).alcance(1.5).lanzable().sinBarrido());
 
+    // Oficial. Daño 10, velocidad 1.0. Perfora armaduras: contra sus golpes solo cuenta la mitad de la armadura
+    // (y de su dureza). Flojo contra lo que va sin armadura, terrible contra caballeros, zombis con hierro o
+    // jugadores con netherita. Sin barrido.
+    public static final RegistryObject<Item> MARTILLO_GUERRA = arma("martillo_guerra", 5, -3.0f, 2300,
+            Rasgos.nuevo().herrero(RangoRol.OFICIAL).perforaArmadura(0.5f).sinBarrido());
+
+    // Experto. Daño 10, velocidad 1.4. La especialista en sangrado.
     public static final RegistryObject<Item> FALCATA = arma("falcata", 5, -2.6f, 2300,
             Rasgos.nuevo().herrero(RangoRol.EXPERTO).sangrado(Sangrado.FALCATA));
 
@@ -121,6 +128,7 @@ public final class ModuloArmas {
 
         MinecraftForge.EVENT_BUS.addListener(CombateEventos::alSerAtacado);
         MinecraftForge.EVENT_BUS.addListener(CombateEventos::alHacerDano);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, CombateEventos::alPerforar);
         MinecraftForge.EVENT_BUS.addListener(CombateEventos::alSalir);
         MinecraftForge.EVENT_BUS.addListener(CombateEventos::alGolpear);
         MinecraftForge.EVENT_BUS.addListener(CombateEventos::alUsarObjeto);

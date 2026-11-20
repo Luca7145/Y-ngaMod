@@ -1,0 +1,28 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:receta_oficio",
+  "oficio": "sacerdote",
+  "rango": "oficial",
+  "category": "equipment",
+  "pattern": [
+    "W W",
+    "WGW",
+    "WWW"
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "yonga:tunica_sagrada"
+  }
+}

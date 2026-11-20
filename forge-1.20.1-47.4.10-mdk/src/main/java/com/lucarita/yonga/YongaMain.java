@@ -4,7 +4,9 @@ import com.lucarita.yonga.client.ClientSetup;
 import com.lucarita.yonga.core.GolpeCargado;
 import com.lucarita.yonga.core.ModBlocks;
 import com.lucarita.yonga.core.ModCreativeTabs;
+import com.lucarita.yonga.core.DiscosEnCofres;
 import com.lucarita.yonga.core.ModItems;
+import com.lucarita.yonga.core.estante.Estantes;
 import com.lucarita.yonga.modulos.Modulo;
 import com.lucarita.yonga.modulos.ModuloActivoCondition;
 import com.lucarita.yonga.modulos.ModulosConfig;
@@ -14,6 +16,8 @@ import com.lucarita.yonga.modulos.fe.mobs.AparicionMobsFe;
 import com.lucarita.yonga.modulos.fe.mobs.EstatuaCentinela;
 import com.lucarita.yonga.modulos.roles.ModuloRoles;
 import com.lucarita.yonga.modulos.sangrado.ModuloSangrado;
+import com.lucarita.yonga.modulos.tabaco.ModuloTabaco;
+import com.lucarita.yonga.modulos.tabaco.SemillasTabacoModifier;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -37,8 +41,10 @@ public class YongaMain
         ModulosConfig.cargar();
 
         // 2. Núcleo: siempre se carga
+        Estantes.registrar(modEventBus);        // los estantes (de la 1.21.9): bloques, objetos, entidad y sonidos
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
+        DiscosEnCofres.registrar(modEventBus);   // nuestros discos en los cofres de mazmorras, mansiones y ciudades antiguas
         ModCreativeTabs.register(modEventBus);
         MinecraftForge.EVENT_BUS.addListener(GolpeCargado::alAtacar);
         MinecraftForge.EVENT_BUS.addListener(GolpeCargado::alSalir);
@@ -49,6 +55,8 @@ public class YongaMain
         AparicionMobsFe.registrar(modEventBus);
         // Las estatuas del desierto (el centinela de piedra): también siempre, por su JSON de generación
         EstatuaCentinela.registrar(modEventBus);
+        // Las semillas de tabaco al romper hierba: también siempre (su JSON siempre está); solo actúa con el módulo
+        SemillasTabacoModifier.registrar(modEventBus);
 
         // 3. Módulos: solo se registran si están activados
         if (Modulo.ARMAS.activo()) {
@@ -62,6 +70,9 @@ public class YongaMain
         }
         if (Modulo.ROLES.activo()) {
             ModuloRoles.registrar(modEventBus);
+        }
+        if (Modulo.TABACO.activo()) {
+            ModuloTabaco.registrar(modEventBus);
         }
         // Futuros módulos aquí, siguiendo el mismo patrón
 

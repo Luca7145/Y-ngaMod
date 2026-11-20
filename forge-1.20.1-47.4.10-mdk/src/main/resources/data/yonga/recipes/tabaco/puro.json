@@ -1,0 +1,23 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "tabaco"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "H",
+    "H",
+    "H"
+  ],
+  "key": {
+    "H": {
+      "item": "yonga:hoja_tabaco_curada"
+    }
+  },
+  "result": {
+    "item": "yonga:puro"
+  }
+}

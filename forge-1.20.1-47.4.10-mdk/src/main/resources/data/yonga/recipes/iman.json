@@ -1,0 +1,29 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:receta_oficio",
+  "oficio": "ingeniero",
+  "rango": "novato",
+  "category": "equipment",
+  "pattern": [
+    "I I",
+    "R R",
+    "I I"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "yonga:iman",
+    "count": 1
+  }
+}

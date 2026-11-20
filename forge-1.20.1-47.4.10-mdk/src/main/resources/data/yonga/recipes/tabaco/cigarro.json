@@ -1,0 +1,21 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "tabaco"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "yonga:tabaco_picado"
+    }
+  ],
+  "result": {
+    "item": "yonga:cigarro"
+  }
+}

@@ -47,11 +47,11 @@ public final class RitualZor {
             return;
         }
         if (!nivel.dimensionType().hasSkyLight() || nivel.dimensionType().hasCeiling()) {
-            avisar(jugador, "yonga.zor.ritual_sin_cielo");
+            avisar(jugador, "yonga.ritual.sin_espacio");
             return;
         }
         if (!RitualPez.abierto(nivel, centro)) {
-            avisar(jugador, "yonga.zor.ritual_cerrado");
+            avisar(jugador, "yonga.ritual.sin_espacio");
             return;
         }
         for (int dx = -1; dx <= 1; dx++) {

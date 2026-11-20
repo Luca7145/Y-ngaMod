@@ -307,6 +307,9 @@ public class ZorElQuemado extends Mob implements MobFe, Jefe {
             intro();
             return;
         }
+        if (this.tickCount % 100 == 0) {
+            Jefe.escalarVida(this, 64);          // más vida con más jugadores (conserva el porcentaje)
+        }
         if (fase == 1 && this.getHealth() < this.getMaxHealth() * 0.5f) {
             fase = 2;
             barra.setColor(BossEvent.BossBarColor.YELLOW);
@@ -399,6 +402,7 @@ public class ZorElQuemado extends Mob implements MobFe, Jefe {
 
     private void empezarRodeo() {
         empezar(RODEAR);
+        Jefe.objetivoAlAzar(this, 64);           // con varios jugadores, reparte los ataques entre todos
         duracionRodeo = RODEO_MIN + this.random.nextInt(RODEO_MAX - RODEO_MIN);
     }
 
@@ -791,6 +795,9 @@ public class ZorElQuemado extends Mob implements MobFe, Jefe {
     @Override
     public boolean hurt(DamageSource fuente, float cantidad) {
         if (accion() == INTRO && !fuente.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return false;
+        if (Jefe.esFlecha(fuente)) {
+            return false;                                   // las flechas le rebotan (como a todos los jefes)
+        }
         if (fuente.getEntity() == this) {
             return false;                                   // sus propias bolas de fuego no le hacen nada
         }

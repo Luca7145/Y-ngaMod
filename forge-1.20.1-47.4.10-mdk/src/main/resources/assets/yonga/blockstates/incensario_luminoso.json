@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "yonga:block/incensario_luminoso"
+    },
+    "lit=true": {
+      "model": "yonga:block/incensario_luminoso_encendido"
+    }
+  }
+}

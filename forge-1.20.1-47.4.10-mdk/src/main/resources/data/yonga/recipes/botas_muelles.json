@@ -1,0 +1,31 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:receta_oficio",
+  "oficio": "ingeniero",
+  "rango": "oficial",
+  "category": "equipment",
+  "pattern": [
+    "SBS",
+    "P P"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:slime_ball"
+    },
+    "B": {
+      "item": "minecraft:iron_boots"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    }
+  },
+  "result": {
+    "item": "yonga:botas_muelles",
+    "count": 1
+  }
+}

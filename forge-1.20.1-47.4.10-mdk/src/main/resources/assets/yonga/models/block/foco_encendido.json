@@ -1,0 +1,94 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "particle": "yonga:block/foco_lado",
+    "lado": "yonga:block/foco_lado",
+    "frente": "yonga:block/foco_frente_encendido",
+    "detras": "yonga:block/foco_detras"
+  },
+  "elements": [
+    {
+      "from": [
+        3,
+        3,
+        5
+      ],
+      "to": [
+        13,
+        13,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#lado"
+        },
+        "south": {
+          "texture": "#detras"
+        },
+        "east": {
+          "texture": "#lado"
+        },
+        "west": {
+          "texture": "#lado"
+        },
+        "up": {
+          "texture": "#lado"
+        },
+        "down": {
+          "texture": "#lado"
+        }
+      }
+    },
+    {
+      "from": [
+        1,
+        1,
+        1
+      ],
+      "to": [
+        15,
+        15,
+        5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#frente"
+        },
+        "south": {
+          "texture": "#detras"
+        },
+        "east": {
+          "texture": "#lado"
+        },
+        "west": {
+          "texture": "#lado"
+        },
+        "up": {
+          "texture": "#lado"
+        },
+        "down": {
+          "texture": "#lado"
+        }
+      }
+    }
+  ],
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        135,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    }
+  }
+}

@@ -551,5 +551,273 @@
         "attenuation_distance": 96
       }
     ]
+  },
+  "rey_paso": {
+    "subtitle": "subtitles.yonga.rey_paso",
+    "sounds": [
+      {
+        "name": "yonga:rey_paso",
+        "stream": false,
+        "attenuation_distance": 128
+      }
+    ]
+  },
+  "rey_rugido": {
+    "subtitle": "subtitles.yonga.rey_rugido",
+    "sounds": [
+      {
+        "name": "yonga:rey_rugido",
+        "stream": false,
+        "attenuation_distance": 128
+      }
+    ]
+  },
+  "rey_golpe": {
+    "subtitle": "subtitles.yonga.rey_golpe",
+    "sounds": [
+      {
+        "name": "yonga:rey_golpe",
+        "stream": false,
+        "attenuation_distance": 128
+      }
+    ]
+  },
+  "rey_sello": {
+    "subtitle": "subtitles.yonga.rey_sello",
+    "sounds": [
+      {
+        "name": "yonga:rey_sello",
+        "stream": false,
+        "attenuation_distance": 128
+      }
+    ]
+  },
+  "rey_herido": {
+    "subtitle": "subtitles.yonga.rey_herido",
+    "sounds": [
+      {
+        "name": "yonga:rey_herido",
+        "stream": false,
+        "attenuation_distance": 128
+      }
+    ]
+  },
+  "rey_muerte": {
+    "subtitle": "subtitles.yonga.rey_muerte",
+    "sounds": [
+      {
+        "name": "yonga:rey_muerte",
+        "stream": false,
+        "attenuation_distance": 128
+      }
+    ]
+  },
+  "block.shelf.activate": {
+    "subtitle": "subtitles.yonga.block.shelf.activate",
+    "sounds": [
+      {
+        "name": "yonga:shelf/activate"
+      }
+    ]
+  },
+  "block.shelf.deactivate": {
+    "subtitle": "subtitles.yonga.block.shelf.deactivate",
+    "sounds": [
+      {
+        "name": "yonga:shelf/deactivate"
+      }
+    ]
+  },
+  "block.shelf.multi_swap": {
+    "subtitle": "subtitles.yonga.block.shelf.multi_swap",
+    "sounds": [
+      {
+        "name": "yonga:shelf/multi_swap"
+      }
+    ]
+  },
+  "block.shelf.place_item": {
+    "subtitle": "subtitles.yonga.block.shelf.place_item",
+    "sounds": [
+      {
+        "name": "yonga:shelf/place_item"
+      }
+    ]
+  },
+  "block.shelf.single_swap": {
+    "subtitle": "subtitles.yonga.block.shelf.single_swap",
+    "sounds": [
+      {
+        "name": "yonga:shelf/single_swap"
+      }
+    ]
+  },
+  "block.shelf.take_item": {
+    "subtitle": "subtitles.yonga.block.shelf.take_item",
+    "sounds": [
+      {
+        "name": "yonga:shelf/take_item"
+      }
+    ]
+  },
+  "disco_mamada_sobre_mamada": {
+    "sounds": [
+      {
+        "name": "yonga:disco_mamada_sobre_mamada",
+        "stream": true
+      }
+    ]
+  },
+  "disco_mamada_sobre_mamada_v3": {
+    "sounds": [
+      {
+        "name": "yonga:disco_mamada_sobre_mamada_v3",
+        "stream": true
+      }
+    ]
+  },
+  "disco_mamada_sobre_mamada_v1": {
+    "sounds": [
+      {
+        "name": "yonga:disco_mamada_sobre_mamada_v1",
+        "stream": true
+      }
+    ]
+  },
+  "disco_media_vita": {
+    "sounds": [
+      {
+        "name": "yonga:disco_media_vita",
+        "stream": true
+      }
+    ]
+  },
+  "disco_baka_mitai": {
+    "sounds": [
+      {
+        "name": "yonga:disco_baka_mitai",
+        "stream": true
+      }
+    ]
+  },
+  "disco_caballo_homosexual": {
+    "sounds": [
+      {
+        "name": "yonga:disco_caballo_homosexual",
+        "stream": true
+      }
+    ]
+  },
+  "disco_papa_palpa": {
+    "sounds": [
+      {
+        "name": "yonga:disco_papa_palpa",
+        "stream": true
+      }
+    ]
+  },
+  "disco_call_me_maybe": {
+    "sounds": [
+      {
+        "name": "yonga:disco_call_me_maybe",
+        "stream": true
+      }
+    ]
+  },
+  "disco_caramelldansen": {
+    "sounds": [
+      {
+        "name": "yonga:disco_caramelldansen",
+        "stream": true
+      }
+    ]
+  },
+  "disco_virtual_insanity": {
+    "sounds": [
+      {
+        "name": "yonga:disco_virtual_insanity",
+        "stream": true
+      }
+    ]
+  },
+  "disco_pipo_pipo": {
+    "sounds": [
+      {
+        "name": "yonga:disco_pipo_pipo",
+        "stream": true
+      }
+    ]
+  },
+  "disco_sexbomb_rayman": {
+    "sounds": [
+      {
+        "name": "yonga:disco_sexbomb_rayman",
+        "stream": true
+      }
+    ]
+  },
+  "disco_its_raining_men": {
+    "sounds": [
+      {
+        "name": "yonga:disco_its_raining_men",
+        "stream": true
+      }
+    ]
+  },
+  "disco_pitito_con_el_cierre": {
+    "sounds": [
+      {
+        "name": "yonga:disco_pitito_con_el_cierre",
+        "stream": true
+      }
+    ]
+  },
+  "disco_somewhere_on_kamino": {
+    "sounds": [
+      {
+        "name": "yonga:disco_somewhere_on_kamino",
+        "stream": true
+      }
+    ]
+  },
+  "disco_puton_del_barrio": {
+    "sounds": [
+      {
+        "name": "yonga:disco_puton_del_barrio",
+        "stream": true
+      }
+    ]
+  },
+  "disco_flyday_chinatown": {
+    "sounds": [
+      {
+        "name": "yonga:disco_flyday_chinatown",
+        "stream": true
+      }
+    ]
+  },
+  "disco_stay_with_me": {
+    "sounds": [
+      {
+        "name": "yonga:disco_stay_with_me",
+        "stream": true
+      }
+    ]
+  },
+  "disco_drunken_sailor": {
+    "sounds": [
+      {
+        "name": "yonga:disco_drunken_sailor",
+        "stream": true
+      }
+    ]
+  },
+  "disco_chum_bucket_rhumba": {
+    "sounds": [
+      {
+        "name": "yonga:disco_chum_bucket_rhumba",
+        "stream": true
+      }
+    ]
   }
 }

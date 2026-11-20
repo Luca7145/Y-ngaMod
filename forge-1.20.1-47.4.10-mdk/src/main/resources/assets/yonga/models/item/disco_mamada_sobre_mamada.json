@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "yonga:item/disco_mamada_sobre_mamada"
+  }
+}

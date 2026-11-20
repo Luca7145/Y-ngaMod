@@ -66,6 +66,7 @@ public class ArmaYonga extends SwordItem {
         boolean combo = false;
         boolean barridoAmplio = false;
         boolean dosManos = false;
+        float perforaArmadura = 0;          // parte de la armadura (y su dureza) que no cuenta contra sus golpes
 
         public static Rasgos nuevo() { return new Rasgos(); }
 
@@ -82,6 +83,7 @@ public class ArmaYonga extends SwordItem {
         public Rasgos combo() { this.combo = true; return this; }
         public Rasgos barridoAmplio() { this.barridoAmplio = true; this.barrido = false; return this; }
         public Rasgos dosManos() { this.dosManos = true; return this; }
+        public Rasgos perforaArmadura(float parte) { this.perforaArmadura = parte; return this; }
     }
 
     // UUID fijo para el modificador de alcance (Minecraft lo necesita para no duplicarlo)
@@ -266,6 +268,7 @@ public class ArmaYonga extends SwordItem {
         if (rasgos.combo) rasgosVisibles.add("yonga.arma.rasgo.combo");
         if (rasgos.barridoAmplio) rasgosVisibles.add("yonga.arma.rasgo.barrido_amplio");
         if (rasgos.dosManos) rasgosVisibles.add("yonga.arma.rasgo.dos_manos");
+        if (rasgos.perforaArmadura > 0) rasgosVisibles.add("yonga.arma.rasgo.perfora_armadura");
 
         if (!rasgosVisibles.isEmpty()) {
             MutableComponent linea = Component.empty();

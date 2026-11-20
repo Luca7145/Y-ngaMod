@@ -3,7 +3,9 @@ package com.lucarita.yonga.modulos.roles.oficios;
 import com.lucarita.yonga.modulos.Modulo;
 import com.lucarita.yonga.modulos.fe.FeNiveles;
 import com.lucarita.yonga.modulos.fe.hechizos.Hechizo;
+import com.lucarita.yonga.modulos.roles.ModuloRoles;
 import com.lucarita.yonga.modulos.roles.RangoRol;
+import com.lucarita.yonga.modulos.roles.cara.Cara;
 import com.lucarita.yonga.modulos.roles.Rol;
 import com.lucarita.yonga.modulos.roles.RolDatos;
 import net.minecraft.world.entity.player.Player;
@@ -18,6 +20,7 @@ import java.util.Map;
  *    Los comandos (/fe sumar, /fe fijar...) no se ven afectados.
  *  - Hechizos mejorados (II): a partir de cierto rango sus hechizos son más fuertes.
  *  - Nivel supremo: el Sacerdote Maestro puede llegar al nivel 101 (Alfa) o -101 (Omega).
+ *  - Rosario (lo fabrica desde Novato, va en la cara): quien lo lleve reza y blasfema más rápido.
  *
  * Todo vale tanto en el servidor (con RolDatos) como en el cliente (con RolCliente), por eso
  * cada cosa tiene una versión que recibe el rol y el rango directamente.
@@ -46,7 +49,17 @@ public final class Sacerdote {
     // Rango de sacerdote que desbloquea el nivel 101 / -101
     private static final RangoRol RANGO_NIVEL_SUPREMO = RangoRol.MAESTRO;
 
+    // Cuánto más rápido se reza (o blasfema) con el rosario puesto
+    private static final double ORACION_ROSARIO = 1.5;
+
     private Sacerdote() {}
+
+    // ---------- ROSARIO ----------
+
+    /** Multiplicador de lo que se gana al rezar o blasfemar: más con el rosario en la cara (lo lleve quien lo lleve). */
+    public static double multiplicadorOracion(Player jugador) {
+        return Modulo.ROLES.activo() && Cara.obtener(jugador).is(ModuloRoles.ROSARIO.get()) ? ORACION_ROSARIO : 1.0;
+    }
 
     // ---------- MULTIPLICADOR DE FE ----------
 

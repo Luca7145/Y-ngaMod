@@ -1,0 +1,16 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "tabaco"
+    }
+  ],
+  "type": "minecraft:campfire_cooking",
+  "category": "misc",
+  "ingredient": {
+    "item": "yonga:hoja_tabaco"
+  },
+  "result": "yonga:hoja_tabaco_curada",
+  "experience": 0.1,
+  "cookingtime": 600
+}

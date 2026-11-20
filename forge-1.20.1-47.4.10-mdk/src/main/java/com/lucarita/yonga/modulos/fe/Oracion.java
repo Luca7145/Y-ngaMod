@@ -1,5 +1,7 @@
 package com.lucarita.yonga.modulos.fe;
 
+import com.lucarita.yonga.modulos.roles.oficios.Sacerdote;
+
 import com.lucarita.yonga.modulos.fe.red.EstadoOracionPacket;
 import com.lucarita.yonga.modulos.fe.red.FeRed;
 import net.minecraft.core.particles.ParticleOptions;
@@ -120,7 +122,8 @@ public final class Oracion {
         int nivelAntes = FeNiveles.nivel(puntos);
         // (multiplicado por la bonificación de su oficio, p. ej. Sacerdote)
         double nuevosPuntos = puntos
-                + FeNiveles.velocidadOracion(nivelAntes, estado.direccion()) / 20.0 * FeDatos.multiplicador(jugador);
+                + FeNiveles.velocidadOracion(nivelAntes, estado.direccion()) / 20.0 * FeDatos.multiplicador(jugador)
+                * Sacerdote.multiplicadorOracion(jugador);
         int nivelDespues = FeNiveles.nivel(nuevosPuntos);
 
         // Si cambia de nivel lo mandamos ya; si no, cada medio segundo

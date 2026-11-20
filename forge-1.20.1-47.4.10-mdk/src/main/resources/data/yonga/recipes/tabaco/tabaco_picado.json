@@ -1,0 +1,19 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "tabaco"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "yonga:hoja_tabaco_curada"
+    }
+  ],
+  "result": {
+    "item": "yonga:tabaco_picado",
+    "count": 2
+  }
+}

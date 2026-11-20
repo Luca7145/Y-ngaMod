@@ -1,0 +1,27 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:receta_oficio",
+  "oficio": "sacerdote",
+  "rango": "oficial",
+  "category": "equipment",
+  "pattern": [
+    "S S",
+    "L L"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    }
+  },
+  "result": {
+    "item": "yonga:sandalias_sagradas"
+  }
+}

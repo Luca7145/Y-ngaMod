@@ -1,0 +1,34 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    }
+  ],
+  "type": "yonga:receta_oficio",
+  "oficio": "explorador",
+  "rango": "maestro",
+  "category": "equipment",
+  "pattern": [
+    " DL",
+    " CD",
+    "X  "
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "L": {
+      "item": "yonga:lucarita"
+    },
+    "C": {
+      "item": "minecraft:chain"
+    },
+    "X": {
+      "item": "minecraft:crossbow"
+    }
+  },
+  "result": {
+    "item": "yonga:garfio"
+  }
+}

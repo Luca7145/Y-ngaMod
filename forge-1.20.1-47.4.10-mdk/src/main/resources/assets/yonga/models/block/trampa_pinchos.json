@@ -1,0 +1,50 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "particle": "yonga:block/trampa_pinchos_lado",
+    "lado": "yonga:block/trampa_pinchos_lado",
+    "arriba": "yonga:block/trampa_pinchos_arriba",
+    "abajo": "yonga:block/trampa_pinchos_abajo",
+    "pincho": "yonga:block/trampa_pinchos_pincho"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#abajo",
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#arriba",
+          "cullface": "up"
+        },
+        "north": {
+          "texture": "#lado",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#lado",
+          "cullface": "south"
+        },
+        "east": {
+          "texture": "#lado",
+          "cullface": "east"
+        },
+        "west": {
+          "texture": "#lado",
+          "cullface": "west"
+        }
+      }
+    }
+  ]
+}

@@ -79,6 +79,22 @@
     "yonga:zigzag_deco",
     "yonga:marmol_verde",
     "yonga:marmol_verde_losa",
-    "yonga:marmol_verde_escaleras"
+    "yonga:marmol_verde_escaleras",
+    {
+      "id": "yonga:incensario_luminoso",
+      "required": false
+    },
+    {
+      "id": "yonga:incensario_oscuro",
+      "required": false
+    },
+    {
+      "id": "yonga:foco",
+      "required": false
+    },
+    {
+      "id": "yonga:trampa_pinchos",
+      "required": false
+    }
   ]
 }

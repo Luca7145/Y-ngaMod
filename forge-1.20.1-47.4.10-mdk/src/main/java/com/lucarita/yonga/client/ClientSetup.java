@@ -12,6 +12,13 @@ import com.lucarita.yonga.client.fe.PezRenderer;
 import com.lucarita.yonga.client.fe.ModeloZor;
 import com.lucarita.yonga.client.fe.ModeloZorTramo;
 import com.lucarita.yonga.client.fe.ZorRenderer;
+import com.lucarita.yonga.core.estante.Estantes;
+import com.lucarita.yonga.client.tabaco.CajetillaScreen;
+import com.lucarita.yonga.modulos.tabaco.CajetillaItem;
+import com.lucarita.yonga.modulos.tabaco.FumableItem;
+import com.lucarita.yonga.modulos.tabaco.ModuloTabaco;
+import com.lucarita.yonga.client.fe.ModeloRey;
+import com.lucarita.yonga.client.fe.ReyRenderer;
 import com.lucarita.yonga.client.fe.GargolaRenderer;
 import com.lucarita.yonga.client.fe.ModeloGargola;
 import com.lucarita.yonga.client.fe.GnomoRenderer;
@@ -28,14 +35,18 @@ import com.lucarita.yonga.client.fe.ModeloEnano;
 import com.lucarita.yonga.client.fe.OrbeFeRenderer;
 import com.lucarita.yonga.client.roles.CapaParapente;
 import com.lucarita.yonga.client.roles.CapaAntifaz;
+import com.lucarita.yonga.client.roles.CapaSagrada;
 import com.lucarita.yonga.client.roles.CapaArmonica;
 import com.lucarita.yonga.client.roles.IncensarioRenderer;
+import com.lucarita.yonga.client.roles.GarfioRenderer;
 import com.lucarita.yonga.client.armas.LanzaRenderer;
 import com.lucarita.yonga.client.roles.TaladroScreen;
 import com.lucarita.yonga.client.roles.BancoScreen;
 import com.lucarita.yonga.modulos.roles.oficios.BotafumeiroItem;
 import com.lucarita.yonga.modulos.roles.oficios.TaladroItem;
 import com.lucarita.yonga.client.roles.CapaMedallon;
+import com.lucarita.yonga.client.roles.CapaRosario;
+import com.lucarita.yonga.client.roles.RadiocaseteScreen;
 import com.lucarita.yonga.client.roles.MochilaScreen;
 import com.lucarita.yonga.client.fe.FeTeclas;
 import com.lucarita.yonga.client.roles.RolesTeclas;
@@ -85,6 +96,18 @@ public final class ClientSetup {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
+        if (Modulo.TABACO.activo()) {
+            event.enqueueWork(() -> {
+                // Cigarro y puro: 0 sin encender, 0.5 encendido, 1 gastado (modelos distintos)
+                ResourceLocation estado = new ResourceLocation(YongaMain.MOD_ID, "estado");
+                ItemProperties.register(ModuloTabaco.CIGARRO.get(), estado, (stack, nivel, entidad, semilla) -> FumableItem.estado(stack) * 0.5F);
+                ItemProperties.register(ModuloTabaco.PURO.get(), estado, (stack, nivel, entidad, semilla) -> FumableItem.estado(stack) * 0.5F);
+                // Cajetilla: vacía / con cigarros
+                ItemProperties.register(ModuloTabaco.CAJETILLA.get(), new ResourceLocation(YongaMain.MOD_ID, "llena"),
+                        (stack, nivel, entidad, semilla) -> CajetillaItem.cigarros(stack) > 0 ? 1.0F : 0.0F);
+                MenuScreens.register(ModuloTabaco.MENU_CAJETILLA.get(), CajetillaScreen::new);
+            });
+        }
         if (Modulo.ROLES.activo()) {
             event.enqueueWork(() -> {
                 // "yonga:abierto" = 1 mientras se planea: el modelo del objeto cambia a uno invisible en la mano
@@ -115,6 +138,7 @@ public final class ClientSetup {
                 // Pantalla de la mochila
                 MenuScreens.register(ModuloRoles.MENU_MOCHILA.get(), MochilaScreen::new);
                 MenuScreens.register(ModuloRoles.MENU_TALADRO.get(), TaladroScreen::new);
+                MenuScreens.register(ModuloRoles.MENU_RADIOCASETE.get(), RadiocaseteScreen::new);
                 MenuScreens.register(ModuloRoles.MENU_BANCO.get(), BancoScreen::new);
                 // El hueco de cara se oculta en el inventario creativo (allí Minecraft lo pondría encima de la barra rápida)
                 HuecoCara.ocultar = () -> Minecraft.getInstance().screen instanceof CreativeModeInventoryScreen;
@@ -172,6 +196,8 @@ public final class ClientSetup {
 
     @SubscribeEvent
     public static void registrarRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        // Los estantes (núcleo: siempre)
+        event.registerBlockEntityRenderer(Estantes.ENTIDAD.get(), EstanteRenderer::new);
         if (Modulo.ARMAS.activo()) {
             event.registerEntityRenderer(ModuloArmas.LANZA_ENTIDAD.get(), LanzaRenderer::new);
         }
@@ -191,6 +217,7 @@ public final class ClientSetup {
             event.registerEntityRenderer(ModuloFe.PEZ_DEL_VIENTO.get(), PezRenderer::new);
             event.registerEntityRenderer(ModuloFe.PEZ_ILUSION.get(), PezRenderer::new);
             event.registerEntityRenderer(ModuloFe.ZOR.get(), ZorRenderer::new);
+            event.registerEntityRenderer(ModuloFe.REY_ARENISCA.get(), ReyRenderer::new);
             event.registerEntityRenderer(ModuloFe.ENANO_MADRE.get(), EnanoRenderer::madre);
             event.registerEntityRenderer(ModuloFe.ENANO_MADRE_OSCURO.get(), EnanoRenderer::madreOscura);
             event.registerEntityRenderer(ModuloFe.DARDO.get(), DardoRenderer::new);
@@ -199,6 +226,7 @@ public final class ClientSetup {
             // La nota de la espada-keytar no tiene dibujo: solo su rastro de notitas
             event.registerEntityRenderer(ModuloRoles.NOTA_PROYECTIL.get(), NoopRenderer::new);
             event.registerEntityRenderer(ModuloRoles.INCENSARIO.get(), IncensarioRenderer::new);
+            event.registerEntityRenderer(ModuloRoles.GARFIO_ENTIDAD.get(), GarfioRenderer::new);
         }
     }
 
@@ -216,12 +244,15 @@ public final class ClientSetup {
             event.registerLayerDefinition(ModeloPez.CAPA, ModeloPez::crearCapa);
             event.registerLayerDefinition(ModeloZor.CAPA, ModeloZor::crearCapa);
             event.registerLayerDefinition(ModeloZorTramo.CAPA, ModeloZorTramo::crearCapa);
+            event.registerLayerDefinition(ModeloRey.CAPA, ModeloRey::crearCapa);
         }
         if (Modulo.ROLES.activo()) {
             event.registerLayerDefinition(CapaParapente.CAPA, CapaParapente::crearCapa);
             event.registerLayerDefinition(CapaAntifaz.CAPA, CapaAntifaz::crearCapa);
+            event.registerLayerDefinition(CapaSagrada.CAPA, CapaSagrada::crearCapa);
             event.registerLayerDefinition(CapaArmonica.CAPA, CapaArmonica::crearCapa);
             event.registerLayerDefinition(CapaMedallon.CAPA, CapaMedallon::crearCapa);
+            event.registerLayerDefinition(CapaRosario.CAPA, CapaRosario::crearCapa);
         }
     }
 
@@ -236,8 +267,10 @@ public final class ClientSetup {
             if (renderJugador != null) {
                 renderJugador.addLayer(new CapaParapente(renderJugador, event.getEntityModels()));
                 renderJugador.addLayer(new CapaAntifaz(renderJugador, event.getEntityModels()));
+                renderJugador.addLayer(new CapaSagrada(renderJugador, event.getEntityModels()));
                 renderJugador.addLayer(new CapaArmonica(renderJugador, event.getEntityModels()));
                 renderJugador.addLayer(new CapaMedallon(renderJugador, event.getEntityModels()));
+                renderJugador.addLayer(new CapaRosario(renderJugador, event.getEntityModels()));
             }
         }
     }

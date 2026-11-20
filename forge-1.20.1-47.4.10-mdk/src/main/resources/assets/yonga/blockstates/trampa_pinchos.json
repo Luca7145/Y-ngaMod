@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "fuera=false": {
+      "model": "yonga:block/trampa_pinchos"
+    },
+    "fuera=true": {
+      "model": "yonga:block/trampa_pinchos_fuera"
+    }
+  }
+}

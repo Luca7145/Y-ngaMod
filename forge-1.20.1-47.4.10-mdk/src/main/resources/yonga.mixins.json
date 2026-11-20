@@ -10,7 +10,10 @@
     "PlayerMixin"
   ],
   "client": [
-    "PlayerModelMixin"
+    "PlayerModelMixin",
+    "SoundManagerAccessor",
+    "SoundEngineAccessor",
+    "ItemInHandRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

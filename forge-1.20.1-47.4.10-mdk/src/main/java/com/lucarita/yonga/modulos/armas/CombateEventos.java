@@ -1,27 +1,30 @@
 package com.lucarita.yonga.modulos.armas;
 
 import com.lucarita.yonga.core.GolpeCargado;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.CombatRules;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.InteractionHand;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 /**
  * Parry y contraataque de las armas.
@@ -179,6 +182,40 @@ public final class CombateEventos {
         if (jugador.level() instanceof ServerLevel nivel) {
             nivel.sendParticles(ParticleTypes.ENCHANTED_HIT, objetivo.getX(), objetivo.getY(0.5), objetivo.getZ(),
                     12, 0.3, 0.4, 0.3, 0.2);
+        }
+    }
+
+    /**
+     * Armas que perforan armaduras (martillo de guerra): el daño se sube lo justo para que, tras pasar por la armadura
+     * entera, haga lo mismo que haría si el objetivo llevara solo la parte que no se perfora. Va con prioridad baja,
+     * después de los demás cambios de daño. Contra quien no lleva armadura no cambia nada.
+     */
+    public static void alPerforar(LivingHurtEvent evento) {
+        DamageSource fuente = evento.getSource();
+        if (!(fuente.getEntity() instanceof ServerPlayer jugador) || fuente.getDirectEntity() != jugador
+                || fuente.is(DamageTypeTags.BYPASSES_ARMOR)
+                || !(jugador.getMainHandItem().getItem() instanceof ArmaYonga arma) || arma.rasgos().perforaArmadura <= 0) {
+            return;
+        }
+        LivingEntity objetivo = evento.getEntity();
+        float armadura = objetivo.getArmorValue();
+        float dureza = (float) objetivo.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
+        float dano = evento.getAmount();
+        if (armadura <= 0 || dano <= 0) {
+            return;
+        }
+        float queda = 1 - arma.rasgos().perforaArmadura;
+        float buscado = CombatRules.getDamageAfterAbsorb(dano, armadura * queda, dureza * queda);
+        // El daño que, con la armadura entera, deja "buscado" (la armadura quita como mucho el 80%, así que basta ×5)
+        float bajo = dano, alto = dano * 5;
+        for (int i = 0; i < 30; i++) {
+            float medio = (bajo + alto) / 2;
+            if (CombatRules.getDamageAfterAbsorb(medio, armadura, dureza) < buscado) bajo = medio; else alto = medio;
+        }
+        evento.setAmount(alto);
+        if (armadura >= 8 && jugador.level() instanceof ServerLevel nivel) {
+            nivel.playSound(null, objetivo.blockPosition(), SoundEvents.ANVIL_PLACE, SoundSource.PLAYERS, 0.35f, 1.5f);
+            nivel.sendParticles(ParticleTypes.CRIT, objetivo.getX(), objetivo.getY(0.6), objetivo.getZ(), 8, 0.3, 0.3, 0.3, 0.2);
         }
     }
 

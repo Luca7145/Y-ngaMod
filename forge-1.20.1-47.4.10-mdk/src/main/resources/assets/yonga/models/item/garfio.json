@@ -1,0 +1,20 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "yonga:item/garfio"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "yonga:item/garfio_lanzado"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2
+      },
+      "model": "yonga:item/garfio_gancho"
+    }
+  ]
+}

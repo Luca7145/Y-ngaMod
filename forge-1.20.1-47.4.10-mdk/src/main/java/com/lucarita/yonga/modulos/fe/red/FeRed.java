@@ -12,7 +12,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
  */
 public final class FeRed {
 
-    private static final String VERSION = "4";
+    private static final String VERSION = "6";
 
     public static final SimpleChannel CANAL = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(YongaMain.MOD_ID, "fe"),
@@ -43,6 +43,11 @@ public final class FeRed {
                 .encoder(JumpscarePacket::codificar)
                 .decoder(JumpscarePacket::decodificar)
                 .consumerMainThread(JumpscarePacket::manejar)
+                .add();
+        CANAL.messageBuilder(AgarreReyPacket.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(AgarreReyPacket::codificar)
+                .decoder(AgarreReyPacket::decodificar)
+                .consumerMainThread(AgarreReyPacket::manejar)
                 .add();
     }
 }

@@ -1,0 +1,20 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "yonga:item/puro"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "yonga:estado": 0.5
+      },
+      "model": "yonga:item/puro_encendido"
+    },
+    {
+      "predicate": {
+        "yonga:estado": 1.0
+      },
+      "model": "yonga:item/puro_gastado"
+    }
+  ]
+}

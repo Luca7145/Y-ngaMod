@@ -1,0 +1,110 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "particle": "yonga:block/saco_dormir",
+    "tela": "yonga:block/saco_dormir",
+    "lado": "yonga:block/saco_dormir_lado",
+    "almohada": "yonga:block/saco_dormir_almohada",
+    "forro": "yonga:block/saco_dormir_forro"
+  },
+  "elements": [
+    {
+      "from": [
+        1,
+        0,
+        0
+      ],
+      "to": [
+        15,
+        3,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#lado"
+        },
+        "south": {
+          "texture": "#tela"
+        },
+        "east": {
+          "texture": "#lado"
+        },
+        "west": {
+          "texture": "#lado"
+        },
+        "up": {
+          "texture": "#tela"
+        },
+        "down": {
+          "texture": "#tela",
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        3,
+        1
+      ],
+      "to": [
+        14,
+        8,
+        6
+      ],
+      "faces": {
+        "north": {
+          "texture": "#almohada"
+        },
+        "south": {
+          "texture": "#almohada"
+        },
+        "east": {
+          "texture": "#almohada"
+        },
+        "west": {
+          "texture": "#almohada"
+        },
+        "up": {
+          "texture": "#almohada"
+        },
+        "down": {
+          "texture": "#almohada"
+        }
+      }
+    },
+    {
+      "from": [
+        1,
+        0,
+        7
+      ],
+      "to": [
+        15,
+        6,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#forro"
+        },
+        "south": {
+          "texture": "#tela"
+        },
+        "east": {
+          "texture": "#lado"
+        },
+        "west": {
+          "texture": "#lado"
+        },
+        "up": {
+          "texture": "#tela"
+        },
+        "down": {
+          "texture": "#tela",
+          "cullface": "down"
+        }
+      }
+    }
+  ]
+}

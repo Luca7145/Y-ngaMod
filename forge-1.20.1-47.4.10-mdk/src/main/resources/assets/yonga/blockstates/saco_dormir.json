@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,part=head": {
+      "model": "yonga:block/saco_dormir_cabeza"
+    },
+    "facing=north,part=foot": {
+      "model": "yonga:block/saco_dormir_pie"
+    },
+    "facing=east,part=head": {
+      "model": "yonga:block/saco_dormir_cabeza",
+      "y": 90
+    },
+    "facing=east,part=foot": {
+      "model": "yonga:block/saco_dormir_pie",
+      "y": 90
+    },
+    "facing=south,part=head": {
+      "model": "yonga:block/saco_dormir_cabeza",
+      "y": 180
+    },
+    "facing=south,part=foot": {
+      "model": "yonga:block/saco_dormir_pie",
+      "y": 180
+    },
+    "facing=west,part=head": {
+      "model": "yonga:block/saco_dormir_cabeza",
+      "y": 270
+    },
+    "facing=west,part=foot": {
+      "model": "yonga:block/saco_dormir_pie",
+      "y": 270
+    }
+  }
+}

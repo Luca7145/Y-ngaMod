@@ -17,6 +17,8 @@ import com.lucarita.yonga.modulos.fe.mobs.PezDelViento;
 import com.lucarita.yonga.modulos.fe.mobs.PezIlusion;
 import com.lucarita.yonga.modulos.fe.mobs.RitualPez;
 import com.lucarita.yonga.modulos.fe.mobs.RitualZor;
+import com.lucarita.yonga.modulos.fe.mobs.rey.ReyDeArenisca;
+import com.lucarita.yonga.modulos.fe.mobs.rey.RitualRey;
 import com.lucarita.yonga.modulos.fe.mobs.ZorElQuemado;
 import com.lucarita.yonga.modulos.fe.mobs.Gargola;
 import com.lucarita.yonga.modulos.fe.mobs.Gnomo;
@@ -192,6 +194,15 @@ public final class ModuloFe {
                     .updateInterval(1)
                     .build("zor"));
 
+    // ---------- EL REY DE ARENISCA (tercer jefe): el coloso al que hay que escalar ----------
+    public static final RegistryObject<EntityType<ReyDeArenisca>> REY_ARENISCA = ENTIDADES.register("rey_arenisca",
+            () -> EntityType.Builder.<ReyDeArenisca>of(ReyDeArenisca::new, MobCategory.MONSTER)
+                    .sized(3.0f, 3.0f)
+                    .fireImmune()
+                    .clientTrackingRange(20)
+                    .updateInterval(1)
+                    .build("rey_arenisca"));
+
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, YongaMain.MOD_ID);
     public static final DeferredRegister<RecipeSerializer<?>> RECETAS =
@@ -242,6 +253,8 @@ public final class ModuloFe {
             () -> new ForgeSpawnEggItem(PEZ_DEL_VIENTO, 0xEEECE6, 0x9CC8FF, new Item.Properties()));
     public static final RegistryObject<Item> HUEVO_ZOR = ITEMS.register("huevo_zor",
             () -> new ForgeSpawnEggItem(ZOR, 0x1C1816, 0xFF5A14, new Item.Properties()));
+    public static final RegistryObject<Item> HUEVO_REY_ARENISCA = ITEMS.register("huevo_rey_arenisca",
+            () -> new ForgeSpawnEggItem(REY_ARENISCA, 0xDACE9C, 0xE8B838, new Item.Properties()));
 
     // ---------- SONIDOS (archivos en assets/yonga/sounds, nombres en assets/yonga/sounds.json) ----------
     public static final DeferredRegister<SoundEvent> SONIDOS =
@@ -290,6 +303,12 @@ public final class ModuloFe {
     public static final RegistryObject<SoundEvent> SONIDO_ZOR_EMERGER = sonido("zor_emerger");
     public static final RegistryObject<SoundEvent> SONIDO_ZOR_HERIDO = sonido("zor_herido");
     public static final RegistryObject<SoundEvent> SONIDO_ZOR_MUERTE = sonido("zor_muerte");
+    public static final RegistryObject<SoundEvent> SONIDO_REY_PASO = sonido("rey_paso");
+    public static final RegistryObject<SoundEvent> SONIDO_REY_RUGIDO = sonido("rey_rugido");
+    public static final RegistryObject<SoundEvent> SONIDO_REY_GOLPE = sonido("rey_golpe");
+    public static final RegistryObject<SoundEvent> SONIDO_REY_SELLO = sonido("rey_sello");
+    public static final RegistryObject<SoundEvent> SONIDO_REY_HERIDO = sonido("rey_herido");
+    public static final RegistryObject<SoundEvent> SONIDO_REY_MUERTE = sonido("rey_muerte");
 
     private static RegistryObject<SoundEvent> sonido(String nombre) {
         return SONIDOS.register(nombre, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(YongaMain.MOD_ID, nombre)));
@@ -318,6 +337,8 @@ public final class ModuloFe {
         MinecraftForge.EVENT_BUS.addListener(Gargola::alMontarODesmontar);
         MinecraftForge.EVENT_BUS.addListener(RitualPez::alColocar);
         MinecraftForge.EVENT_BUS.addListener(RitualZor::alColocar);
+        MinecraftForge.EVENT_BUS.addListener(RitualRey::alColocar);
+        MinecraftForge.EVENT_BUS.addListener(ReyDeArenisca::alCaer);
         MinecraftForge.EVENT_BUS.addListener(ZorElQuemado::alMontarODesmontar);
         MinecraftForge.EVENT_BUS.addListener(AcechoAstado::alDesconectarse);
         FeRed.registrar();
@@ -365,6 +386,7 @@ public final class ModuloFe {
         evento.put(PEZ_DEL_VIENTO.get(), PezDelViento.atributos().build());
         evento.put(PEZ_ILUSION.get(), PezDelViento.atributos().build());
         evento.put(ZOR.get(), ZorElQuemado.atributos().build());
+        evento.put(REY_ARENISCA.get(), ReyDeArenisca.atributos().build());
         evento.put(ENANO_MADRE.get(), EnanoMadre.atributosMadre().build());
         evento.put(ENANO_MADRE_OSCURO.get(), EnanoMadre.atributosMadre().build());
     }

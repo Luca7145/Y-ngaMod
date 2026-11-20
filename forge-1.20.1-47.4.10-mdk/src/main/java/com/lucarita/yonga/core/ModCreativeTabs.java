@@ -7,6 +7,7 @@ import com.lucarita.yonga.modulos.fe.ModuloFe;
 import com.lucarita.yonga.modulos.roles.ModuloRoles;
 import com.lucarita.yonga.modulos.roles.construccion.Construccion;
 import com.lucarita.yonga.modulos.sangrado.ModuloSangrado;
+import com.lucarita.yonga.modulos.tabaco.ModuloTabaco;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -47,6 +48,10 @@ public class ModCreativeTabs {
 
                         if (Modulo.FE.activo()) {
                             ModuloFe.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
+                        }
+
+                        if (Modulo.TABACO.activo()) {
+                            ModuloTabaco.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
                         }
 
                         if (Modulo.SANGRADO.activo()) {

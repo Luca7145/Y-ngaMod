@@ -1,0 +1,26 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "armas"
+    }
+  ],
+  "type": "yonga:arma_herrero",
+  "pattern": [
+    "LLL",
+    " SL",
+    "S  "
+  ],
+  "key": {
+    "L": {
+      "item": "yonga:lucarita"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "yonga:martillo_guerra",
+    "count": 1
+  }
+}

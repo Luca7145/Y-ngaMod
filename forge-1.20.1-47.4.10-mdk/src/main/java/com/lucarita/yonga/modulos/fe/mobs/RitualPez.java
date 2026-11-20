@@ -55,11 +55,11 @@ public final class RitualPez {
             return;
         }
         if (!nivel.dimensionType().hasSkyLight() || nivel.dimensionType().hasCeiling()) {
-            avisar(jugador, "yonga.pez.ritual_sin_cielo");
+            avisar(jugador, "yonga.ritual.sin_espacio");
             return;
         }
         if (!abierto(nivel, centro)) {
-            avisar(jugador, "yonga.pez.ritual_cerrado");
+            avisar(jugador, "yonga.ritual.sin_espacio");
             return;
         }
         // ¡Se consume el altar!

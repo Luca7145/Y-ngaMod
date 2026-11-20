@@ -174,7 +174,7 @@ public class TaladroItem extends PickaxeItem {
         if (!combustible.isEmpty()) {
             texto.add(Component.translatable("yonga.taladro.deposito", combustible.getCount(), combustible.getHoverName()).withStyle(ChatFormatting.YELLOW));
         }
-        texto.add(Component.translatable("yonga.taladro.como_cargar").withStyle(ChatFormatting.DARK_GRAY));
+        texto.add(Component.translatable("yonga.taladro.como_cargar").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
     }
 
     // ---------- PICAR: como uno de netherita con combustible, como uno de piedra sin él ----------

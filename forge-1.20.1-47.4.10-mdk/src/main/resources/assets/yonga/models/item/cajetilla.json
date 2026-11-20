@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "yonga:item/cajetilla"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "yonga:llena": 1.0
+      },
+      "model": "yonga:item/cajetilla_llena"
+    }
+  ]
+}

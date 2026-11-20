@@ -57,6 +57,26 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraft.world.item.BedItem;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.PushReaction;
+import com.lucarita.yonga.modulos.roles.oficios.SacoDormirBlock;
+import com.lucarita.yonga.modulos.roles.oficios.Sagrado;
+import com.lucarita.yonga.modulos.roles.oficios.IncensarioSueloBlock;
+import com.lucarita.yonga.modulos.roles.oficios.GarfioItem;
+import com.lucarita.yonga.modulos.roles.oficios.BaculoItem;
+import com.lucarita.yonga.modulos.roles.oficios.BotasMuelles;
+import com.lucarita.yonga.modulos.roles.oficios.EscanerItem;
+import com.lucarita.yonga.modulos.roles.oficios.FocoBlock;
+import com.lucarita.yonga.modulos.roles.oficios.ImanItem;
+import com.lucarita.yonga.modulos.roles.oficios.TrampaPinchosBlock;
+import com.lucarita.yonga.modulos.roles.oficios.RadiocaseteItem;
+import com.lucarita.yonga.modulos.roles.oficios.RadiocaseteMenu;
+import com.lucarita.yonga.modulos.roles.oficios.GarfioEntity;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -79,8 +99,12 @@ public final class ModuloRoles {
             DeferredRegister.create(ForgeRegistries.MENU_TYPES, YongaMain.MOD_ID);
     public static final DeferredRegister<SoundEvent> SONIDOS =
             DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, YongaMain.MOD_ID);
+    public static final DeferredRegister<Block> BLOQUES =
+            DeferredRegister.create(ForgeRegistries.BLOCKS, YongaMain.MOD_ID);
     public static final DeferredRegister<EntityType<?>> ENTIDADES =
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, YongaMain.MOD_ID);
+    public static final DeferredRegister<BlockEntityType<?>> ENTIDADES_BLOQUE =
+            DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, YongaMain.MOD_ID);
 
     // ---------- OBJETOS DE OFICIO ----------
 
@@ -93,6 +117,58 @@ public final class ModuloRoles {
             () -> new MochilaItem(18, 100, new Item.Properties()));
     public static final RegistryObject<Item> MOCHILA_MEJORADA = ITEMS.register("mochila_mejorada",
             () -> new MochilaItem(27, 200, new Item.Properties()));
+
+    // Sacerdote: la túnica sagrada (Oficial). 0 de armadura, pero quita daño de los mobs de fe (ver Sagrado)
+    public static final RegistryObject<Item> CAPUCHA_SAGRADA = ITEMS.register("capucha_sagrada",
+            () -> new Sagrado.PiezaTunica(ModArmaduras.TUNICA, ArmorItem.Type.HELMET, 0.18f, new Item.Properties()));
+    public static final RegistryObject<Item> TUNICA_SAGRADA = ITEMS.register("tunica_sagrada",
+            () -> new Sagrado.PiezaTunica(ModArmaduras.TUNICA, ArmorItem.Type.CHESTPLATE, 0.27f, new Item.Properties()));
+    public static final RegistryObject<Item> FALDON_SAGRADO = ITEMS.register("faldon_sagrado",
+            () -> new Sagrado.PiezaTunica(ModArmaduras.TUNICA, ArmorItem.Type.LEGGINGS, 0.23f, new Item.Properties()));
+    public static final RegistryObject<Item> SANDALIAS_SAGRADAS = ITEMS.register("sandalias_sagradas",
+            () -> new Sagrado.PiezaTunica(ModArmaduras.TUNICA, ArmorItem.Type.BOOTS, 0.17f, new Item.Properties()));
+    // Sacerdote: halo y cuernos (Experto). Van en la cara.
+    public static final RegistryObject<Item> HALO = ITEMS.register("halo",
+            () -> new Sagrado.Distintivo("yonga.sagrado.halo", new Item.Properties()));
+    public static final RegistryObject<Item> CUERNOS = ITEMS.register("cuernos",
+            () -> new Sagrado.Distintivo("yonga.sagrado.cuernos", new Item.Properties()));
+
+    // Sacerdote: rosario (Novato). Va en la cara; rezas y blasfemas más rápido (ver Sacerdote)
+    public static final RegistryObject<Item> ROSARIO = ITEMS.register("rosario",
+            () -> new Item(new Item.Properties().stacksTo(1)));
+    // Sacerdote: báculo (Oficial). Pega poco, pero cada golpe cargado gasta maná y pega mucho más
+    public static final RegistryObject<Item> BACULO = ITEMS.register("baculo",
+            () -> new BaculoItem(new Item.Properties()));
+
+    // Explorador: saco de dormir (Aprendiz). Como una cama, más cómodo, y no guarda el punto de aparición.
+    public static final RegistryObject<Block> SACO_DORMIR = BLOQUES.register("saco_dormir",
+            () -> new SacoDormirBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).sound(SoundType.WOOL)
+                    .strength(0.2f).noOcclusion().pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<Item> SACO_DORMIR_ITEM = ITEMS.register("saco_dormir",
+            () -> new BedItem(SACO_DORMIR.get(), new Item.Properties().stacksTo(1)));
+
+    // Sacerdote: incensarios de suelo (Aprendiz). Encendidos alejan a los mobs de fe del otro lado (ver IncensarioSueloBlock)
+    public static final RegistryObject<Block> INCENSARIO_LUMINOSO = BLOQUES.register("incensario_luminoso",
+            () -> new IncensarioSueloBlock(false, propiedadesIncensario(MapColor.GOLD)));
+    public static final RegistryObject<Block> INCENSARIO_OSCURO = BLOQUES.register("incensario_oscuro",
+            () -> new IncensarioSueloBlock(true, propiedadesIncensario(MapColor.COLOR_BLACK)));
+    public static final RegistryObject<Item> INCENSARIO_LUMINOSO_ITEM = ITEMS.register("incensario_luminoso",
+            () -> new BlockItem(INCENSARIO_LUMINOSO.get(), new Item.Properties()));
+    public static final RegistryObject<Item> INCENSARIO_OSCURO_ITEM = ITEMS.register("incensario_oscuro",
+            () -> new BlockItem(INCENSARIO_OSCURO.get(), new Item.Properties()));
+    public static final RegistryObject<BlockEntityType<IncensarioSueloBlock.Entidad>> ENTIDAD_INCENSARIO_SUELO =
+            ENTIDADES_BLOQUE.register("incensario_suelo", () -> BlockEntityType.Builder.of(IncensarioSueloBlock.Entidad::new,
+                    INCENSARIO_LUMINOSO.get(), INCENSARIO_OSCURO.get()).build(null));
+
+    private static BlockBehaviour.Properties propiedadesIncensario(MapColor color) {
+        return BlockBehaviour.Properties.of().mapColor(color).sound(SoundType.LANTERN).strength(2.0f, 6.0f)
+                .requiresCorrectToolForDrops().noOcclusion().pushReaction(PushReaction.DESTROY)
+                .lightLevel(estado -> estado.getValue(IncensarioSueloBlock.ENCENDIDO) ? 10 : 0);
+    }
+
+    // Explorador: garfio (Maestro). Lanza un gancho que tira de ti hasta el bloque (ver GarfioEntity)
+    public static final RegistryObject<Item> GARFIO = ITEMS.register("garfio",
+            () -> new GarfioItem(new Item.Properties()));
 
     // Explorador: antifaz (Novato). Va en el hueco de cara; los mobs te detectan a la mitad de distancia.
     public static final RegistryObject<Item> ANTIFAZ = ITEMS.register("antifaz",
@@ -132,6 +208,10 @@ public final class ModuloRoles {
     public static final RegistryObject<Item> ARCO_LIRA = ITEMS.register("arco_lira",
             () -> new ArcoLiraItem(new Item.Properties()));
 
+    // Melómano: radiocasete (Aprendiz). Un tocadiscos de bolsillo que oyen los de alrededor
+    public static final RegistryObject<Item> RADIOCASETE = ITEMS.register("radiocasete",
+            () -> new RadiocaseteItem(new Item.Properties()));
+
     // Melómano: armónica. Va en el hueco de cara y se ve en la boca (ver Armonica: tecla H, blues y lamento)
     public static final RegistryObject<Item> ARMONICA = ITEMS.register("armonica",
             () -> new ArmonicaItem(new Item.Properties()));
@@ -153,6 +233,30 @@ public final class ModuloRoles {
             () -> new ShovelItem(ModTiers.LUCARITA, 1.5f, -3.0f, new Item.Properties().fireResistant()));
 
     // ---------- INGENIERO ----------
+
+    // ---------- INGENIERO: imán (Novato), foco (Aprendiz), botas de muelles y trampa de pinchos (Oficial), escáner (Experto)
+
+    public static final RegistryObject<Item> IMAN = ITEMS.register("iman", () -> new ImanItem(new Item.Properties()));
+
+    public static final RegistryObject<Block> FOCO = BLOQUES.register("foco",
+            () -> new FocoBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).sound(SoundType.LANTERN)
+                    .strength(2.0f, 6.0f).requiresCorrectToolForDrops().noOcclusion()   // no es un cubo entero: que se vea lo de al lado
+                    .lightLevel(estado -> estado.getValue(FocoBlock.ENCENDIDO) ? 15 : 0)));
+    public static final RegistryObject<Item> FOCO_ITEM = ITEMS.register("foco",
+            () -> new BlockItem(FOCO.get(), new Item.Properties()));
+    public static final RegistryObject<BlockEntityType<FocoBlock.Entidad>> ENTIDAD_FOCO = ENTIDADES_BLOQUE.register("foco",
+            () -> BlockEntityType.Builder.of(FocoBlock.Entidad::new, FOCO.get()).build(null));
+
+    public static final RegistryObject<Item> BOTAS_MUELLES = ITEMS.register("botas_muelles",
+            () -> new BotasMuelles(new Item.Properties()));
+
+    public static final RegistryObject<Block> TRAMPA_PINCHOS = BLOQUES.register("trampa_pinchos",
+            () -> new TrampaPinchosBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).sound(SoundType.METAL)
+                    .strength(3.0f, 6.0f).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Item> TRAMPA_PINCHOS_ITEM = ITEMS.register("trampa_pinchos",
+            () -> new BlockItem(TRAMPA_PINCHOS.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> ESCANER = ITEMS.register("escaner", () -> new EscanerItem(new Item.Properties()));
 
     // Taladro: pico a motor con combustible (3x3)
     public static final RegistryObject<Item> TALADRO = ITEMS.register("taladro",
@@ -181,6 +285,12 @@ public final class ModuloRoles {
             () -> EntityType.Builder.<IncensarioEntity>of(IncensarioEntity::new, MobCategory.MISC)
                     .sized(0.5f, 0.5f).clientTrackingRange(8).updateInterval(2)
                     .build("incensario"));
+
+    // El gancho del garfio cuando está lanzado
+    public static final RegistryObject<EntityType<GarfioEntity>> GARFIO_ENTIDAD = ENTIDADES.register("garfio",
+            () -> EntityType.Builder.<GarfioEntity>of(GarfioEntity::new, MobCategory.MISC)
+                    .sized(0.4f, 0.4f).clientTrackingRange(8).updateInterval(1)
+                    .build("garfio"));
 
     // ---------- SONIDOS (archivos en assets/yonga/sounds, nombres en assets/yonga/sounds.json) ----------
 
@@ -221,6 +331,10 @@ public final class ModuloRoles {
     public static final RegistryObject<MenuType<BancoMenu>> MENU_BANCO = MENUS.register("banco_ingeniero",
             () -> IForgeMenuType.create((id, inventario, datos) -> new BancoMenu(id, inventario)));
 
+    // Hueco del disco del radiocasete
+    public static final RegistryObject<MenuType<RadiocaseteMenu>> MENU_RADIOCASETE = MENUS.register("radiocasete",
+            () -> IForgeMenuType.create(RadiocaseteMenu::desdeRed));
+
     // Depósito de combustible del taladro
     public static final RegistryObject<MenuType<TaladroMenu>> MENU_TALADRO = MENUS.register("taladro",
             () -> IForgeMenuType.create(TaladroMenu::desdeRed));
@@ -235,10 +349,12 @@ public final class ModuloRoles {
 
     public static void registrar(IEventBus modEventBus) {
         ITEMS.register(modEventBus);
+        BLOQUES.register(modEventBus);
         RECETAS.register(modEventBus);
         MENUS.register(modEventBus);
         SONIDOS.register(modEventBus);
         ENTIDADES.register(modEventBus);
+        ENTIDADES_BLOQUE.register(modEventBus);
         TIPOS_RECETA.register(modEventBus);
         Construccion.registrar(modEventBus);
         RolesRed.registrar();
@@ -254,6 +370,21 @@ public final class ModuloRoles {
 
         // Habilidades de oficio
         MinecraftForge.EVENT_BUS.addListener(Explorador::alRecibirDano);
+        MinecraftForge.EVENT_BUS.addListener(SacoDormirBlock::alGuardarAparicion);
+        MinecraftForge.EVENT_BUS.addListener(Sagrado::alRecibirDano);
+        MinecraftForge.EVENT_BUS.addListener(BaculoItem::alAtacar);
+        MinecraftForge.EVENT_BUS.addListener(BaculoItem::alRecibirDano);
+        MinecraftForge.EVENT_BUS.addListener(RadiocaseteItem::alTick);
+        MinecraftForge.EVENT_BUS.addListener(ImanItem::alTick);
+        MinecraftForge.EVENT_BUS.addListener(BotasMuelles::alSaltar);
+        MinecraftForge.EVENT_BUS.addListener(BotasMuelles::alCaer);
+        MinecraftForge.EVENT_BUS.addListener(EscanerItem::alTick);
+        MinecraftForge.EVENT_BUS.addListener(RadiocaseteItem::alEmpezarAVer);
+        MinecraftForge.EVENT_BUS.addListener(RadiocaseteItem::alSalir);
+        MinecraftForge.EVENT_BUS.addListener(RadiocaseteItem::alCambiarDimension);
+        MinecraftForge.EVENT_BUS.addListener(RadiocaseteItem::alMorir);
+        MinecraftForge.EVENT_BUS.addListener(SacoDormirBlock::alDespertar);
+        MinecraftForge.EVENT_BUS.addListener(IncensarioSueloBlock::alAparecer);
         MinecraftForge.EVENT_BUS.addListener(Musica::alSalir);
         MinecraftForge.EVENT_BUS.addListener(EscudoTamborItem::alBloquear);
         MinecraftForge.EVENT_BUS.addListener(EscudoTamborItem::alSalir);

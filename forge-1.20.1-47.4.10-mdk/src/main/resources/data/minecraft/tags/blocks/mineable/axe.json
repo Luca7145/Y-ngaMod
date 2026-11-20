@@ -2,6 +2,17 @@
   "replace": false,
   "values": [
     "yonga:lamas_madera",
-    "yonga:talla_dorada"
+    "yonga:talla_dorada",
+    "yonga:oak_shelf",
+    "yonga:spruce_shelf",
+    "yonga:birch_shelf",
+    "yonga:jungle_shelf",
+    "yonga:acacia_shelf",
+    "yonga:dark_oak_shelf",
+    "yonga:mangrove_shelf",
+    "yonga:cherry_shelf",
+    "yonga:bamboo_shelf",
+    "yonga:crimson_shelf",
+    "yonga:warped_shelf"
   ]
 }

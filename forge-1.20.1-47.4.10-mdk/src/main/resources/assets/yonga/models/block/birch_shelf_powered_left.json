@@ -1,0 +1,7 @@
+{
+  "parent": "yonga:block/shelf_template",
+  "textures": {
+    "frente": "yonga:block/birch_shelf_powered_left",
+    "tabla": "yonga:block/birch_shelf_side_left"
+  }
+}
