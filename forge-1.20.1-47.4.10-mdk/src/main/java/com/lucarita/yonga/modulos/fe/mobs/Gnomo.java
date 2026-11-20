@@ -432,7 +432,7 @@ public class Gnomo extends PathfinderMob implements MobFe {
     public static boolean puedeAparecer(EntityType<? extends Gnomo> tipo, LevelAccessor nivel, MobSpawnType razon,
                                         BlockPos posicion, RandomSource azar) {
         int suelo = nivel.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, posicion.getX(), posicion.getZ());
-        return nivel.getBlockState(posicion.below()).is(BlockTags.DIRT) && posicion.getY() >= suelo - 1;
+        return AparicionMobsFe.esSuelo(nivel.getBlockState(posicion.below())) && posicion.getY() >= suelo - 1;
     }
 
     @Override

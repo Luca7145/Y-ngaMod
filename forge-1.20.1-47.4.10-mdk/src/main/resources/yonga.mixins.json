@@ -7,13 +7,16 @@
   "mixins": [
     "AnvilMenuMixin",
     "InventoryMenuMixin",
-    "PlayerMixin"
+    "PlayerMixin",
+    "SlotAccessor",
+    "ServerGamePacketListenerImplMixin"
   ],
   "client": [
     "PlayerModelMixin",
     "SoundManagerAccessor",
     "SoundEngineAccessor",
-    "ItemInHandRendererMixin"
+    "ItemInHandRendererMixin",
+    "CreativeModeInventoryScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

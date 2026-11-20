@@ -16,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.network.PacketDistributor;
 
 import java.util.HashMap;
@@ -58,6 +59,32 @@ public final class Cara {
         if (evento.getEntity() instanceof Player jugador && obtener(jugador).is(ModuloRoles.ANTIFAZ.get())) {
             evento.modifyVisibility(VISIBILIDAD_ANTIFAZ);
         }
+    }
+
+    /**
+     * Click derecho con un objeto de cara en la mano: te lo pones (como la armadura). Si ya llevabas algo, se
+     * intercambian. En creativo el de la mano no se gasta, como pasa con la armadura.
+     */
+    public static void alUsarObjeto(PlayerInteractEvent.RightClickItem evento) {
+        ItemStack enMano = evento.getItemStack();
+        if (!enMano.is(OBJETOS_DE_CARA)) return;
+        Player jugador = evento.getEntity();
+        net.minecraft.world.SimpleContainer cara = ((AccesoCara) jugador).yonga$cara();
+        ItemStack puesto = cara.getItem(0);
+        if (ItemStack.isSameItemSameTags(puesto, enMano)) return;
+        if (!evento.getLevel().isClientSide()) {
+            ItemStack nuevo = enMano.copyWithCount(1);
+            if (!jugador.getAbilities().instabuild) enMano.shrink(1);
+            cara.setItem(0, nuevo);
+            if (!puesto.isEmpty()) {
+                if (enMano.isEmpty()) jugador.setItemInHand(evento.getHand(), puesto);
+                else if (!jugador.getInventory().add(puesto)) jugador.drop(puesto, false);
+            }
+            evento.getLevel().playSound(null, jugador.blockPosition(), net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_GENERIC,
+                    net.minecraft.sounds.SoundSource.PLAYERS, 1.0f, 1.0f);
+        }
+        evento.setCanceled(true);
+        evento.setCancellationResult(net.minecraft.world.InteractionResult.sidedSuccess(evento.getLevel().isClientSide()));
     }
 
     // ---------- QUE LOS DEMÁS VEAN LO QUE LLEVAS EN LA CARA ----------

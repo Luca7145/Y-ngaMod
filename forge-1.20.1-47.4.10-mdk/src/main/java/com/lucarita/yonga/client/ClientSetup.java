@@ -46,6 +46,7 @@ import com.lucarita.yonga.modulos.roles.oficios.BotafumeiroItem;
 import com.lucarita.yonga.modulos.roles.oficios.TaladroItem;
 import com.lucarita.yonga.client.roles.CapaMedallon;
 import com.lucarita.yonga.client.roles.CapaRosario;
+import com.lucarita.yonga.client.roles.CapaIman;
 import com.lucarita.yonga.client.roles.RadiocaseteScreen;
 import com.lucarita.yonga.client.roles.MochilaScreen;
 import com.lucarita.yonga.client.fe.FeTeclas;
@@ -253,6 +254,7 @@ public final class ClientSetup {
             event.registerLayerDefinition(CapaArmonica.CAPA, CapaArmonica::crearCapa);
             event.registerLayerDefinition(CapaMedallon.CAPA, CapaMedallon::crearCapa);
             event.registerLayerDefinition(CapaRosario.CAPA, CapaRosario::crearCapa);
+            event.registerLayerDefinition(CapaIman.CAPA, CapaIman::crearCapa);
         }
     }
 
@@ -271,6 +273,7 @@ public final class ClientSetup {
                 renderJugador.addLayer(new CapaArmonica(renderJugador, event.getEntityModels()));
                 renderJugador.addLayer(new CapaMedallon(renderJugador, event.getEntityModels()));
                 renderJugador.addLayer(new CapaRosario(renderJugador, event.getEntityModels()));
+                renderJugador.addLayer(new CapaIman(renderJugador, event.getEntityModels()));
             }
         }
     }

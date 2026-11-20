@@ -335,7 +335,7 @@ public class EnanoMadre extends Enano {
     /** Sobre hierba, en la superficie, con cielo encima: llanuras. */
     public static boolean puedeAparecerMadre(EntityType<? extends EnanoMadre> tipo, LevelAccessor nivel, MobSpawnType razon,
                                              BlockPos posicion, RandomSource azar) {
-        return nivel.getBlockState(posicion.below()).is(BlockTags.DIRT) && nivel.canSeeSkyFromBelowWater(posicion);
+        return AparicionMobsFe.esSuelo(nivel.getBlockState(posicion.below())) && nivel.canSeeSkyFromBelowWater(posicion);
     }
 
     @Override

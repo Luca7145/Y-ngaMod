@@ -51,6 +51,21 @@ COLORES_BOTAS = {"k": (30, 26, 24), "l": (156, 106, 64), "L": (120, 78, 44), "I"
                  "S": (216, 220, 228), "s": (100, 106, 118)}
 
 
+def iman_puesto():
+    """Para el imán colgado en el pecho (CapaIman): arriba el cordón, en medio el rojo, abajo la plata."""
+    img = Image.new("RGBA", (16, 16))
+    for y in range(16):
+        for x in range(16):
+            if y < 4:
+                c = (62, 58, 66) if (x + y) % 2 else (78, 74, 82)
+            elif y < 12:
+                c = (214, 52, 50) if h(x, y, 11) < 0.6 else (186, 36, 38)
+            else:
+                c = (224, 228, 236) if h(x, y, 12) < 0.6 else (176, 182, 194)
+            img.putpixel((x, y), c4(c))
+    return img
+
+
 def escaner():
     """La tablet: marco oscuro, pantalla verde con los aros del sonar, una mancha y el botón de abajo."""
     img = Image.new("RGBA", (16, 16), NADA)
@@ -345,13 +360,13 @@ def anadir_a_etiqueta(ruta, valores):
 
 TEXTOS = {
     "es_es.json": {
-        "item.yonga.iman": "Imán", "yonga.iman.encendido": "Encendido", "yonga.iman.apagado": "Apagado",
+        "item.yonga.iman": "Imán",
         "block.yonga.foco": "Foco",
         "item.yonga.botas_muelles": "Botas de muelles",
         "block.yonga.trampa_pinchos": "Trampa de pinchos",
         "item.yonga.escaner": "Escáner",     },
     "en_us.json": {
-        "item.yonga.iman": "Magnet", "yonga.iman.encendido": "On", "yonga.iman.apagado": "Off",
+        "item.yonga.iman": "Magnet",
         "block.yonga.foco": "Spotlight",
         "item.yonga.botas_muelles": "Spring Boots",
         "block.yonga.trampa_pinchos": "Spike Trap",
@@ -377,6 +392,8 @@ def main(raiz):
     for n in ("iman", "botas_muelles", "escaner"):
         guardar(os.path.join(a, "models", "item", n + ".json"),
                 {"parent": "minecraft:item/generated", "textures": {"layer0": "yonga:item/" + n}})
+    os.makedirs(os.path.join(a, "textures", "entity"), exist_ok=True)
+    iman_puesto().save(os.path.join(a, "textures", "entity", "iman.png"))
     os.makedirs(os.path.join(a, "textures", "models", "armor"), exist_ok=True)
     armadura_muelles().save(os.path.join(a, "textures", "models", "armor", "muelles_layer_1.png"))
 

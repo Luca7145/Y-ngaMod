@@ -1,0 +1,55 @@
+{
+  "replace": false,
+  "values": [
+    "#yonga:bosques",
+    "#yonga:taigas",
+    "#yonga:junglas",
+    "minecraft:swamp",
+    "minecraft:mangrove_swamp",
+    "minecraft:cherry_grove",
+    {
+      "id": "#forge:is_swamp",
+      "required": false
+    },
+    {
+      "id": "#forge:is_lush",
+      "required": false
+    },
+    {
+      "id": "#forge:is_dense",
+      "required": false
+    },
+    {
+      "id": "#c:is_swamp",
+      "required": false
+    },
+    {
+      "id": "#c:is_lush",
+      "required": false
+    },
+    {
+      "id": "#c:is_dense_vegetation",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:bayou",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:old_growth_bayou",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:fen",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:fungal_fen",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:marsh",
+      "required": false
+    }
+  ]
+}

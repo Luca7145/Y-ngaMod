@@ -466,10 +466,10 @@
   "item.yonga.martillo_guerra": "Warhammer",
   "yonga.arma.rasgo.perfora_armadura": "Armor piercing",
   "item.yonga.iman": "Magnet",
-  "yonga.iman.encendido": "On",
-  "yonga.iman.apagado": "Off",
   "block.yonga.foco": "Spotlight",
   "item.yonga.botas_muelles": "Spring Boots",
   "block.yonga.trampa_pinchos": "Spike Trap",
-  "item.yonga.escaner": "Scanner"
+  "item.yonga.escaner": "Scanner",
+  "item.yonga.guante_moderador": "Moderator's Glove",
+  "yonga.guante.inventario_de": "%s's inventory"
 }

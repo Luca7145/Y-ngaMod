@@ -556,7 +556,7 @@ public class LeonDeGuerra extends PathfinderMob implements MobFe {
     public static boolean puedeAparecer(EntityType<? extends LeonDeGuerra> tipo, LevelAccessor nivel, MobSpawnType razon,
                                         BlockPos posicion, RandomSource azar) {
         BlockState debajo = nivel.getBlockState(posicion.below());
-        return (debajo.is(BlockTags.DIRT) || debajo.is(BlockTags.SAND)) && nivel.canSeeSkyFromBelowWater(posicion);
+        return (AparicionMobsFe.esSuelo(debajo) || debajo.is(BlockTags.SAND) || debajo.is(BlockTags.TERRACOTTA)) && nivel.canSeeSkyFromBelowWater(posicion);
     }
 
     @Override

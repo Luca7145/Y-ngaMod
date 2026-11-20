@@ -466,10 +466,10 @@
   "item.yonga.martillo_guerra": "Martillo de guerra",
   "yonga.arma.rasgo.perfora_armadura": "Perfora armaduras",
   "item.yonga.iman": "Imán",
-  "yonga.iman.encendido": "Encendido",
-  "yonga.iman.apagado": "Apagado",
   "block.yonga.foco": "Foco",
   "item.yonga.botas_muelles": "Botas de muelles",
   "block.yonga.trampa_pinchos": "Trampa de pinchos",
-  "item.yonga.escaner": "Escáner"
+  "item.yonga.escaner": "Escáner",
+  "item.yonga.guante_moderador": "Guante del moderador",
+  "yonga.guante.inventario_de": "Inventario de %s"
 }

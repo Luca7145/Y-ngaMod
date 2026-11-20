@@ -86,6 +86,12 @@ public class ModItems {
                 () -> new RecordItem(15, sonido, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), ticks));
     }
 
+    // ---------- MODERACIÓN ----------
+
+    // Guante del moderador: solo en creativo (sin receta). Click derecho a un jugador: abre su inventario como un cofre
+    public static final RegistryObject<Item> GUANTE_MODERADOR = ITEMS.register("guante_moderador",
+            () -> new com.lucarita.yonga.core.moderacion.GuanteModeradorItem(new Item.Properties()));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
         SONIDOS.register(eventBus);

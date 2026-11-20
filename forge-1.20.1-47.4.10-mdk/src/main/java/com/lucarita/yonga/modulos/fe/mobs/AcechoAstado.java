@@ -129,7 +129,7 @@ public final class AcechoAstado {
                 && nivel.getDifficulty() != Difficulty.PEACEFUL
                 && nivel.isNight()
                 && !jugador.isCreative() && !jugador.isSpectator()
-                && nivel.getBiome(jugador.blockPosition()).is(BiomeTags.IS_FOREST)
+                && nivel.getBiome(jugador.blockPosition()).is(AparicionMobsFe.BOSQUES)
                 && MobFe.ataca(true, true, FeDatos.obtenerNivel(jugador))
                 && !hayAstadoCerca(jugador);
     }

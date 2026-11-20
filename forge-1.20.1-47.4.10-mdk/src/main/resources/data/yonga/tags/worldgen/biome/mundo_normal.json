@@ -1,0 +1,23 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_overworld",
+    {
+      "id": "#forge:is_overworld",
+      "required": false
+    },
+    {
+      "id": "#c:is_overworld",
+      "required": false
+    },
+    "#yonga:bosques",
+    "#yonga:taigas",
+    "#yonga:junglas",
+    "#yonga:llanuras",
+    "#yonga:sabanas",
+    "#yonga:montanas",
+    "#yonga:desiertos",
+    "#yonga:frondosos",
+    "#yonga:mesetas"
+  ]
+}

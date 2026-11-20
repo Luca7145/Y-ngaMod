@@ -25,6 +25,7 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
@@ -82,7 +83,9 @@ public class Hada extends PathfinderMob implements MobFe, FlyingAnimal {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.2, true) {
+        // Temen al Astado, como los creepers a los gatos: si hay uno cerca, huyen volando
+        this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Astado.class, 12.0f, 1.3, 1.7));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.2, true) {
             @Override
             protected int getAttackInterval() {
                 return this.adjustedTickDelay(TIEMPO_ENTRE_TOQUES);
@@ -189,7 +192,7 @@ public class Hada extends PathfinderMob implements MobFe, FlyingAnimal {
                                         BlockPos posicion, RandomSource azar) {
         BlockState debajo = nivel.getBlockState(posicion.below());
         int suelo = nivel.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, posicion.getX(), posicion.getZ());
-        return (debajo.is(BlockTags.DIRT) || debajo.is(BlockTags.LEAVES))
+        return (AparicionMobsFe.esSuelo(debajo) || debajo.is(BlockTags.LEAVES))
                 && nivel.getBlockState(posicion).isAir()
                 && posicion.getY() >= suelo;
     }

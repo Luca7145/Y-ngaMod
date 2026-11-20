@@ -365,6 +365,7 @@ public final class ModuloRoles {
         MinecraftForge.EVENT_BUS.addListener(Cara::alCalcularVisibilidad);
         MinecraftForge.EVENT_BUS.addListener(Cara::alClonar);
         MinecraftForge.EVENT_BUS.addListener(Cara::alTick);
+        MinecraftForge.EVENT_BUS.addListener(Cara::alUsarObjeto);
         MinecraftForge.EVENT_BUS.addListener(Cara::alEmpezarAVer);
         MinecraftForge.EVENT_BUS.addListener(Cara::alSalir);
 
