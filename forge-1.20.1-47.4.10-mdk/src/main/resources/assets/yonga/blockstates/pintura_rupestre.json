@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/pintura_rupestre"
+    },
+    "facing=east": {
+      "model": "yonga:block/pintura_rupestre",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/pintura_rupestre",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/pintura_rupestre",
+      "y": 270
+    }
+  }
+}

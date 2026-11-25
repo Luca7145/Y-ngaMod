@@ -19,7 +19,8 @@ public enum Modulo {
     SANGRADO("sangrado"),
     FE("fe"),
     ROLES("roles"),
-    TABACO("tabaco");
+    TABACO("tabaco"),
+    HABITANTES("habitantes");
 
     private final String id;
 

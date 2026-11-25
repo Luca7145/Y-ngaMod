@@ -1,0 +1,19 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    },
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "habitantes"
+    }
+  ],
+  "type": "yonga:banco_ingeniero",
+  "ingredient": {
+    "tag": "minecraft:logs"
+  },
+  "result": "yonga:lena_apilada",
+  "count": 1,
+  "rango": "todos"
+}

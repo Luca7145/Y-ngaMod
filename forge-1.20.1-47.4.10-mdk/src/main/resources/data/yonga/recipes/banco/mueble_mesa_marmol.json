@@ -1,0 +1,19 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    },
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "habitantes"
+    }
+  ],
+  "type": "yonga:banco_ingeniero",
+  "ingredient": {
+    "item": "minecraft:calcite"
+  },
+  "result": "yonga:mesa_marmol",
+  "count": 1,
+  "rango": "novato"
+}

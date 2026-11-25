@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/tapiz"
+    },
+    "facing=east": {
+      "model": "yonga:block/tapiz",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/tapiz",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/tapiz",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/busto_marmol"
+    },
+    "facing=east": {
+      "model": "yonga:block/busto_marmol",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/busto_marmol",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/busto_marmol",
+      "y": 270
+    }
+  }
+}

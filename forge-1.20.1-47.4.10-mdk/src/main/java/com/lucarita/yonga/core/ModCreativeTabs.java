@@ -4,6 +4,7 @@ import com.lucarita.yonga.YongaMain;
 import com.lucarita.yonga.modulos.Modulo;
 import com.lucarita.yonga.modulos.armas.ModuloArmas;
 import com.lucarita.yonga.modulos.fe.ModuloFe;
+import com.lucarita.yonga.modulos.habitantes.ModuloHabitantes;
 import com.lucarita.yonga.modulos.roles.ModuloRoles;
 import com.lucarita.yonga.modulos.roles.construccion.Construccion;
 import com.lucarita.yonga.modulos.sangrado.ModuloSangrado;
@@ -52,6 +53,10 @@ public class ModCreativeTabs {
 
                         if (Modulo.TABACO.activo()) {
                             ModuloTabaco.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
+                        }
+
+                        if (Modulo.HABITANTES.activo()) {
+                            ModuloHabitantes.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
                         }
 
                         if (Modulo.SANGRADO.activo()) {

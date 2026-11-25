@@ -1,0 +1,19 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    },
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "habitantes"
+    }
+  ],
+  "type": "yonga:banco_ingeniero",
+  "ingredient": {
+    "item": "minecraft:terracotta"
+  },
+  "result": "yonga:lucerna",
+  "count": 1,
+  "rango": "novato"
+}

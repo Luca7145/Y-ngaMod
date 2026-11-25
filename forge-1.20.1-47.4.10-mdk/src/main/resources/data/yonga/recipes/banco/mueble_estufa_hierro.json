@@ -1,0 +1,19 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    },
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "habitantes"
+    }
+  ],
+  "type": "yonga:banco_ingeniero",
+  "ingredient": {
+    "item": "minecraft:iron_block"
+  },
+  "result": "yonga:estufa_hierro",
+  "count": 1,
+  "rango": "experto"
+}

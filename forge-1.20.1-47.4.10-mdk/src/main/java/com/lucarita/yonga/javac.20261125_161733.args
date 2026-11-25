@@ -1,0 +1,8 @@
+-d
+/tmp/jc
+-proc:none
+modulos/habitantes/familia/Amor.java
+modulos/habitantes/taberna/EdificioTaberna.java
+modulos/habitantes/taberna/Taberna.java
+client/habitantes/CapaBarriga.java
+modulos/habitantes/HabitantesConfig.java

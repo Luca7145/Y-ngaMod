@@ -4,6 +4,10 @@ import com.lucarita.yonga.YongaMain;
 import com.lucarita.yonga.client.fe.BarraFe;
 import com.lucarita.yonga.client.fe.BarraMana;
 import com.lucarita.yonga.client.fe.AstadoRenderer;
+import com.lucarita.yonga.client.habitantes.HabitanteRenderer;
+import com.lucarita.yonga.client.habitantes.ModeloHabitante;
+import com.lucarita.yonga.client.habitantes.TiendaScreen;
+import com.lucarita.yonga.modulos.habitantes.ModuloHabitantes;
 import com.lucarita.yonga.client.fe.EnanoRenderer;
 import com.lucarita.yonga.client.fe.CentinelaRenderer;
 import com.lucarita.yonga.client.fe.DardoRenderer;
@@ -145,6 +149,9 @@ public final class ClientSetup {
                 HuecoCara.ocultar = () -> Minecraft.getInstance().screen instanceof CreativeModeInventoryScreen;
             });
         }
+        if (Modulo.HABITANTES.activo()) {
+            event.enqueueWork(() -> MenuScreens.register(ModuloHabitantes.MENU_TIENDA.get(), TiendaScreen::new));
+        }
         if (!Modulo.ARMAS.activo()) {
             return;
         }
@@ -189,6 +196,10 @@ public final class ClientSetup {
             event.register(FeTeclas.REZAR);
             event.register(FeTeclas.BLASFEMAR);
         }
+        if (Modulo.HABITANTES.activo()) {
+            event.register(com.lucarita.yonga.client.habitantes.HabitantesCliente.HABLAR);
+            event.register(com.lucarita.yonga.client.habitantes.HabitantesCliente.FAMILIA);
+        }
         if (Modulo.ROLES.activo()) {
             event.register(RolesTeclas.SILENCIAR_NOTAS);
             event.register(RolesTeclas.TOCAR_ARMONICA);
@@ -197,6 +208,11 @@ public final class ClientSetup {
 
     @SubscribeEvent
     public static void registrarRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        if (Modulo.HABITANTES.activo()) {
+            event.registerEntityRenderer(ModuloHabitantes.HABITANTE.get(), HabitanteRenderer::new);
+            event.registerEntityRenderer(com.lucarita.yonga.modulos.habitantes.muebles.Muebles.ASIENTO.get(),
+                    net.minecraft.client.renderer.entity.NoopRenderer::new);   // el asiento de los muebles no se ve
+        }
         // Los estantes (núcleo: siempre)
         event.registerBlockEntityRenderer(Estantes.ENTIDAD.get(), EstanteRenderer::new);
         if (Modulo.ARMAS.activo()) {
@@ -234,6 +250,14 @@ public final class ClientSetup {
     // Modelo 3D de la vela del parapente
     @SubscribeEvent
     public static void registrarModelos(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        if (Modulo.HABITANTES.activo()) {
+            event.registerLayerDefinition(ModeloHabitante.CAPA_HOMBRE, ModeloHabitante::crearHombre);
+            event.registerLayerDefinition(ModeloHabitante.CAPA_MUJER, ModeloHabitante::crearMujer);
+            event.registerLayerDefinition(com.lucarita.yonga.client.habitantes.CapaPelo3D.CAPA,
+                    com.lucarita.yonga.client.habitantes.CapaPelo3D::crearCapa);
+            event.registerLayerDefinition(com.lucarita.yonga.client.habitantes.CapaBarriga.CAPA,
+                    com.lucarita.yonga.client.habitantes.CapaBarriga::crearCapa);
+        }
         if (Modulo.FE.activo()) {
             event.registerLayerDefinition(ModeloEnano.CAPA, ModeloEnano::crearCapa);
             event.registerLayerDefinition(ModeloAstado.CAPA, ModeloAstado::crearCapa);
@@ -261,6 +285,16 @@ public final class ClientSetup {
     // Añade la vela a los dos tipos de jugador (brazos anchos y brazos finos)
     @SubscribeEvent
     public static void agregarCapas(EntityRenderersEvent.AddLayers event) {
+        if (Modulo.HABITANTES.activo()) {
+            // La barriga de las jugadoras embarazadas (fase 5)
+            for (String tipoSkin : event.getSkins()) {
+                PlayerRenderer r = event.getSkin(tipoSkin);
+                if (r != null) {
+                    r.addLayer(new com.lucarita.yonga.client.habitantes.CapaBarriga.DeJugadora(r,
+                            event.getEntityModels().bakeLayer(com.lucarita.yonga.client.habitantes.CapaBarriga.CAPA)));
+                }
+            }
+        }
         if (!Modulo.ROLES.activo()) {
             return;
         }

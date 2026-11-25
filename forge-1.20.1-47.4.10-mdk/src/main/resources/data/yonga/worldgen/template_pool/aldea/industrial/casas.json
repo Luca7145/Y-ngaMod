@@ -1,0 +1,140 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/industrial/casa_baja",
+        "processors": "yonga:con_create_industrial",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/industrial/casa",
+        "processors": "yonga:con_create_industrial",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/industrial/casa_larga",
+        "processors": "yonga:con_create_industrial",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/industrial/casa_grande",
+        "processors": "yonga:con_create_industrial",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/industrial/fabrica",
+        "processors": "yonga:con_create_industrial",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/industrial/fabrica_textil",
+        "processors": "yonga:con_create_industrial",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/industrial/taller_composter",
+        "processors": "yonga:con_create_industrial",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/industrial/taller_smoker",
+        "processors": "yonga:con_create_industrial",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/industrial/taller_smithing",
+        "processors": "yonga:con_create_industrial",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/industrial/taller_furnace",
+        "processors": "yonga:con_create_industrial",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/industrial/taller_barrel",
+        "processors": "yonga:con_create_industrial",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/industrial/taller_fletching",
+        "processors": "yonga:con_create_industrial",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/industrial/taller_stonecutter",
+        "processors": "yonga:con_create_industrial",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/industrial/taller_loom",
+        "processors": "yonga:con_create_industrial",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/industrial/taller_brewing",
+        "processors": "yonga:con_create_industrial",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/comoda"
+    },
+    "facing=east": {
+      "model": "yonga:block/comoda",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/comoda",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/comoda",
+      "y": 270
+    }
+  }
+}

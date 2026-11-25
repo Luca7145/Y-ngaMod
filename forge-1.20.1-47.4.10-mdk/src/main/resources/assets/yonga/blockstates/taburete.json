@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/taburete"
+    },
+    "facing=east": {
+      "model": "yonga:block/taburete",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/taburete",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/taburete",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/contemporanea/casa_0",
+        "processors": "yonga:con_create_contemporanea",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/contemporanea/casa_1",
+        "processors": "yonga:con_create_contemporanea",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/contemporanea/casa_2",
+        "processors": "yonga:con_create_contemporanea",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/contemporanea/casa_3",
+        "processors": "yonga:con_create_contemporanea",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/contemporanea/chalet",
+        "processors": "yonga:con_create_contemporanea",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/contemporanea/adosado",
+        "processors": "yonga:con_create_contemporanea",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/contemporanea/casa_baja",
+        "processors": "yonga:con_create_contemporanea",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/contemporanea/casa_baja_teja",
+        "processors": "yonga:con_create_contemporanea",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/contemporanea/taller_composter",
+        "processors": "yonga:con_create_contemporanea",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/contemporanea/taller_smoker",
+        "processors": "yonga:con_create_contemporanea",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/contemporanea/taller_smithing",
+        "processors": "yonga:con_create_contemporanea",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/contemporanea/taller_furnace",
+        "processors": "yonga:con_create_contemporanea",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/contemporanea/taller_barrel",
+        "processors": "yonga:con_create_contemporanea",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/contemporanea/taller_fletching",
+        "processors": "yonga:con_create_contemporanea",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/contemporanea/taller_stonecutter",
+        "processors": "yonga:con_create_contemporanea",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/contemporanea/taller_loom",
+        "processors": "yonga:con_create_contemporanea",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "yonga:aldea/contemporanea/taller_brewing",
+        "processors": "yonga:con_create_contemporanea",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

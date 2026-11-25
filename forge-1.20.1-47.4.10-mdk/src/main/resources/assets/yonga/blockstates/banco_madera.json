@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/banco_madera"
+    },
+    "facing=east": {
+      "model": "yonga:block/banco_madera",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/banco_madera",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/banco_madera",
+      "y": 270
+    }
+  }
+}

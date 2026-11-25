@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/planta_maceta"
+    },
+    "facing=east": {
+      "model": "yonga:block/planta_maceta",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/planta_maceta",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/planta_maceta",
+      "y": 270
+    }
+  }
+}

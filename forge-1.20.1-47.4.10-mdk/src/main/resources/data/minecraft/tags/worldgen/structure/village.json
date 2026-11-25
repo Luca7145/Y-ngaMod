@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "yonga:aldea_prehistorica",
+    "yonga:aldea_antigua",
+    "yonga:aldea_medieval",
+    "yonga:aldea_moderna",
+    "yonga:aldea_industrial",
+    "yonga:aldea_contemporanea"
+  ]
+}

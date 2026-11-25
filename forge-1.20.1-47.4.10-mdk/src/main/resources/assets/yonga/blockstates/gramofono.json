@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/gramofono"
+    },
+    "facing=east": {
+      "model": "yonga:block/gramofono",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/gramofono",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/gramofono",
+      "y": 270
+    }
+  }
+}

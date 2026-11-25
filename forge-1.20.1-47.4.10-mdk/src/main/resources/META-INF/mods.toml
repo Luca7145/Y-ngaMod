@@ -66,6 +66,20 @@ description='''Mod para Jannus'''
     ordering="NONE"
     side="BOTH"
 
+# Opcionales (fase 9): si están, Yonga los aprovecha; si no, funciona igual
+[[dependencies.${mod_id}]]
+    modId="create"
+    mandatory=false
+    versionRange="*"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="carryon"
+    mandatory=false
+    versionRange="*"
+    ordering="NONE"
+    side="BOTH"
+
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares
 # that your mod requires GL version 3.2 or higher. Other features will be added. They are side aware so declaring this won't
 # stop your mod loading on the server for example.

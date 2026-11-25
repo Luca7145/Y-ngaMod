@@ -1,0 +1,13 @@
+-d
+/tmp/jc
+-proc:none
+modulos/habitantes/taberna/EdificioTaberna.java
+modulos/habitantes/taberna/Encargos.java
+modulos/habitantes/taberna/Taberna.java
+modulos/habitantes/taberna/TablonBlock.java
+modulos/habitantes/aldea/Aldeas.java
+modulos/habitantes/aldea/Chismes.java
+modulos/habitantes/aldea/GuardiaGoals.java
+modulos/habitantes/aldea/PobladoPrehistorico.java
+modulos/habitantes/aldea/Poblados.java
+modulos/habitantes/aldea/Sociedad.java

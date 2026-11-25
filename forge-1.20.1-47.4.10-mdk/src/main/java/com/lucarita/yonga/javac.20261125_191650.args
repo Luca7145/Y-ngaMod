@@ -1,0 +1,4 @@
+-d
+/tmp/jc
+-proc:none
+modulos/habitantes/taberna/EdificioTaberna.java

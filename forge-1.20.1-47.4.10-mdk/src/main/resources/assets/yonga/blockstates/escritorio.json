@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/escritorio"
+    },
+    "facing=east": {
+      "model": "yonga:block/escritorio",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/escritorio",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/escritorio",
+      "y": 270
+    }
+  }
+}

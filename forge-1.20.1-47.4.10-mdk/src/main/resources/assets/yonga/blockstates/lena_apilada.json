@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/lena_apilada"
+    },
+    "facing=east": {
+      "model": "yonga:block/lena_apilada",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/lena_apilada",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/lena_apilada",
+      "y": 270
+    }
+  }
+}

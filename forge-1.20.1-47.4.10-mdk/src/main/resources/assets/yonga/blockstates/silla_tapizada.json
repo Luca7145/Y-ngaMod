@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/silla_tapizada"
+    },
+    "facing=east": {
+      "model": "yonga:block/silla_tapizada",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/silla_tapizada",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/silla_tapizada",
+      "y": 270
+    }
+  }
+}

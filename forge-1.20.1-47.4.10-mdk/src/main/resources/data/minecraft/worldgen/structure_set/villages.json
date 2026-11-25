@@ -1,0 +1,34 @@
+{
+  "structures": [
+    {
+      "structure": "yonga:aldea_prehistorica",
+      "weight": 1
+    },
+    {
+      "structure": "yonga:aldea_antigua",
+      "weight": 1
+    },
+    {
+      "structure": "yonga:aldea_medieval",
+      "weight": 1
+    },
+    {
+      "structure": "yonga:aldea_moderna",
+      "weight": 1
+    },
+    {
+      "structure": "yonga:aldea_industrial",
+      "weight": 1
+    },
+    {
+      "structure": "yonga:aldea_contemporanea",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 10387312,
+    "separation": 8,
+    "spacing": 34
+  }
+}

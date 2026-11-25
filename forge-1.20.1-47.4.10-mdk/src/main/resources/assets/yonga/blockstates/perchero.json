@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/perchero"
+    },
+    "facing=east": {
+      "model": "yonga:block/perchero",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/perchero",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/perchero",
+      "y": 270
+    }
+  }
+}

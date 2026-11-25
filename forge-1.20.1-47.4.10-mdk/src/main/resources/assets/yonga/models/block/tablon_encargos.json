@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "yonga:block/tablon_encargos_marco",
+    "frente": "yonga:block/tablon_encargos",
+    "marco": "yonga:block/tablon_encargos_marco"
+  },
+  "elements": [
+    {
+      "from": [0, 2, 14],
+      "to": [16, 14, 16],
+      "faces": {
+        "north": { "uv": [0, 2, 16, 14], "texture": "#frente" },
+        "south": { "uv": [0, 2, 16, 14], "texture": "#marco" },
+        "east": { "uv": [0, 2, 2, 14], "texture": "#marco" },
+        "west": { "uv": [14, 2, 16, 14], "texture": "#marco" },
+        "up": { "uv": [0, 0, 16, 2], "texture": "#marco" },
+        "down": { "uv": [0, 14, 16, 16], "texture": "#marco" }
+      }
+    }
+  ],
+  "display": {
+    "gui": { "rotation": [30, 225, 0], "translation": [0, 0, 0], "scale": [0.625, 0.625, 0.625] },
+    "fixed": { "rotation": [0, 180, 0], "scale": [0.5, 0.5, 0.5] }
+  }
+}

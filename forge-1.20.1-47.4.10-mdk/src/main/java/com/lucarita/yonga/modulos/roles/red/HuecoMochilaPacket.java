@@ -26,8 +26,7 @@ public record HuecoMochilaPacket(int idMenu, int hueco, ItemStack objeto, int ca
 
     // Se ejecuta en el cliente (la parte que toca la pantalla está en una clase solo de cliente)
     public void manejar(Supplier<NetworkEvent.Context> contexto) {
-        if (FMLEnvironment.dist.isClient()) {
-            com.lucarita.yonga.client.roles.MochilaCliente.actualizarHueco(idMenu, hueco, objeto.copyWithCount(cantidad));
-        }
+        net.minecraftforge.fml.DistExecutor.unsafeRunWhenOn(net.minecraftforge.api.distmarker.Dist.CLIENT, () -> () ->
+                com.lucarita.yonga.client.roles.MochilaCliente.actualizarHueco(idMenu, hueco, objeto.copyWithCount(cantidad)));
     }
 }

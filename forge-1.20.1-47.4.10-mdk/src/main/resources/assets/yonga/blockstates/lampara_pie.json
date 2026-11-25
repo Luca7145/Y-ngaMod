@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "facing=north,half=lower,lit=true": {
+      "model": "yonga:block/lampara_pie"
+    },
+    "facing=north,half=lower,lit=false": {
+      "model": "yonga:block/lampara_pie_apagado"
+    },
+    "facing=east,half=lower,lit=true": {
+      "model": "yonga:block/lampara_pie",
+      "y": 90
+    },
+    "facing=east,half=lower,lit=false": {
+      "model": "yonga:block/lampara_pie_apagado",
+      "y": 90
+    },
+    "facing=south,half=lower,lit=true": {
+      "model": "yonga:block/lampara_pie",
+      "y": 180
+    },
+    "facing=south,half=lower,lit=false": {
+      "model": "yonga:block/lampara_pie_apagado",
+      "y": 180
+    },
+    "facing=west,half=lower,lit=true": {
+      "model": "yonga:block/lampara_pie",
+      "y": 270
+    },
+    "facing=west,half=lower,lit=false": {
+      "model": "yonga:block/lampara_pie_apagado",
+      "y": 270
+    },
+    "facing=north,half=upper,lit=true": {
+      "model": "yonga:block/lampara_pie_arriba"
+    },
+    "facing=north,half=upper,lit=false": {
+      "model": "yonga:block/lampara_pie_arriba_apagado"
+    },
+    "facing=east,half=upper,lit=true": {
+      "model": "yonga:block/lampara_pie_arriba",
+      "y": 90
+    },
+    "facing=east,half=upper,lit=false": {
+      "model": "yonga:block/lampara_pie_arriba_apagado",
+      "y": 90
+    },
+    "facing=south,half=upper,lit=true": {
+      "model": "yonga:block/lampara_pie_arriba",
+      "y": 180
+    },
+    "facing=south,half=upper,lit=false": {
+      "model": "yonga:block/lampara_pie_arriba_apagado",
+      "y": 180
+    },
+    "facing=west,half=upper,lit=true": {
+      "model": "yonga:block/lampara_pie_arriba",
+      "y": 270
+    },
+    "facing=west,half=upper,lit=false": {
+      "model": "yonga:block/lampara_pie_arriba_apagado",
+      "y": 270
+    }
+  }
+}

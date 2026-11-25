@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/nevera"
+    },
+    "facing=east": {
+      "model": "yonga:block/nevera",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/nevera",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/nevera",
+      "y": 270
+    }
+  }
+}

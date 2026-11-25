@@ -1,0 +1,19 @@
+{
+  "conditions": [
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "roles"
+    },
+    {
+      "type": "yonga:modulo_activo",
+      "modulo": "habitantes"
+    }
+  ],
+  "type": "yonga:banco_ingeniero",
+  "ingredient": {
+    "item": "minecraft:lantern"
+  },
+  "result": "yonga:lampara_gas",
+  "count": 1,
+  "rango": "experto"
+}

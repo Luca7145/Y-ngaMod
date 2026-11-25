@@ -1,0 +1,148 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": false,
+  "textures": {
+    "t0": "yonga:block/mueble_reloj_pared",
+    "t1": "minecraft:block/dark_oak_planks",
+    "particle": "minecraft:block/dark_oak_planks"
+  },
+  "elements": [
+    {
+      "from": [
+        5,
+        2,
+        14
+      ],
+      "to": [
+        11,
+        14,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#t0",
+          "uv": [
+            5,
+            1,
+            11,
+            13
+          ]
+        },
+        "south": {
+          "texture": "#t1",
+          "uv": [
+            5,
+            2,
+            11,
+            14
+          ]
+        },
+        "east": {
+          "texture": "#t1",
+          "uv": [
+            0,
+            2,
+            2,
+            14
+          ]
+        },
+        "west": {
+          "texture": "#t1",
+          "uv": [
+            14,
+            2,
+            16,
+            14
+          ]
+        },
+        "up": {
+          "texture": "#t1",
+          "uv": [
+            5,
+            14,
+            11,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#t1",
+          "uv": [
+            5,
+            0,
+            11,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        4.5,
+        14,
+        13.5
+      ],
+      "to": [
+        11.5,
+        15,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#t1",
+          "uv": [
+            4.5,
+            1,
+            11.5,
+            2
+          ]
+        },
+        "south": {
+          "texture": "#t1",
+          "uv": [
+            4.5,
+            1,
+            11.5,
+            2
+          ]
+        },
+        "east": {
+          "texture": "#t1",
+          "uv": [
+            0,
+            1,
+            2.5,
+            2
+          ]
+        },
+        "west": {
+          "texture": "#t1",
+          "uv": [
+            13.5,
+            1,
+            16,
+            2
+          ]
+        },
+        "up": {
+          "texture": "#t1",
+          "uv": [
+            4.5,
+            13.5,
+            11.5,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#t1",
+          "uv": [
+            4.5,
+            0,
+            11.5,
+            2.5
+          ]
+        }
+      }
+    }
+  ]
+}

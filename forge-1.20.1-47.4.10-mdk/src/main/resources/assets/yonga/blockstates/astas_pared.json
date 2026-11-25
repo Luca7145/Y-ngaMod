@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/astas_pared"
+    },
+    "facing=east": {
+      "model": "yonga:block/astas_pared",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/astas_pared",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/astas_pared",
+      "y": 270
+    }
+  }
+}

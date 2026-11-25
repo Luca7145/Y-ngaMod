@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "yonga:block/tablon_encargos" },
+    "facing=east": { "model": "yonga:block/tablon_encargos", "y": 90 },
+    "facing=south": { "model": "yonga:block/tablon_encargos", "y": 180 },
+    "facing=west": { "model": "yonga:block/tablon_encargos", "y": 270 }
+  }
+}

@@ -12,6 +12,7 @@ import com.lucarita.yonga.modulos.ModuloActivoCondition;
 import com.lucarita.yonga.modulos.ModulosConfig;
 import com.lucarita.yonga.modulos.armas.ModuloArmas;
 import com.lucarita.yonga.modulos.fe.ModuloFe;
+import com.lucarita.yonga.modulos.habitantes.ModuloHabitantes;
 import com.lucarita.yonga.modulos.fe.mobs.AparicionMobsFe;
 import com.lucarita.yonga.modulos.fe.mobs.EstatuaCentinela;
 import com.lucarita.yonga.modulos.roles.ModuloRoles;
@@ -42,6 +43,9 @@ public class YongaMain
 
         // 2. Núcleo: siempre se carga
         Estantes.registrar(modEventBus);        // los estantes (de la 1.21.9): bloques, objetos, entidad y sonidos
+        // El procesador de Create de las aldeas: siempre (las listas de procesadores de los datos lo nombran aunque
+        // el módulo de habitantes esté apagado, y sin él no cargaría el mundo)
+        com.lucarita.yonga.modulos.habitantes.compat.Compat.PROCESADORES.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
         DiscosEnCofres.registrar(modEventBus);   // nuestros discos en los cofres de mazmorras, mansiones y ciudades antiguas
@@ -73,6 +77,9 @@ public class YongaMain
         }
         if (Modulo.TABACO.activo()) {
             ModuloTabaco.registrar(modEventBus);
+        }
+        if (Modulo.HABITANTES.activo()) {
+            ModuloHabitantes.registrar(modEventBus);
         }
         // Futuros módulos aquí, siguiendo el mismo patrón
 

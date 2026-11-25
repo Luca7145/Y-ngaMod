@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/piel_suelo"
+    },
+    "facing=east": {
+      "model": "yonga:block/piel_suelo",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/piel_suelo",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/piel_suelo",
+      "y": 270
+    }
+  }
+}

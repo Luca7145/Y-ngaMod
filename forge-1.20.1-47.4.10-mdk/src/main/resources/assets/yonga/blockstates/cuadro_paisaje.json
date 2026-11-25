@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/cuadro_paisaje"
+    },
+    "facing=east": {
+      "model": "yonga:block/cuadro_paisaje",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/cuadro_paisaje",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/cuadro_paisaje",
+      "y": 270
+    }
+  }
+}

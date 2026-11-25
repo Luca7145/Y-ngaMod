@@ -95,6 +95,25 @@
     {
       "id": "yonga:trampa_pinchos",
       "required": false
-    }
+    },
+    "yonga:vasija_barro",
+    "yonga:piedra_moler",
+    "yonga:pintura_rupestre",
+    "yonga:anfora",
+    "yonga:brasero",
+    "yonga:lucerna",
+    "yonga:mesa_marmol",
+    "yonga:busto_marmol",
+    "yonga:candelabro_hierro",
+    "yonga:candelabro_plata",
+    "yonga:estufa_hierro",
+    "yonga:lampara_gas",
+    "yonga:maquina_coser",
+    "yonga:radiador",
+    "yonga:television",
+    "yonga:lampara_pie",
+    "yonga:nevera",
+    "yonga:planta_maceta",
+    "yonga:ordenador"
   ]
 }

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/anfora"
+    },
+    "facing=east": {
+      "model": "yonga:block/anfora",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/anfora",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/anfora",
+      "y": 270
+    }
+  }
+}

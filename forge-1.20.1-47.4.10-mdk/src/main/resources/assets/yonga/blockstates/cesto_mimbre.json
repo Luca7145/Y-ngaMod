@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/cesto_mimbre"
+    },
+    "facing=east": {
+      "model": "yonga:block/cesto_mimbre",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/cesto_mimbre",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/cesto_mimbre",
+      "y": 270
+    }
+  }
+}

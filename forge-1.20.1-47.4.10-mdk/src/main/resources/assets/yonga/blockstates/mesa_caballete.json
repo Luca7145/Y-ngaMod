@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "yonga:block/mesa_caballete"
+    },
+    "facing=east": {
+      "model": "yonga:block/mesa_caballete",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "yonga:block/mesa_caballete",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "yonga:block/mesa_caballete",
+      "y": 270
+    }
+  }
+}
